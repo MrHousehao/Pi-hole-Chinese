@@ -1065,7 +1065,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
                                         </div>
                                         <div class="col-md-6">
                                             <select id="iCheckStyle">
-                                                <option>默认</option>
+                                                <option>default</option>
                                                 <option>primary</option>
                                                 <option>success</option>
                                                 <option>info</option>
@@ -1092,25 +1092,25 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
                                                 <option>silver</option>
                                                 <option>asbestos</option>
 
-                                                <option>材质-红色</option>
-                                                <option>材质-粉红色</option>
-                                                <option>材质-紫色</option>
-                                                <option>材质-深紫色</option>
-                                                <option>材质-靛蓝色</option>
-                                                <option>材质-蓝色</option>
-                                                <option>材质-浅蓝色</option>
-                                                <option>材质-青色</option>
-                                                <option>材质-蓝绿色</option>
-                                                <option>材质-绿色</option>
-                                                <option>材质-浅绿色</option>
-                                                <option>材质-柠檬色</option>
-                                                <option>材质-黄色</option>
-                                                <option>材质-琥珀色</option>
-                                                <option>材质-橙色</option>
-                                                <option>材质-深橙色</option>
-                                                <option>材质-棕色</option>
-                                                <option>材质-灰色</option>
-                                                <option>材质-蓝灰色</option>
+                                                <option>material-red</option>
+                                                <option>material-pink</option>
+                                                <option>material-purple</option>
+                                                <option>material-deeppurple</option>
+                                                <option>material-indigo</option>
+                                                <option>material-blue</option>
+                                                <option>material-lightblue</option>
+                                                <option>material-cyan</option>
+                                                <option>material-teal</option>
+                                                <option>material-green</option>
+                                                <option>material-lightgreen</option>
+                                                <option>material-lime</option>
+                                                <option>material-yellow</option>
+                                                <option>material-amber</option>
+                                                <option>material-orange</option>
+                                                <option>material-deeporange</option>
+                                                <option>material-brown</option>
+                                                <option>material-grey</option>
+                                                <option>material-bluegrey</option>
                                             </select>
                                         </div>
                                     </div>
