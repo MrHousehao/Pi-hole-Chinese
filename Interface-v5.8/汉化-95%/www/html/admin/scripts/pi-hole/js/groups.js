@@ -1,0 +1,269 @@
+/* Pi-hole: A black hole for Internet advertisements
+ *  (c) 2017 Pi-hole, LLC (https://pi-hole.net)
+ *  Network-wide ad blocking via your own hardware.
+ *
+ *  This file is copyright under the latest version of the EUPL.
+ *  Please see LICENSE file for your rights under this license. */
+
+/* global utils:false */
+
+var table;
+var token = $("#token").text();
+
+$(function () {
+  $("#btnAdd").on("click", addGroup);
+
+  table = $("#groupsTable").DataTable({
+    ajax: {
+      url: "scripts/pi-hole/php/groups.php",
+      data: { action: "get_groups", token: token },
+      type: "POST",
+    },
+    order: [[0, "asc"]],
+    columns: [
+      { data: "id", visible: false },
+      { data: "name" },
+      { data: "enabled", searchable: false },
+      { data: "description" },
+      { data: null, width: "60px", orderable: false },
+    ],
+    drawCallback: function () {
+      $('button[id^="deleteGroup_"]').on("click", deleteGroup);
+    },
+    rowCallback: function (row, data) {
+      $(row).attr("data-id", data.id);
+      var tooltip =
+        "Added: " +
+        utils.datetime(data.date_added, false) +
+        "\nLast modified: " +
+        utils.datetime(data.date_modified, false) +
+        "\nDatabase ID: " +
+        data.id;
+      $("td:eq(0)", row).html(
+        '<input id="name_' + data.id + '" title="' + tooltip + '" class="form-control">'
+      );
+      var nameEl = $("#name_" + data.id, row);
+      nameEl.val(utils.unescapeHtml(data.name));
+      nameEl.on("change", editGroup);
+
+      var disabled = data.enabled === 0;
+      $("td:eq(1)", row).html(
+        '<input type="checkbox" id="status_' + data.id + '"' + (disabled ? "" : " checked") + ">"
+      );
+      var statusEl = $("#status_" + data.id, row);
+      statusEl.bootstrapToggle({
+        on: "启用",
+        off: "停用",
+        size: "small",
+        onstyle: "success",
+        width: "80px",
+      });
+      statusEl.on("change", editGroup);
+
+      $("td:eq(2)", row).html('<input id="desc_' + data.id + '" class="form-control">');
+      var desc = data.description !== null ? data.description : "";
+      var descEl = $("#desc_" + data.id, row);
+      descEl.val(utils.unescapeHtml(desc));
+      descEl.on("change", editGroup);
+
+      $("td:eq(3)", row).empty();
+      if (data.id !== 0) {
+        var button =
+          '<button type="button" class="btn btn-danger btn-xs" id="deleteGroup_' +
+          data.id +
+          '">' +
+          '<span class="far fa-trash-alt"></span>' +
+          "</button>";
+        $("td:eq(3)", row).html(button);
+      }
+    },
+    dom:
+      "<'row'<'col-sm-4'l><'col-sm-8'f>>" +
+      "<'row'<'col-sm-12'<'table-responsive'tr>>>" +
+      "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+    lengthMenu: [
+      [10, 25, 50, 100, -1],
+      [10, 25, 50, 100, "全部"],
+    ],
+    stateSave: true,
+    stateSaveCallback: function (settings, data) {
+      utils.stateSaveCallback("groups-table", data);
+    },
+    stateLoadCallback: function () {
+      var data = utils.stateLoadCallback("groups-table");
+
+      // Return if not available
+      if (data === null) {
+        return null;
+      }
+
+      // Reset visibility of ID column
+      data.columns[0].visible = false;
+      // Apply loaded state to table
+      return data;
+    },
+  });
+
+  // Disable autocorrect in the search box
+  var input = document.querySelector("input[type=search]");
+  if (input !== null) {
+    input.setAttribute("autocomplete", "off");
+    input.setAttribute("autocorrect", "off");
+    input.setAttribute("autocapitalize", "off");
+    input.setAttribute("spellcheck", false);
+  }
+
+  table.on("order.dt", function () {
+    var order = table.order();
+    if (order[0][0] !== 0 || order[0][1] !== "asc") {
+      $("#resetButton").removeClass("hidden");
+    } else {
+      $("#resetButton").addClass("hidden");
+    }
+  });
+  $("#resetButton").on("click", function () {
+    table.order([[0, "asc"]]).draw();
+    $("#resetButton").addClass("hidden");
+  });
+});
+
+function addGroup() {
+  var name = utils.escapeHtml($("#new_name").val());
+  var desc = utils.escapeHtml($("#new_desc").val());
+
+  utils.disableAll();
+  utils.showAlert("info", "", "添加群组中...", name);
+
+  if (name.length === 0) {
+    // enable the ui elements again
+    utils.enableAll();
+    utils.showAlert("warning", "", "警告", "请指定一个群组名称");
+    return;
+  }
+
+  $.ajax({
+    url: "scripts/pi-hole/php/groups.php",
+    method: "post",
+    dataType: "json",
+    data: { action: "add_group", name: name, desc: desc, token: token },
+    success: function (response) {
+      utils.enableAll();
+      if (response.success) {
+        utils.showAlert("success", "fas fa-plus", "成功添加群组", name);
+        $("#new_name").val("");
+        $("#new_desc").val("");
+        table.ajax.reload();
+      } else {
+        utils.showAlert("error", "", "添加新群组时出错", response.message);
+      }
+    },
+    error: function (jqXHR, exception) {
+      utils.enableAll();
+      utils.showAlert("error", "", "添加新群组时出错", jqXHR.responseText);
+      console.log(exception); // eslint-disable-line no-console
+    },
+  });
+}
+
+function editGroup() {
+  var elem = $(this).attr("id");
+  var tr = $(this).closest("tr");
+  var id = tr.attr("data-id");
+  var name = utils.escapeHtml(tr.find("#name_" + id).val());
+  var status = tr.find("#status_" + id).is(":checked") ? 1 : 0;
+  var desc = utils.escapeHtml(tr.find("#desc_" + id).val());
+
+  var done = "修改";
+  var notDone = "正在修改";
+  switch (elem) {
+    case "status_" + id:
+      if (status === 0) {
+        done = "停用";
+        notDone = "正在停用";
+      } else if (status === 1) {
+        done = "启用";
+        notDone = "正在启用";
+      }
+
+      break;
+    case "name_" + id:
+      done = "修改名称，";
+      notDone = "正在修改名称";
+      break;
+    case "desc_" + id:
+      done = "修改描述，";
+      notDone = "正在修改描述";
+      break;
+    default:
+      alert("元素错误或数据id无效！");
+      return;
+  }
+
+  utils.disableAll();
+  utils.showAlert("info", "", "修改群组中...", name);
+  $.ajax({
+    url: "scripts/pi-hole/php/groups.php",
+    method: "post",
+    dataType: "json",
+    data: {
+      action: "edit_group",
+      id: id,
+      name: name,
+      desc: desc,
+      status: status,
+      token: token,
+    },
+    success: function (response) {
+      utils.enableAll();
+      if (response.success) {
+        utils.showAlert("success", "fas fa-pencil-alt", "成功" + done + "群组：", name);
+      } else {
+        utils.showAlert(
+          "error",
+          "",
+          "群组ID为" + id + "在" + notDone + "出错",
+          response.message
+        );
+      }
+    },
+    error: function (jqXHR, exception) {
+      utils.enableAll();
+      utils.showAlert(
+        "error",
+        "",
+        "群组ID为" + id + "在" + notDone + "出错",
+        jqXHR.responseText
+      );
+      console.log(exception); // eslint-disable-line no-console
+    },
+  });
+}
+
+function deleteGroup() {
+  var tr = $(this).closest("tr");
+  var id = tr.attr("data-id");
+  var name = utils.escapeHtml(tr.find("#name_" + id).val());
+
+  utils.disableAll();
+  utils.showAlert("info", "", "删除群组中...", name);
+  $.ajax({
+    url: "scripts/pi-hole/php/groups.php",
+    method: "post",
+    dataType: "json",
+    data: { action: "delete_group", id: id, token: token },
+    success: function (response) {
+      utils.enableAll();
+      if (response.success) {
+        utils.showAlert("success", "far fa-trash-alt", "已成功删除群组", name);
+        table.row(tr).remove().draw(false);
+      } else {
+        utils.showAlert("error", "", "删除ID为" + id + "的群组时出错", response.message);
+      }
+    },
+    error: function (jqXHR, exception) {
+      utils.enableAll();
+      utils.showAlert("error", "", "删除ID为" + id + "的群组时出错", jqXHR.responseText);
+      console.log(exception); // eslint-disable-line no-console
+    },
+  });
+}
