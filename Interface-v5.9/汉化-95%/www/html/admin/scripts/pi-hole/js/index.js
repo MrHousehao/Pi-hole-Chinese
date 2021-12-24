@@ -814,10 +814,12 @@ function doughnutTooltip(tooltipItems, data) {
   return (
     label +
     ":<br>- " +
+	"占所有项目的" +
     dataset.data[tooltipItems.index].toFixed(1) +
-    "% of all queries<br>- " +
+    "%<br>- " +
+	"占所选显示项目的" +
     ((dataset.data[tooltipItems.index] * 100) / (total - scale)).toFixed(1) +
-    "% of shown items"
+    "%"
   );
 }
 
