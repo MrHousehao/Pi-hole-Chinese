@@ -14,7 +14,8 @@
 # 以下是替换方法（自己做笔记用，大佬请忽略）
 
 1、解压文件拷贝到U盘（fat32格式），找到www文件夹，放在根目录下，然后插入到树莓派中，执行下面的命令，『USB』（包括『』）改为U盘的名称，建议改英文名
-sudo cp -f -r /media/pi/『USB』/www/html /var/www/
+
+然后执行 sudo cp -f -r /media/pi/『USB』/www/html /var/www/
 
 2、如果安装了SMB并且开启共享了，解压文件找到www文件夹，放在共享文件夹下，一般是/home/pi，然后执行下面的命令。
 
