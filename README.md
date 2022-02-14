@@ -6,3 +6,13 @@
 2、此外原文“blocked”、“blocke”等直译应该是“阻止、阻挡“的，也根据“黑洞”，改用“吞噬”作为替代词。
 3、如果不喜欢的请自行搜索更换回原文直译词语。
 
+# 以下是替换方法（自己做笔记用，大佬请忽略）
+1、解压文件拷贝到U盘（fat32格式），找到www文件夹，放在根目录下，然后插入到树莓派中，执行下面的命令，『USB』（包括『』）改为U盘的名称，建议改英文名
+sudo cp -f -r /media/pi/『USB』/www/html /var/www/
+2、如果安装了SMB并且开启共享了，解压文件找到www文件夹，放在共享文件夹下，一般是/home/pi，然后执行下面的命令。
+sudo cp -f -r /home/pi/www/html /var/www/
+3、安装WinSCP，使用root登录树莓派，然后将解压后的www文件夹，拉到/var目录下，替换www文件夹
+	sudo passwd root			#设置root用户密码
+	nano /etc/ssh/sshd_config	#编辑设置文件，nano是系统自带的，vim请自行安装
+	在PermitRootLogin prohibit-password下面添加，就是第33行（nano按Alt + Shift + 3 显示行号）
+	PermitRootLogin yes
