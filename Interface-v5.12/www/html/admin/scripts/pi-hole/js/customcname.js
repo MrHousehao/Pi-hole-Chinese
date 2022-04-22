@@ -71,7 +71,7 @@ $(function () {
     ],
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     order: [[0, "asc"]],
     stateSave: true,
@@ -112,7 +112,7 @@ function addCustomCNAME() {
       } else showAlert("error", response.message);
     },
     error: function () {
-      showAlert("error", "Error while adding this custom CNAME record");
+      showAlert("error", "添加此自定义 CNAME 映射时出错");
     },
   });
 }
@@ -134,7 +134,7 @@ function deleteCustomCNAME() {
       } else showAlert("error", response.message);
     },
     error: function (jqXHR, exception) {
-      showAlert("error", "Error while deleting this custom CNAME record");
+      showAlert("error", "删除此自定义 CNAME 映射时出错");
       console.log(exception); // eslint-disable-line no-console
     },
   });

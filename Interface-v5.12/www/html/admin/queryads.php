@@ -9,7 +9,7 @@
 ?>
 <!-- Title -->
 <div class="page-header">
-    <h1>Find Blocked Domain In Lists</h1>
+    <h1>定位吞噬域名在引力场的位置</h1>
 </div>
 <div class="row">
   <div class="col-md-12">
@@ -17,11 +17,11 @@
       <div class="box-body">
         <!-- domain-search-block - Single search field mobile/desktop -->
         <div id="domain-search-block" class="input-group">
-          <input id="domain" type="url" class="form-control" placeholder="Domain to look for (example.com or sub.example.com)" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
+          <input id="domain" type="url" class="form-control" placeholder="查找的域名（example.com 或 sub.example.com）" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
           <input id="quiet" type="hidden" value="no">
           <span class="input-group-btn">
-            <button type="button" id="btnSearch" class="btn btn-default">Search partial match</button>
-            <button type="button" id="btnSearchExact" class="btn btn-default">Search exact match</button>
+            <button type="button" id="btnSearch" class="btn btn-default">搜索（部分匹配）</button>
+            <button type="button" id="btnSearchExact" class="btn btn-default">搜索（精确匹配）</button>
           </span>
         </div>
         <!-- /domain-search-block -->

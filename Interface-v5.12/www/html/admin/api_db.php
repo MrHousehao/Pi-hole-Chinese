@@ -79,7 +79,7 @@ if (isset($_GET['getAllQueries']) && $auth)
 			}
 			else
 			{
-				die("Error. Selector types specified using an invalid format.");
+				die("错误。指定的选择器类型使用无效格式。");
 			}
 		}
 		$dbquery .= "ORDER BY timestamp ASC";

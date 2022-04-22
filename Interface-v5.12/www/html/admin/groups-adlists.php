@@ -10,7 +10,7 @@
 
 <!-- Title -->
 <div class="page-header">
-    <h1>Adlist group management</h1>
+    <h1>引力场管理（广告吞噬规则管理）</h1>
 </div>
 
 <!-- Domain Input -->
@@ -20,30 +20,30 @@
             <!-- /.box-header -->
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Add a new adlist
+                    添加引力场
                 </h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="new_address">Address:</label>
-                        <input id="new_address" type="text" class="form-control" placeholder="URL or space-separated URLs" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
+                        <label for="new_address">地址：</label>
+                        <input id="new_address" type="text" class="form-control" placeholder="URL链接或以空格分隔的多个URL链接" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="new_comment">Comment:</label>
-                        <input id="new_comment" type="text" class="form-control" placeholder="Adlist description (optional)">
+                        <label for="new_comment">描述：</label>
+                        <input id="new_comment" type="text" class="form-control" placeholder="引力场描述（可选）">
                     </div>
                 </div>
             </div>
             <div class="box-footer clearfix">
-                <strong>Hints:</strong>
+                <strong>提示：</strong>
                 <ol>
-                    <li>Please run <code>pihole -g</code> or update your gravity list <a href="gravity.php">online</a> after modifying your adlists.</li>
-                    <li>Multiple adlists can be added by separating each <i>unique</i> URL with a space</li>
-                    <li>Click on the icon in the first column to get additional information about your lists. The icons correspond to the health of the list.</li>
+                    <li>请在配置引力场后，在终端运行<code>pihole -g</code>或在线<a href="gravity.php">更新引力场</a>。</li>
+                    <li>用空格分隔<i>每一个</i>URL链接，可以添加多个引力场</li>
+                    <li>点击第一列中的图标可以显示该引力场的相关信息。图标对应于引力场的运行状况。</li>
                 </ol>
-                <button type="button" id="btnAdd" class="btn btn-primary pull-right">Add</button>
+                <button type="button" id="btnAdd" class="btn btn-primary pull-right">添加</button>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@
         <div class="box" id="adlists-list">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    List of configured adlists
+                    引力场配置表
                 </h3>
             </div>
             <!-- /.box-header -->
@@ -63,15 +63,15 @@
                     <tr>
                         <th>ID</th>
                         <th></th>
-                        <th>Address</th>
-                        <th>Status</th>
-                        <th>Comment</th>
-                        <th>Group assignment</th>
+                        <th>地址</th>
+                        <th>状态</th>
+                        <th>描述</th>
+                        <th>群组分配</th>
                         <th>&nbsp;</th>
                     </tr>
                     </thead>
                 </table>
-                <button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">Reset sorting</button>
+                <button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">重新排序</button>
             </div>
             <!-- /.box-body -->
         </div>
