@@ -924,20 +924,10 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array("sysadmin", "dns", "piho
                                                     <a href="https://dnssec.vs.uni-due.de/" rel="noopener" target="_blank"> DNSSEC 解析器检测</a>进行测试。</p>
                                                 </div>
                                                 <br>
-                                                <h4><a id="ratelimit"></a>Rate-limiting</h4>
-                                                <p>Block clients making more than <input type="number" name="rate_limit_count" value="<?=$rate_limit_count?>" min="0" step="10" style="width: 5em;"> queries within
-                                                <input type="number" name="rate_limit_interval" value="<?=$rate_limit_interval?>" min="0" step="10" style="width: 4em;"> seconds.</p>
-                                                <p>When a client makes too many queries in too short time, it
-                                                gets rate-limited. Rate-limited queries are answered with a
-                                                <code>REFUSED</code> reply and not further processed by FTL
-                                                and prevent Pi-holes getting overwhelmed by rogue clients.
-                                                It is important to note that rate-limiting is happening on a
-                                                per-client basis. Other clients can continue to use FTL while
-                                                rate-limited clients are short-circuited at the same time.</p>
-                                                <p>Rate-limiting may be disabled altogether by setting both
-                                                values to zero. See
-                                                <a href="https://docs.pi-hole.net/ftldns/configfile/#rate_limit" target="_blank">our documentation</a>
-                                                for further details.</p>
+                                                <h4><a id="ratelimit"></a>频率限制</h4>
+                                                <p>阻止客户端 <input type="number" name="rate_limit_interval" value="<?=$rate_limit_interval?>" min="0" step="10" style="width: 4em;"> 秒内超过 <input type="number" name="rate_limit_count" value="<?=$rate_limit_count?>" min="0" step="10" style="width: 5em;"> 次的查询请求。</p>
+                                                <p>当客户端在短时间内发送过多的查询请求时，其发起的请求将受到限制。被限制的查询请求将会被回应<code>拒绝</code>，FTL 不会进一步处理，防止恶意客户端过度Pi-hole服务器资源。需要注意，频率限制会针对每个客户端进行设置。其他客户端可以继续使用 FTL ，同时被限制的客户端的查询请求将被短路处理。</p>
+                                                <p>通过将两个数值设置为零，可以完全禁用频率限制。详见 <a href="https://docs.pi-hole.net/ftldns/configfile/#rate_limit" target="_blank">频率限制</a>文档。</p>
                                                 <br>
                                                 <h4>条件转发</h4>
                                                 <p>如果未配置为DHCP服务器，Pi-hole通常无法确定本地网络上的设备名称。 因此，客户端统计等统计表将仅显示IP地址。</p>

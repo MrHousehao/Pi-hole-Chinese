@@ -229,7 +229,7 @@ function updateQueriesOverTime() {
     timeLineChart.data.labels = [];
     timeLineChart.data.datasets = [];
 
-    var labels = ["Blocked DNS Queries", "Permitted DNS Queries"];
+    var labels = ["吞噬DNS查询请求", "放行DNS查询请求"];
     var blockedColor = $(".queries-blocked").css("background-color");
     var permittedColor = $(".queries-permitted").css("background-color");
     var colors = [blockedColor, permittedColor];
@@ -357,7 +357,7 @@ function customLegend(chart) {
       txt =
         '<span class="colorBoxWrapper" style="color: ' +
         color +
-        '" title="Toggle visibility">' +
+        '" title="统计可见">' +
         '<i class="fa fa-check-square"></i>' +
         "</span>";
 
@@ -367,9 +367,9 @@ function customLegend(chart) {
       // label
       if (labels[i]) {
         txt +=
-          '<span class="legend-label-text" title="List ' +
+          '<span class="legend-label-text" title="' +
           labels[i] +
-          ' queries">' +
+          ' 的查询请求">' +
           labels[i] +
           "</span>";
       }
@@ -771,9 +771,9 @@ function updateSummaryData(runOnce) {
     updateSessionTimer();
 
     if ("FTLnotrunning" in data) {
-      data.dns_queries_today = "Lost";
-      data.ads_blocked_today = "connection";
-      data.ads_percentage_today = "to";
+      data.dns_queries_today = "无法";
+      data.ads_blocked_today = "连接";
+      data.ads_percentage_today = "到";
       data.domains_being_blocked = "API";
       // Show spinner
       $("#queries-over-time .overlay").show();
@@ -817,7 +817,7 @@ function updateSummaryData(runOnce) {
     if (Object.prototype.hasOwnProperty.call(data, "dns_queries_all_types")) {
       $("#total_queries").prop(
         "title",
-        "only A + AAAA queries (" + data.dns_queries_all_types + " in total)"
+        "类型为A和AAAA的查询请求（总共" + data.dns_queries_all_types + "条数据）"
       );
     }
 
@@ -858,10 +858,12 @@ function doughnutTooltip(tooltipItems, data) {
   return (
     label +
     ":<br>&bull; " +
+	"占所有项目的" +
     dataset.data[tooltipItems.index].toFixed(1) +
-    "% of all queries<br>&bull; " +
+    "%<br>&bull; " +
+	"占所选显示项目的" +
     ((dataset.data[tooltipItems.index] * 100) / (total - scale)).toFixed(1) +
-    "% of shown items"
+    "%"
   );
 }
 
@@ -905,7 +907,7 @@ $(function () {
             var m = parseInt(time[2], 10) || 0;
             var from = utils.padNumber(h) + ":" + utils.padNumber(m - 5) + ":00";
             var to = utils.padNumber(h) + ":" + utils.padNumber(m + 4) + ":59";
-            return "Queries from " + from + " to " + to;
+            return "查询请求数据统计时间从" + from + " 到 " + to;
           },
           label: function (tooltipItems, data) {
             if (tooltipItems.datasetIndex === 0) {
@@ -1003,7 +1005,7 @@ $(function () {
               var m = parseInt(time[2], 10) || 0;
               var from = utils.padNumber(h) + ":" + utils.padNumber(m - 5) + ":00";
               var to = utils.padNumber(h) + ":" + utils.padNumber(m + 4) + ":59";
-              return "Client activity from " + from + " to " + to;
+              return "客户端查询请求统计时间从" + from + " 到 " + to;
             },
             label: function (tooltipItems, data) {
               return data.datasets[tooltipItems.datasetIndex].label + ": " + tooltipItems.yLabel;
@@ -1126,7 +1128,7 @@ $(function () {
           custom: customTooltips,
           callbacks: {
             title: function () {
-              return "Query types";
+              return "查询请求类型";
             },
             label: function (tooltipItems, data) {
               return doughnutTooltip(tooltipItems, data);
@@ -1166,7 +1168,7 @@ $(function () {
           custom: customTooltips,
           callbacks: {
             title: function () {
-              return "Forward destinations";
+              return "转发目的地";
             },
             label: function (tooltipItems, data) {
               return doughnutTooltip(tooltipItems, data);
