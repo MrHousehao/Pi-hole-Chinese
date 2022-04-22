@@ -90,11 +90,11 @@ function initTable() {
     rowCallback: function (row, data) {
       $(row).attr("data-id", data.id);
       var tooltip =
-        "添加时间：" +
+        "Added: " +
         utils.datetime(data.date_added, false) +
-        "\n上次修改：" +
+        "\nLast modified: " +
         utils.datetime(data.date_modified, false) +
-        "\n数据库ID：" +
+        "\nDatabase ID: " +
         data.id;
       $("td:eq(0)", row).html(
         '<code id="domain_' +
@@ -111,10 +111,10 @@ function initTable() {
         whitelistOptions =
           '<option value="0"' +
           (data.type === 0 ? " selected" : "") +
-          ">确切白名单</option>" +
+          ">Exact whitelist</option>" +
           '<option value="2"' +
           (data.type === 2 ? " selected" : "") +
-          ">正侧表达式白名单</option>";
+          ">Regex whitelist</option>";
       }
 
       var blacklistOptions = "";
@@ -122,10 +122,10 @@ function initTable() {
         blacklistOptions =
           '<option value="1"' +
           (data.type === 1 ? " selected " : " ") +
-          ">确切黑名单</option>" +
+          ">Exact blacklist</option>" +
           '<option value="3"' +
           (data.type === 3 ? " selected" : "") +
-          ">正侧表达式黑名单</option>";
+          ">Regex blacklist</option>";
       }
 
       $("td:eq(1)", row).html(
@@ -145,8 +145,8 @@ function initTable() {
       );
       var statusEl = $("#status_" + data.id, row);
       statusEl.bootstrapToggle({
-        on: "启用",
-        off: "停用",
+        on: "Enabled",
+        off: "Disabled",
         size: "small",
         onstyle: "success",
         width: "80px",
@@ -220,7 +220,7 @@ function initTable() {
           .prepend(
             '<button type="button" id=btn_apply_' +
               data.id +
-              ' class="btn btn-block btn-sm" disabled>应用</button>'
+              ' class="btn btn-block btn-sm" disabled>Apply</button>'
           );
       }
 
@@ -250,7 +250,7 @@ function initTable() {
       "<'row'<'col-sm-5'i><'col-sm-7'p>>",
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "全部"],
+      [10, 25, 50, 100, "All"],
     ],
     stateSave: true,
     stateDuration: 0,
@@ -318,11 +318,11 @@ function addDomain() {
   // current tab's inputs
   var domainRegex, domainEl, commentEl;
   if (tabHref === "#tab_domain") {
-    domainRegex = "域名";
+    domainRegex = "domain";
     domainEl = $("#new_domain");
     commentEl = $("#new_domain_comment");
   } else if (tabHref === "#tab_regex") {
-    domainRegex = "正侧表达式";
+    domainRegex = "regex";
     domainEl = $("#new_regex");
     commentEl = $("#new_regex_comment");
   }
@@ -331,31 +331,31 @@ function addDomain() {
   var comment = utils.escapeHtml(commentEl.val());
 
   utils.disableAll();
-  utils.showAlert("info", "", "添加" + domainRegex + "中...", domain);
+  utils.showAlert("info", "", "Adding " + domainRegex + "...", domain);
 
   if (domain.length > 0) {
     // strip "*." if specified by user in wildcard mode
-    if (domainRegex === "域名" && wildcardChecked && domain.startsWith("*.")) {
+    if (domainRegex === "domain" && wildcardChecked && domain.startsWith("*.")) {
       domain = domain.substr(2);
     }
 
     // determine list type
-    if (domainRegex === "域名" && action === "add2black" && wildcardChecked) {
+    if (domainRegex === "domain" && action === "add2black" && wildcardChecked) {
       type = "3W";
-    } else if (domainRegex === "域名" && action === "add2black" && !wildcardChecked) {
+    } else if (domainRegex === "domain" && action === "add2black" && !wildcardChecked) {
       type = "1";
-    } else if (domainRegex === "域名" && action === "add2white" && wildcardChecked) {
+    } else if (domainRegex === "domain" && action === "add2white" && wildcardChecked) {
       type = "2W";
-    } else if (domainRegex === "域名" && action === "add2white" && !wildcardChecked) {
+    } else if (domainRegex === "domain" && action === "add2white" && !wildcardChecked) {
       type = "0";
-    } else if (domainRegex === "正则表达式" && action === "add2black") {
+    } else if (domainRegex === "regex" && action === "add2black") {
       type = "3";
-    } else if (domainRegex === "正则表达式" && action === "add2white") {
+    } else if (domainRegex === "regex" && action === "add2white") {
       type = "2";
     }
   } else {
     utils.enableAll();
-    utils.showAlert("warning", "", "警告", "请指定一个" + domainRegex);
+    utils.showAlert("warning", "", "Warning", "Please specify a " + domainRegex);
     return;
   }
 
@@ -373,18 +373,18 @@ function addDomain() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "fas fa-plus", "成功！", response.message);
+        utils.showAlert("success", "fas fa-plus", "Success!", response.message);
         domainEl.val("");
         commentEl.val("");
         wildcardEl.prop("checked", false);
         table.ajax.reload(null, false);
       } else {
-        utils.showAlert("error", "", "添加" + domainRegex + "时出错", response.message);
+        utils.showAlert("error", "", "Error while adding new " + domainRegex, response.message);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "添加" + domainRegex + "时出错", jqXHR.responseText);
+      utils.showAlert("error", "", "Error while adding new " + domainRegex, jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     },
   });
@@ -406,47 +406,47 @@ function editDomain() {
 
   var domainRegex;
   if (type === "0" || type === "1") {
-    domainRegex = "域名";
+    domainRegex = "domain";
   } else if (type === "2" || type === "3") {
-    domainRegex = "正侧表达式";
+    domainRegex = "regex";
   }
 
-  var done = "修改";
-  var notDone = "正在修改";
+  var done = "edited";
+  var notDone = "editing";
   switch (elem) {
     case "status_" + id:
       if (status === 0) {
-        done = "停用";
-        notDone = "正在停用";
+        done = "disabled";
+        notDone = "disabling";
       } else if (status === 1) {
-        done = "启用";
-        notDone = "正在启用";
+        done = "enabled";
+        notDone = "enabling";
       }
 
       break;
     case "name_" + id:
-      done = "修改名称，";
-      notDone = "正在修改名称";
+      done = "edited name of";
+      notDone = "editing name of";
       break;
     case "comment_" + id:
-      done = "修改描述，";
-      notDone = "正在修改描述";
+      done = "edited comment of";
+      notDone = "editing comment of";
       break;
     case "type_" + id:
-      done = "修改类型，";
-      notDone = "正在修改类型";
+      done = "edited type of";
+      notDone = "editing type of";
       break;
     case "multiselect_" + id:
-      done = "修改群组，";
-      notDone = "正在修改群组";
+      done = "edited groups of";
+      notDone = "editing groups of";
       break;
     default:
-      alert("元素错误或数据id无效！");
+      alert("bad element or invalid data-id!");
       return;
   }
 
   utils.disableAll();
-  utils.showAlert("info", "", "修改" + domainRegex + "中...", name);
+  utils.showAlert("info", "", "Editing " + domainRegex + "...", name);
   $.ajax({
     url: "scripts/pi-hole/php/groups.php",
     method: "post",
@@ -466,7 +466,7 @@ function editDomain() {
         utils.showAlert(
           "success",
           "fas fa-pencil-alt",
-          "已成功" + done + " " + domainRegex + "：",
+          "Successfully " + done + " " + domainRegex,
           domain
         );
         table.ajax.reload(null, false);
@@ -474,7 +474,7 @@ function editDomain() {
         utils.showAlert(
           "error",
           "",
-          "ID为" + id + "的" + domainRegex + "，" + notDone + "的过程中出错",
+          "Error while " + notDone + " " + domainRegex + " with ID " + id,
           response.message
         );
     },
@@ -483,7 +483,7 @@ function editDomain() {
       utils.showAlert(
         "error",
         "",
-        "ID为" + id + "的" + domainRegex + "，" + notDone + "的过程中出错",
+        "Error while " + notDone + " " + domainRegex + " with ID " + id,
         jqXHR.responseText
       );
       console.log(exception); // eslint-disable-line no-console
@@ -499,13 +499,13 @@ function deleteDomain() {
 
   var domainRegex;
   if (type === "0" || type === "1") {
-    domainRegex = "域名";
+    domainRegex = "domain";
   } else if (type === "2" || type === "3") {
-    domainRegex = "正侧表达式";
+    domainRegex = "regex";
   }
 
   utils.disableAll();
-  utils.showAlert("info", "", "删除 " + domainRegex + "中...", domain);
+  utils.showAlert("info", "", "Deleting " + domainRegex + "...", domain);
   $.ajax({
     url: "scripts/pi-hole/php/groups.php",
     method: "post",
@@ -517,7 +517,7 @@ function deleteDomain() {
         utils.showAlert(
           "success",
           "far fa-trash-alt",
-          "已删除" + domainRegex,
+          "Successfully deleted " + domainRegex,
           domain
         );
         table.row(tr).remove().draw(false).ajax.reload(null, false);
@@ -525,7 +525,7 @@ function deleteDomain() {
         utils.showAlert(
           "error",
           "",
-          "删除ID为" + id + "的" + domainRegex + "时出错",
+          "Error while deleting " + domainRegex + " with ID " + id,
           response.message
         );
       }
@@ -535,7 +535,7 @@ function deleteDomain() {
       utils.showAlert(
         "error",
         "",
-        "删除ID为" + id + "的" + domainRegex + "时出错",
+        "Error while deleting " + domainRegex + " with ID " + id,
         jqXHR.responseText
       );
       console.log(exception); // eslint-disable-line no-console

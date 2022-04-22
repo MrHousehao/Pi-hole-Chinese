@@ -32,37 +32,37 @@ $(function () {
 
 function format(data) {
   // Generate human-friendly status string
-  var statusText = "未知";
+  var statusText = "Unknown";
   var numbers = true;
   if (data.status !== null) {
     switch (parseInt(data.status, 10)) {
       case 0:
         statusText =
           data.enabled === 0
-            ? "引力场已禁用且未选中"
-            : "目前尚未下载该引力场";
+            ? "List is disabled and not checked"
+            : "List was not downloaded so far";
         numbers = false;
         break;
       case 1:
-        statusText = '已成功下载最新版本的引力场（<span class="list-status-1">OK</span>）';
+        statusText = 'List download was successful (<span class="list-status-1">OK</span>)';
         break;
       case 2:
         statusText =
-          '引力场无更新，Pi-hole使用本地存储的副本（<span class="list-status-2">OK</span>）';
+          'List unchanged upstream, Pi-hole used a local copy (<span class="list-status-2">OK</span>)';
         break;
       case 3:
         statusText =
-          '引力场无法获得更新，Pi-hole使用本地存储的副本（<span class="list-status-3">check list</span>）';
+          'List unavailable, Pi-hole used a local copy (<span class="list-status-3">check list</span>)';
         break;
       case 4:
         statusText =
-          '引力场无法获得更新，Pi-hole数据库中没有本地存储的副本（<span class="list-status-4">请更换配置</span>）';
+          'List unavailable, there is no local copy of this list available on your Pi-hole (<span class="list-status-4">replace list</span>)';
         numbers = false;
         break;
 
       default:
         statusText =
-          '未知（<span class="list-status-0">' + parseInt(data.status, 10) + "</span>）";
+          'Unknown (<span class="list-status-0">' + parseInt(data.status, 10) + "</span>)";
         break;
     }
   }
@@ -75,33 +75,33 @@ function format(data) {
   // Compile extra info for displaying
   return (
     "<table>" +
-    '<tr class="dataTables-child"><td>运行状况：</td><td>' +
+    '<tr class="dataTables-child"><td>Health status of this list:</td><td>' +
     statusText +
-    '</td></tr><tr class="dataTables-child"><td>添加到Pi-hole时间：&nbsp;&nbsp;</td><td>' +
+    '</td></tr><tr class="dataTables-child"><td>This list was added to Pi-hole&nbsp;&nbsp;</td><td>' +
     utils.datetimeRelative(data.date_added) +
     "&nbsp;(" +
     utils.datetime(data.date_added, false) +
-    ')</td></tr><tr class="dataTables-child"><td>最近吞噬数据时间：&nbsp;&nbsp;</td><td>' +
+    ')</td></tr><tr class="dataTables-child"><td>Database entry was last modified&nbsp;&nbsp;</td><td>' +
     utils.datetimeRelative(data.date_modified) +
     "&nbsp;(" +
     utils.datetime(data.date_modified, false) +
-    ')</td></tr><tr class="dataTables-child"><td>最后更新时间：&nbsp;&nbsp;</td><td>' +
+    ')</td></tr><tr class="dataTables-child"><td>The list contents were last updated&nbsp;&nbsp;</td><td>' +
     (data.date_updated > 0
       ? utils.datetimeRelative(data.date_updated) +
         "&nbsp;(" +
         utils.datetime(data.date_updated) +
         ")"
       : "N/A") +
-    '</td></tr><tr class="dataTables-child"><td>有效的吞噬域名规则：&nbsp;&nbsp;</td><td>' +
+    '</td></tr><tr class="dataTables-child"><td>Number of domains on this list:&nbsp;&nbsp;</td><td>' +
     (data.number !== null && numbers === true ? parseInt(data.number, 10) : "N/A") +
     '</td></tr><tr class="dataTables-child"' +
     invalidStyle +
-    "><td>无效的吞噬域名规则：&nbsp;&nbsp;</td>" +
+    "><td>Number of invalid domains on this list:&nbsp;&nbsp;</td>" +
     "<td>" +
     (data.invalid_domains !== null && numbers === true
       ? parseInt(data.invalid_domains, 10)
       : "N/A") +
-    '</td></tr><tr class="dataTables-child"><td>数据库—引力场ID：</td><td>' +
+    '</td></tr><tr class="dataTables-child"><td>Database ID of this list:</td><td>' +
     data.id +
     "</td></tr></table>"
   );
@@ -178,7 +178,7 @@ function initTable() {
 
       $("td:eq(0)", row).addClass("list-status-" + statusCode);
       $("td:eq(0)", row).html(
-        "<i class='fa " + statusIcon + "' title='点击显示该引力场的详细信息'></i>" + extra
+        "<i class='fa " + statusIcon + "' title='Click for details about this list'></i>" + extra
       );
 
       if (data.address.startsWith("file://")) {
@@ -204,8 +204,8 @@ function initTable() {
       );
       var statusEl = $("#status_" + data.id, row);
       statusEl.bootstrapToggle({
-        on: "启用",
-        off: "停用",
+        on: "Enabled",
+        off: "Disabled",
         size: "small",
         onstyle: "success",
         width: "80px",
@@ -277,7 +277,7 @@ function initTable() {
         .prepend(
           '<button type="button" id=btn_apply_' +
             data.id +
-            ' class="btn btn-block btn-sm" disabled>应用</button>'
+            ' class="btn btn-block btn-sm" disabled>Apply</button>'
         );
 
       var applyBtn = "#btn_apply_" + data.id;
@@ -297,7 +297,7 @@ function initTable() {
       "<'row'<'col-sm-5'i><'col-sm-7'p>>",
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "全部"],
+      [10, 25, 50, 100, "All"],
     ],
     stateSave: true,
     stateDuration: 0,
@@ -363,12 +363,12 @@ function addAdlist() {
   var comment = utils.escapeHtml($("#new_comment").val());
 
   utils.disableAll();
-  utils.showAlert("info", "", "添加引力场中...", address);
+  utils.showAlert("info", "", "Adding adlist...", address);
 
   if (address.length === 0) {
     // enable the ui elements again
     utils.enableAll();
-    utils.showAlert("warning", "", "警告", "请指定引力场地址");
+    utils.showAlert("warning", "", "Warning", "Please specify an adlist address");
     return;
   }
 
@@ -390,7 +390,7 @@ function addAdlist() {
           utils.showAlert("warning", "fas fa-plus", "Warning", response.message);
         } else {
           // All items added.
-          utils.showAlert("success", "fas fa-plus", "已成功添加引力场", response.message);
+          utils.showAlert("success", "fas fa-plus", "Successfully added adlist", response.message);
         }
 
         table.ajax.reload(null, false);
@@ -398,12 +398,12 @@ function addAdlist() {
         $("#new_comment").val("");
         table.ajax.reload();
       } else {
-        utils.showAlert("error", "", "添加新的引力场时出错：", response.message);
+        utils.showAlert("error", "", "Error while adding new adlist: ", response.message);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "添加新的引力场时出错：", jqXHR.responseText);
+      utils.showAlert("error", "", "Error while adding new adlist: ", jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     },
   });
@@ -418,34 +418,34 @@ function editAdlist() {
   var groups = tr.find("#multiselect_" + id).val();
   var address = utils.escapeHtml(tr.find("#address_" + id).text());
 
-  var done = "修改";
-  var notDone = "正在修改";
+  var done = "edited";
+  var notDone = "editing";
   switch (elem) {
     case "status_" + id:
       if (status === 0) {
-        done = "停用";
-        notDone = "正在停用";
+        done = "disabled";
+        notDone = "disabling";
       } else if (status === 1) {
-        done = "启用";
-        notDone = "正在启用";
+        done = "enabled";
+        notDone = "enabling";
       }
 
       break;
     case "comment_" + id:
-      done = "修改描述，";
-      notDone = "正在修改描述";
+      done = "edited comment of";
+      notDone = "editing comment of";
       break;
     case "multiselect_" + id:
-      done = "修改群组，";
-      notDone = "正在修改群组";
+      done = "edited groups of";
+      notDone = "editing groups of";
       break;
     default:
-      alert("元素错误或数据id无效！");
+      alert("bad element or invalid data-id!");
       return;
   }
 
   utils.disableAll();
-  utils.showAlert("info", "", "修改引力场中...", address);
+  utils.showAlert("info", "", "Editing adlist...", address);
 
   $.ajax({
     url: "scripts/pi-hole/php/groups.php",
@@ -465,7 +465,7 @@ function editAdlist() {
         utils.showAlert(
           "success",
           "fas fa-pencil-alt",
-          "已成功" + done + "引力场：",
+          "Successfully " + done + " adlist ",
           address
         );
         table.ajax.reload(null, false);
@@ -473,7 +473,7 @@ function editAdlist() {
         utils.showAlert(
           "error",
           "",
-          "ID为" + id + "的引力场，" + notDone + "的过程中出错",
+          "Error while " + notDone + " adlist with ID " + id,
           Number(response.message)
         );
       }
@@ -483,7 +483,7 @@ function editAdlist() {
       utils.showAlert(
         "error",
         "",
-        "ID为" + id + "的引力场，" + notDone + "的过程中出错",
+        "Error while " + notDone + " adlist with ID " + id,
         jqXHR.responseText
       );
       console.log(exception); // eslint-disable-line no-console
@@ -497,7 +497,7 @@ function deleteAdlist() {
   var address = utils.escapeHtml(tr.find("#address_" + id).text());
 
   utils.disableAll();
-  utils.showAlert("info", "", "删除引力场中...", address);
+  utils.showAlert("info", "", "Deleting adlist...", address);
   $.ajax({
     url: "scripts/pi-hole/php/groups.php",
     method: "post",
@@ -506,15 +506,15 @@ function deleteAdlist() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "far fa-trash-alt", "已删除引力场", address);
+        utils.showAlert("success", "far fa-trash-alt", "Successfully deleted adlist ", address);
         table.row(tr).remove().draw(false).ajax.reload(null, false);
       } else {
-        utils.showAlert("error", "", "删除ID为" + id + "的引力场时出错", response.message);
+        utils.showAlert("error", "", "Error while deleting adlist with ID " + id, response.message);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "删除ID为" + id + "的引力场时出错", jqXHR.responseText);
+      utils.showAlert("error", "", "Error while deleting adlist with ID " + id, jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     },
   });

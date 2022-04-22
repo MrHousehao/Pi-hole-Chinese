@@ -24,14 +24,14 @@ function piholeChanged(action) {
 
   switch (action) {
     case "enabled":
-      status.html("<i class='fa fa-circle text-green-light'></i>激活");
+      status.html("<i class='fa fa-circle text-green-light'></i> Active");
       ena.hide();
       dis.show();
       dis.removeClass("active");
       break;
 
     case "disabled":
-      status.html("<i class='fa fa-circle text-red'></i>离线");
+      status.html("<i class='fa fa-circle text-red'></i> Blocking disabled");
       ena.show();
       dis.hide();
       break;
@@ -49,15 +49,15 @@ function countDown() {
 
   //Stop and remove timer when user enabled early
   if ($("#pihole-enable").is(":hidden")) {
-    ena.text("启用");
+    ena.text("Enable");
     return;
   }
 
   if (seconds > 0) {
     setTimeout(countDown, 1000);
-    ena.text("启用 (" + secondsTimeSpanToHMS(seconds) + ")");
+    ena.text("Enable (" + secondsTimeSpanToHMS(seconds) + ")");
   } else {
-    ena.text("启用");
+    ena.text("Enable");
     piholeChanged("enabled");
     if (localStorage) {
       localStorage.removeItem("countDownTarget");

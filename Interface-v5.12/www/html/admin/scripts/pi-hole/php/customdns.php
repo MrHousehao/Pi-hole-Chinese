@@ -10,7 +10,7 @@
             check_cors();
             check_csrf($_POST['token']);
         } else {
-            log_and_die('不允许（登录无效或已过期，请重新登录Pi-hole）！');
+            log_and_die('Not allowed (login session invalid or expired, please relogin on the Pi-hole dashboard)!');
         }
     }
 
@@ -21,7 +21,7 @@
         case 'add':     echo json_encode(addCustomDNSEntry());    break;
         case 'delete':  echo json_encode(deleteCustomDNSEntry()); break;
         default:
-            die("错误操作");
+            die("Wrong action");
     }
 
 

@@ -12,7 +12,7 @@ require "database.php";
 require "savesettings.php";
 
 if (php_sapi_name() !== "cli") {
-	if(!$auth) die("未授权");
+	if(!$auth) die("Not authorized");
 	check_csrf(isset($_POST["token"]) ? $_POST["token"] : "");
 }
 
@@ -328,9 +328,9 @@ function noun($num)
 {
 	if($num === 1)
 	{
-		return "导入";
+		return " entry";
 	}
-	return "导入";
+	return " entries";
 }
 
 if(isset($_POST["action"]))
@@ -350,13 +350,13 @@ if(isset($_POST["action"]))
 		$ext_valid = strtolower($ext[0]) == "tar" && strtolower($ext[1]) == "gz" ? true : false;
 
 		if(!$ext_valid || !$mime_valid) {
-			die("您尝试上传的文件不是.tar.gz文件（文件名：".htmlentities($filename)."，文件类型：".htmlentities($type)."）。请再试一次。");
+			die("The file you are trying to upload is not a .tar.gz file (filename: ".htmlentities($filename).", type: ".htmlentities($type)."). Please try again.");
 		}
 
 		$fullfilename = sys_get_temp_dir()."/".$filename;
 		if(!move_uploaded_file($source, $fullfilename))
 		{
-			die("移动".htmlentities($source)."到".htmlentities($fullfilename)."失败");
+			die("Failed moving ".htmlentities($source)." to ".htmlentities($fullfilename));
 		}
 
 		$archive = new PharData($fullfilename);
@@ -372,21 +372,21 @@ if(isset($_POST["action"]))
 			if(isset($_POST["blacklist"]) && $file->getFilename() === "blacklist.txt")
 			{
 				$num = archive_insert_into_table($file, "blacklist", $flushtables);
-				echo "已处理黑名单（确切）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed blacklist (exact) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["whitelist"]) && $file->getFilename() === "whitelist.txt")
 			{
 				$num = archive_insert_into_table($file, "whitelist", $flushtables);
-				echo "已处理白名单（确切）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed whitelist (exact) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["regexlist"]) && $file->getFilename() === "regex.list")
 			{
 				$num = archive_insert_into_table($file, "regex_blacklist", $flushtables);
-				echo "已处理黑名单（正侧表达式）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed blacklist (regex) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
@@ -394,84 +394,84 @@ if(isset($_POST["action"]))
 			if(isset($_POST["regexlist"]) && $file->getFilename() === "wildcardblocking.txt")
 			{
 				$num = archive_insert_into_table($file, "regex_blacklist", $flushtables, true);
-				echo "已处理黑名单（正侧表达式/通配符）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed blacklist (regex, wildcard style) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["auditlog"]) && $file->getFilename() === "auditlog.list")
 			{
 				$num = archive_insert_into_table($file, "domain_audit", $flushtables);
-				echo "已处理审核日志（".noun($num).$num."条配置）<br>\n";
+				echo "Processed audit log (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["adlist"]) && $file->getFilename() === "adlists.list")
 			{
 				$num = archive_insert_into_table($file, "adlist", $flushtables);
-				echo "已处理引力场（".noun($num).$num."条配置）<br>\n";
+				echo "Processed adlists (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["blacklist"]) && $file->getFilename() === "blacklist.exact.json")
 			{
 				$num = archive_restore_table($file, "blacklist", $flushtables);
-				echo "已处理黑名单（确切）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed blacklist (exact) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["regexlist"]) && $file->getFilename() === "blacklist.regex.json")
 			{
 				$num = archive_restore_table($file, "regex_blacklist", $flushtables);
-				echo "已处理黑名单（正侧表达式）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed blacklist (regex) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["whitelist"]) && $file->getFilename() === "whitelist.exact.json")
 			{
 				$num = archive_restore_table($file, "whitelist", $flushtables);
-				echo "已处理白名单（确切）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed whitelist (exact) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["regex_whitelist"]) && $file->getFilename() === "whitelist.regex.json")
 			{
 				$num = archive_restore_table($file, "regex_whitelist", $flushtables);
-				echo "已处理白名单（正侧表达式）（".noun($num).$num."条配置）<br>\n";
+				echo "Processed whitelist (regex) (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["adlist"]) && $file->getFilename() === "adlist.json")
 			{
 				$num = archive_restore_table($file, "adlist", $flushtables);
-				echo "已处理引力场（".noun($num).$num."条配置）<br>\n";
+				echo "Processed adlist (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["auditlog"]) && $file->getFilename() === "domain_audit.json")
 			{
 				$num = archive_restore_table($file, "domain_audit", $flushtables);
-				echo "已处理的域名审查 (".noun($num).$num."条配置）<br>\n";
+				echo "Processed domain_audit (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["group"]) && $file->getFilename() === "group.json")
 			{
 				$num = archive_restore_table($file, "group", $flushtables);
-				echo "已处理群组（".noun($num).$num."条配置）<br>\n";
+				echo "Processed group (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["client"]) && $file->getFilename() === "client.json")
 			{
 				$num = archive_restore_table($file, "client", $flushtables);
-				echo "已处理客户端（".noun($num).$num."条配置）<br>\n";
+				echo "Processed client (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["client"]) && $file->getFilename() === "client_by_group.json")
 			{
 				$num = archive_restore_table($file, "client_by_group", $flushtables);
-				echo "已处理客户端群组分配（".noun($num).$num."条配置）<br>\n";
+				echo "Processed client group assignments (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
@@ -480,14 +480,14 @@ if(isset($_POST["action"]))
 				$file->getFilename() === "domainlist_by_group.json")
 			{
 				$num = archive_restore_table($file, "domainlist_by_group", $flushtables);
-				echo "已处理黑名单/白名单群组分配（".noun($num).$num."条配置）<br>\n";
+				echo "Processed black-/whitelist group assignments (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
 			if(isset($_POST["adlist"]) && $file->getFilename() === "adlist_by_group.json")
 			{
 				$num = archive_restore_table($file, "adlist_by_group", $flushtables);
-				echo "已处理引力场群组分配（".noun($num).$num."条配置）<br>\n";
+				echo "Processed adlist group assignments (".$num.noun($num).")<br>\n";
 				$importedsomething = true;
 			}
 
@@ -510,7 +510,7 @@ if(isset($_POST["action"]))
 				}
 
 				readStaticLeasesFile();
-				echo "已处理静态DHCP地址分配（".noun($num).$num."条配置）<br>\n";
+				echo "Processed static DHCP leases (".$num.noun($num).")<br>\n";
 				if($num > 0) {
 					$importedsomething = true;
 					$reloadsettingspage = true;
@@ -534,7 +534,7 @@ if(isset($_POST["action"]))
 						$num++;
 				}
 				ob_end_clean();
-				echo "已处理本地 DNS 记录（".noun($num).$num."条配置）<br>\n";
+				echo "Processed local DNS records (".$num.noun($num).")<br>\n";
 				if($num > 0) {
 					// we need a full pihole restart
 					$fullpiholerestart = true;
@@ -566,7 +566,7 @@ if(isset($_POST["action"]))
 						$num++;
 				}
 				ob_end_clean();
-				echo "已处理本地 CNAME 记录（".noun($num).$num."条配置）<br>\n";
+				echo "Processed local CNAME records (".$num.noun($num).")<br>\n";
 				if($num > 0) {
 					// we need a full pihole restart
 					$fullpiholerestart = true;
@@ -577,11 +577,11 @@ if(isset($_POST["action"]))
 		// do we need a full restart of Pi-hole or reloading the lists?
 		if($fullpiholerestart)
 		{
-			pihole_execute("重新启动DNS服务器");
+			pihole_execute("restartdns");
 		} else {
 			if($importedsomething)
 			{
-				pihole_execute("重新启动DNS服务器并重新加载");
+				pihole_execute("restartdns reload");
 			}
 		}
 
@@ -595,7 +595,7 @@ if(isset($_POST["action"]))
 	}
 	else
 	{
-		die("无文件传输或参数错误。");
+		die("No file transmitted or parameter error.");
 	}
 }
 else

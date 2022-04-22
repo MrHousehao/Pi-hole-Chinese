@@ -13,7 +13,7 @@ function eventsource() {
   // IE does not support EventSource - exit early
   if (typeof EventSource !== "function") {
     ta.show();
-    ta.html("此浏览器不支持更新引力场（域名吞噬规则）！");
+    ta.html("Updating lists of ad-serving domains is not supported with this browser!");
     return;
   }
 

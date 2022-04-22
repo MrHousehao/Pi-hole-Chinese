@@ -7,7 +7,7 @@
 *  Please see LICENSE file for your rights under this license. */
 
 require "password.php";
-if(!$auth) die("未授权");
+if(!$auth) die("Not authorized");
 
 // Not using SplFileObject here, since direct
 // usage of f-streams will be much faster for
@@ -23,7 +23,7 @@ else
 
 if(!$file)
 {
-	die(json_encode(array("offset" => 0, "lines" => array("无法打开日志文件。检查权限！\n"))));
+	die(json_encode(array("offset" => 0, "lines" => array("Failed to open log file. Check permissions!\n"))));
 }
 
 if(isset($_GET["offset"]))

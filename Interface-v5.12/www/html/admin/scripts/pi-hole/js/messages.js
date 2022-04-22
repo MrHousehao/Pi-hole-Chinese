@@ -75,7 +75,7 @@ function renderMessage(data, type, row) {
       );
 
     case "DNSMASQ_CONFIG":
-      return "FTL 无法启动，因为" + row.message;
+      return "FTL failed to start due to " + row.message;
 
     case "RATE_LIMIT":
       return (
@@ -90,9 +90,9 @@ function renderMessage(data, type, row) {
 
     case "DNSMASQ_WARN":
       return (
-        "<code>dnsmasq</code>核心警告：<pre>" +
+        "Warning in <code>dnsmasq</code> core:<pre>" +
         row.message +
-        '</pre>查看<a href="https://docs.pi-hole.net/ftldns/dnsmasq_warn/" target="_blank">Pi-hole支持文档</a>以获取更多信息。'
+        '</pre> Check out <a href="https://docs.pi-hole.net/ftldns/dnsmasq_warn/" target="_blank">our documentation</a> for further information.'
       );
 
     case "LOAD":
@@ -106,28 +106,28 @@ function renderMessage(data, type, row) {
 
     case "SHMEM":
       return (
-        "RAM 不足（<code>" +
+        "RAM shortage (<code>" +
         utils.escapeHtml(row.message) +
-        "</code>）剩余：<strong>" +
+        "</code>) ahead: <strong>" +
         parseInt(row.blob1, 10) +
-        "% 使用</strong><pre>" +
+        "% used</strong><pre>" +
         utils.escapeHtml(row.blob2) +
         "</pre>"
       );
 
     case "DISK":
       return (
-        "磁盘不足（<code>" +
+        "Disk shortage (<code>" +
         utils.escapeHtml(row.message) +
-        "</code>）剩余：<strong>" +
+        "</code>) ahead: <strong>" +
         parseInt(row.blob1, 10) +
-        "% 使用</strong><pre>" +
+        "% used</strong><pre>" +
         utils.escapeHtml(row.blob2) +
         "</pre>"
       );
 
     default:
-      return "未知消息类型<pre>" + JSON.stringify(row) + "</pre>";
+      return "Unknown message type<pre>" + JSON.stringify(row) + "</pre>";
   }
 }
 
@@ -244,10 +244,10 @@ $(function () {
       "<'row'<'col-sm-12'i>>",
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "全部"],
+      [10, 25, 50, 100, "All"],
     ],
     language: {
-      emptyTable: "没有发现任何问题。",
+      emptyTable: "No issues found.",
     },
     stateSave: true,
     stateDuration: 0,
@@ -325,7 +325,7 @@ function delMsg(ids) {
 
   utils.disableAll();
   var idstring = ids.join(", ");
-  utils.showAlert("info", "", "正在删除信息：" + idstring, "...");
+  utils.showAlert("info", "", "Deleting messages: " + idstring, "...");
 
   $.ajax({
     url: "scripts/pi-hole/php/message.php",
@@ -339,7 +339,7 @@ function delMsg(ids) {
         utils.showAlert(
           "success",
           "far fa-trash-alt",
-          "成功删除信息：" + idstring,
+          "Successfully deleted messages: " + idstring,
           ""
         );
         for (var id in ids) {
@@ -348,7 +348,7 @@ function delMsg(ids) {
           }
         }
       } else {
-        utils.showAlert("error", "", "删除ID为：" + idstring + "的信息时出错", response.message);
+        utils.showAlert("error", "", "Error while deleting message: " + idstring, response.message);
       }
 
       // Clear selection after deletion
@@ -360,7 +360,7 @@ function delMsg(ids) {
     )
     .fail(function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "删除ID为：" + idstring + "的信息时出错", jqXHR.responseText);
+      utils.showAlert("error", "", "Error while deleting message: " + idstring, jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     });
 }

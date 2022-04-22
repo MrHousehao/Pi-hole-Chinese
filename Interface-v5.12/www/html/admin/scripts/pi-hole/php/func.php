@@ -13,17 +13,17 @@ function validDomain($domain_name, &$message = NULL)
 {
 	if(!preg_match("/^((-|_)*[a-z\d]((-|_)*[a-z\d])*(-|_)*)(\.(-|_)*([a-z\d]((-|_)*[a-z\d])*))*$/i", $domain_name)) {
 		if($message !== NULL)
-			$message = "它包含无效字符";
+			$message = "it contains invalid characters";
 		return false;
 	}
 	if(!preg_match("/^.{1,253}$/", $domain_name)) {
 		if($message !== NULL)
-			$message = "它的长度无效";
+			$message = "its length is invalid";
 		return false;
 	}
 	if(!preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain_name)) {
 		if($message !== NULL)
-			$message = "至少有一个标签的长度无效";
+			$message = "at least one label is of invalid length";
 		return false;
 	}
 
@@ -209,18 +209,18 @@ function addCustomDNSEntry($ip="", $domain="", $reload="", $json=true)
             $reload = $_REQUEST['reload'];
 
         if (empty($ip))
-            return returnError("必须设置IP地址", $json);
+            return returnError("IP must be set", $json);
 
         $ipType = get_ip_type($ip);
 
         if (!$ipType)
-            return returnError("IP地址必须有效", $json);
+            return returnError("IP must be valid", $json);
 
         if (empty($domain))
-            return returnError("必须设置域名", $json);
+            return returnError("Domain must be set", $json);
 
         if (!validDomain($domain))
-            return returnError("域名必须有效", $json);
+            return returnError("Domain must be valid", $json);
 
         // Only check for duplicates if adding new records from the web UI (not through Teleporter)
         if(isset($_REQUEST['ip']) || isset($_REQUEST['domain']))
@@ -228,7 +228,7 @@ function addCustomDNSEntry($ip="", $domain="", $reload="", $json=true)
             $existingEntries = getCustomDNSEntries();
             foreach ($existingEntries as $entry)
                 if ($entry->domain == $domain && get_ip_type($entry->ip) == $ipType)
-                    return returnError("此域名已经有一个自定义DNS的IPv" . $ipType . "地址映射配置", $json);
+                    return returnError("This domain already has a custom DNS entry for an IPv" . $ipType, $json);
         }
 
         // Add record
@@ -250,10 +250,10 @@ function deleteCustomDNSEntry()
         $domain = !empty($_REQUEST['domain']) ? $_REQUEST['domain']: "";
 
         if (empty($ip))
-            return returnError("必须设置IP地址");
+            return returnError("IP must be set");
 
         if (empty($domain))
-            return returnError("必须设置域名");
+            return returnError("Domain must be set");
 
         $existingEntries = getCustomDNSEntries();
 
@@ -266,7 +266,7 @@ function deleteCustomDNSEntry()
                 }
 
         if (!$found)
-            return returnError("此域名与IP地址的映射不存在");
+            return returnError("This domain/ip association does not exist");
 
         pihole_execute("-a removecustomdns ".$ip." ".$domain);
 
@@ -361,19 +361,19 @@ function addCustomCNAMEEntry($domain="", $target="", $reload="", $json=true)
             $reload = $_REQUEST['reload'];
 
         if (empty($domain))
-            return returnError("必须设置域名", $json);
+            return returnError("Domain must be set", $json);
 
         if (empty($target))
-            return returnError("必须设置目标", $json);
+            return returnError("Target must be set", $json);
 
         if (!validDomain($target))
-            return returnError("目标必须有效", $json);
+            return returnError("Target must be valid", $json);
 
         // Check if each submitted domain is valid
         $domains = array_map('trim', explode(",", $domain));
         foreach ($domains as $d) {
             if (!validDomain($d))
-                return returnError("域名 '$d' 无效", $json);
+                return returnError("Domain '$d' is not valid", $json);
         }
 
         $existingEntries = getCustomCNAMEEntries();
@@ -382,7 +382,7 @@ function addCustomCNAMEEntry($domain="", $target="", $reload="", $json=true)
         foreach ($existingEntries as $entry)
             foreach ($domains as $d)
                 if (in_array($d, $entry->domains))
-                    return returnError("已有 CNAME 映射设置'$d'", $json);
+                    return returnError("There is already a CNAME record for '$d'", $json);
 
         pihole_execute("-a addcustomcname ".$domain." ".$target." ".$reload);
 
@@ -402,10 +402,10 @@ function deleteCustomCNAMEEntry()
         $domain = !empty($_REQUEST['domain']) ? $_REQUEST['domain']: "";
 
         if (empty($target))
-            return returnError("必须设置目标");
+            return returnError("Target must be set");
 
         if (empty($domain))
-            return returnError("必须设置域名");
+            return returnError("Domain must be set");
 
         $existingEntries = getCustomCNAMEEntries();
 
@@ -418,7 +418,7 @@ function deleteCustomCNAMEEntry()
                 }
 
         if (!$found)
-            return returnError("此域名与IP地址的映射不存在");
+            return returnError("This domain/ip association does not exist");
 
         pihole_execute("-a removecustomcname ".$domain." ".$target);
 

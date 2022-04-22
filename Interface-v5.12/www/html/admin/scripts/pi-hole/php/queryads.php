@@ -29,13 +29,13 @@ if(isset($_GET["domain"]))
     $url = idn_to_ascii($_GET["domain"]);
     if(!validDomain($url))
     {
-        echoEvent("$url 是无效的域名！");
+        echoEvent("$url is an invalid domain!");
         die();
     }
 }
 else
 {
-    echoEvent("没有提供域名");
+    echoEvent("No domain provided");
     die();
 }
 

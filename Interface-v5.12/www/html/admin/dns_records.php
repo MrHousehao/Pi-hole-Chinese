@@ -11,8 +11,8 @@
 
 <!-- Title -->
 <div class="page-header">
-    <h1>本地DNS映射</h1>
-    <small>在本页面中，您可以添加域名到IP地址的映射。</small>
+    <h1>Local DNS Records</h1>
+    <small>On this page, you can add domain/IP associations</small>
 </div>
 
 <!-- Domain Input -->
@@ -22,33 +22,33 @@
             <!-- /.box-header -->
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    添加新的域名到IP地址的映射
+                    Add a new domain/IP combination
                 </h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="domain">域名：</label>
-                        <input id="domain" type="url" class="form-control" placeholder="添加域名（如example.com 或 sub.example.com）" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
+                        <label for="domain">Domain:</label>
+                        <input id="domain" type="url" class="form-control" placeholder="Add a domain (example.com or sub.example.com)" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="ip">目标IP地址：</label>
-                        <input id="ip" type="text" class="form-control" placeholder="关联目标IP地址" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
+                        <label for="ip">IP Address:</label>
+                        <input id="ip" type="text" class="form-control" placeholder="Associated IP address" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off">
                     </div>
                 </div>
             </div>
             <div class="box-footer clearfix">
-              <strong>备注：</strong>
-              <p>本地定义的DNS映射的调阅顺序是：</p>
+              <strong>Note:</strong>
+              <p>The order of locally defined DNS records is: </p>
               <ol>
-                  <li>设备的主机名和<code>pi.hole</code></li>
-                  <li>在文件<code>/etc/dnsmasq.d/</code>中的配置</li>
-                  <li>读取<code>/etc/hosts</code>中的配置</li>
-                  <li>从“本地（自定义）DNS” 列表中读取（文件位置<code>/etc/pihole/custom.list</code>）</li>
+                  <li>The device's host name and <code>pi.hole</code></li>
+                  <li>Configured in a config file in <code>/etc/dnsmasq.d/</code></li>
+                  <li>Read from <code>/etc/hosts</code></li>
+                  <li>Read from the "Local (custom) DNS" list (stored in <code>/etc/pihole/custom.list</code>)</li>
               </ol>
-              <p>多条相同域名的映射设置，只会按顺序调阅第一条域名到IP地址映射设置。</p>
-                <button type="button" id="btnAdd" class="btn btn-primary pull-right">添加</button>
+              <p>Only the first record will trigger an address-to-name association.</p>
+                <button type="button" id="btnAdd" class="btn btn-primary pull-right">Add</button>
             </div>
         </div>
     </div>
@@ -57,26 +57,26 @@
 <!-- Alerts -->
 <div id="alInfo" class="alert alert-info alert-dismissible fade in" role="alert" hidden>
     <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    更新自定义DNS映射中...
+    Updating the custom DNS entries...
 </div>
 <div id="alSuccess" class="alert alert-success alert-dismissible fade in" role="alert" hidden>
     <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    操作成功！配置表将被刷新。
+    Success! The list will refresh.
 </div>
 <div id="alFailure" class="alert alert-danger alert-dismissible fade in" role="alert" hidden>
     <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    操作失败！发生错误，请参见以下输出信息：<br/><br/><pre><span id="err"></span></pre>
+    Failure! Something went wrong, see output below:<br/><br/><pre><span id="err"></span></pre>
 </div>
 <div id="alWarning" class="alert alert-warning alert-dismissible fade in" role="alert" hidden>
     <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    配置中已经有相同的条目，请参见以下输出信息：<br/><br/><pre><span id="warn"></span></pre>
+    At least one domain was already present, see output below:<br/><br/><pre><span id="warn"></span></pre>
 </div>
 <div class="row">
     <div class="col-md-12">
         <div class="box" id="recent-queries">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    本地DNS映射配置表
+                    List of local DNS domains
                 </h3>
             </div>
             <!-- /.box-header -->
@@ -84,13 +84,13 @@
                 <table id="customDNSTable" class="table table-striped table-bordered" width="100%">
                     <thead>
                     <tr>
-                        <th>域名</th>
-                        <th>目标IP地址</th>
-                        <th>操作</th>
+                        <th>Domain</th>
+                        <th>IP</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                 </table>
-                <button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">清除筛选器</button>
+                <button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">Clear Filters</button>
             </div>
             <!-- /.box-body -->
         </div>

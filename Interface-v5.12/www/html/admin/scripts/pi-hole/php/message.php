@@ -16,7 +16,7 @@ if (!isset($api)) {
         check_cors();
         check_csrf($_POST['token']);
     } else {
-        log_and_die('不允许（登录无效或已过期，请重新登录Pi-hole）！');
+        log_and_die('Not allowed (login session invalid or expired, please relogin on the Pi-hole dashboard)!');
     }
 }
 
@@ -54,10 +54,10 @@ if ($_POST['action'] == 'delete_message' && isset($_POST['id'])) {
         }
         $stmt = $db->prepare('DELETE FROM message WHERE id IN ('.implode(",",$ids).')');
         if (!$stmt)
-            throw new Exception('在准备消息语句时：' . $db->lastErrorMsg());
+            throw new Exception('While preparing message statement: ' . $db->lastErrorMsg());
 
         if (!$stmt->execute())
-            throw new Exception('执行消息语句时：' . $db->lastErrorMsg());
+            throw new Exception('While executing message statement: ' . $db->lastErrorMsg());
 
         $reload = true;
         JSON_success();
@@ -65,5 +65,5 @@ if ($_POST['action'] == 'delete_message' && isset($_POST['id'])) {
         JSON_error($ex->getMessage());
     }
 } else {
-    log_and_die('不支持请求的操作！');
+    log_and_die('Requested action not supported!');
 }

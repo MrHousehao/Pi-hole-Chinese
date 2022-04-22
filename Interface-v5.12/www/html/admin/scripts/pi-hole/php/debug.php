@@ -9,7 +9,7 @@ require "password.php";
 require "auth.php";
 
 if (!$auth) {
-    die("未授权");
+    die("Unauthorized");
 }
 
 check_cors();

@@ -12,7 +12,7 @@ $serverName = htmlspecialchars($_SERVER["SERVER_NAME"]);
 $serverName = preg_replace('/^\[(.*)\]$/', '${1}', $serverName);
 
 if (!is_file("/etc/pihole/setupVars.conf"))
-  die("[错误] 找不到文件：<code>/etc/pihole/setupVars.conf</code>");
+  die("[ERROR] File not found: <code>/etc/pihole/setupVars.conf</code>");
 
 // Get values from setupVars.conf
 $setupVars = parse_ini_file("/etc/pihole/setupVars.conf");
@@ -45,7 +45,7 @@ $viewPort = '<meta name="viewport" content="width=device-width, initial-scale=1"
 
 // Set response header
 function setHeader($type = "x") {
-    header("X-Pi-hole: 互联网广告黑洞。");
+    header("X-Pi-hole: A black hole for Internet advertisements.");
     if (isset($type) && $type === "js") header("Content-Type: application/javascript");
 }
 
@@ -79,7 +79,7 @@ if ($serverName === "pi.hole"
         <body id='splashpage'>
             <div id="pihole_card">
               <img src='/admin/img/logo.svg' alt='Pi-hole logo' id="pihole_logo_splash" />
-              <p>Pi-<strong>hole</strong>: 您的互联网广告黑洞 您想去管理页面吗？</p>
+              <p>Pi-<strong>hole</strong>: Your black hole for Internet advertisements</p>
               <a href='/admin'>Did you mean to go to the admin panel?</a>
             </div>
         </body>
@@ -88,7 +88,7 @@ EOT;
     exit($splashPage);
 } elseif ($currentUrlExt === "js") {
     // Serve Pi-hole JavaScript for blocked domains requesting JS
-    exit(setHeader("js").'var x = "Pi-hole: 互联网广告黑洞。"');
+    exit(setHeader("js").'var x = "Pi-hole: A black hole for Internet advertisements."');
 } elseif (strpos($_SERVER["REQUEST_URI"], "?") !== FALSE && isset($_SERVER["HTTP_REFERER"])) {
     // Serve blank image upon receiving REQUEST_URI w/ query string & HTTP_REFERRER
     // e.g: An iframe of a blocked domain
@@ -141,7 +141,7 @@ if (isset($FTLsettings["GRAVITYDB"])) {
 try {
     $db = new SQLite3($gravityDBFile, SQLITE3_OPEN_READONLY);
 } catch (Exception $exception) {
-    die("[错误]: 无法连接到 gravity.db");
+    die("[ERROR]: Failed to connect to gravity.db");
 }
 
 // Get all adlist addresses
@@ -152,7 +152,7 @@ while ($row = $adlistResults->fetchArray()) {
 }
 
 if (empty($adlistsUrls))
-    die("[错误]: 没有启用引力场");
+    die("[ERROR]: There are no adlists enabled");
 
 // Get total number of blocklists (Including Whitelist, Blacklist & Wildcard lists)
 $adlistsCount = count($adlistsUrls) + 3;
@@ -220,7 +220,7 @@ $queryAds = queryAds($serverName);
 
 // Pass error through to Block Page
 if ($queryAds[0] === "error")
-    die("[错误]: 无法分析来自 <i>queryads.php</i>: <code>".$queryAds[1]."</code>的结果");
+    die("[ERROR]: Unable to parse results from <i>queryads.php</i>: <code>".$queryAds[1]."</code>");
 
 // Count total number of matching blocklists
 $featuredTotal = count($queryAds);
@@ -325,8 +325,8 @@ setHeader();
   <div id="bpAbout">
     <div class="aboutPH">
       <div class="aboutImg"></div>
-      <p>开源广告拦截器
-        <small>专为Raspberry Pi设计</small>
+      <p>Open Source Ad Blocker
+        <small>Designed for Raspberry Pi</small>
       </p>
     </div>
     <div class="aboutLink">

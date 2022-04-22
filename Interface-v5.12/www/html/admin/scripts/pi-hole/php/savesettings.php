@@ -10,7 +10,7 @@ require_once("func.php");
 
 if(!in_array(basename($_SERVER['SCRIPT_FILENAME']), ["settings.php", "teleporter.php"], true))
 {
-	die("禁止直接访问此脚本！");
+	die("Direct access to this script is forbidden!");
 }
 
 // Check for existence of variable
@@ -135,23 +135,23 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 	try {
 		if(!validMAC($mac))
 		{
-			throw new Exception("MAC地址 (".htmlspecialchars($mac).") 无效！<br>", 0);
+			throw new Exception("MAC address (".htmlspecialchars($mac).") is invalid!<br>", 0);
 		}
 		$mac = strtoupper($mac);
 
 		if(!validIP($ip) && strlen($ip) > 0)
 		{
-			throw new Exception("IP地址 (".htmlspecialchars($ip).") 无效！<br>", 1);
+			throw new Exception("IP address (".htmlspecialchars($ip).") is invalid!<br>", 1);
 		}
 
 		if(!validDomain($hostname) && strlen($hostname) > 0)
 		{
-			throw new Exception("主机名称 (".htmlspecialchars($hostname).") 无效！<br>", 2);
+			throw new Exception("Host name (".htmlspecialchars($hostname).") is invalid!<br>", 2);
 		}
 
 		if(strlen($hostname) == 0 && strlen($ip) == 0)
 		{
-			throw new Exception("您不能既不输入IP地址又不输入主机名称！<br>", 3);
+			throw new Exception("You can not omit both the IP address and the host name!<br>", 3);
 		}
 
 		if(strlen($hostname) == 0)
@@ -166,20 +166,20 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 		foreach($dhcp_static_leases as $lease) {
 			if($lease["hwaddr"] === $mac)
 			{
-				throw new Exception("MAC地址 (".htmlspecialchars($mac).") 的静态地址已被分配！<br>", 4);
+				throw new Exception("Static lease for MAC address (".htmlspecialchars($mac).") already defined!<br>", 4);
 			}
 			if($ip !== "noip" && $lease["IP"] === $ip)
 			{
-				throw new Exception("IP地址 (".htmlspecialchars($ip).") 的静态地址已被分配！<br>", 5);
+				throw new Exception("Static lease for IP address (".htmlspecialchars($ip).") already defined!<br>", 5);
 			}
 			if($lease["host"] === $hostname)
 			{
-				throw new Exception("主机名称 (".htmlspecialchars($hostname).") 的静态地址已被分配！<br>", 6);
+				throw new Exception("Static lease for hostname (".htmlspecialchars($hostname).") already defined!<br>", 6);
 			}
 		}
 
 		pihole_execute("-a addstaticdhcp ".$mac." ".$ip." ".$hostname);
-		$success .= "已添加新的静态地址分配";
+		$success .= "A new static address has been added";
 		return true;
 	} catch(Exception $exception) {
 		$error .= $exception->getMessage();
@@ -235,7 +235,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 
 						if(!validIP($IP))
 						{
-							$error .= "IP地址 (".htmlspecialchars($IP).") 无效！<br>";
+							$error .= "IP (".htmlspecialchars($IP).") is invalid!<br>";
 						}
 						else
 						{
@@ -244,7 +244,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 								$port = trim($exploded[1]);
 								if(!is_numeric($port))
 								{
-									$error .= "端口 (".htmlspecialchars($port).") 无效！<br>";
+									$error .= "Port (".htmlspecialchars($port).") is invalid!<br>";
 								}
 								else
 								{
@@ -261,7 +261,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 				// Check if at least one DNS server has been added
 				if($DNSservercount < 1)
 				{
-					$error .= "未选择 DNS 服务器。<br>";
+					$error .= "No DNS server has been selected.<br>";
 				}
 
 				// Check if domain-needed is requested
@@ -301,22 +301,22 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					$cidr = trim($_POST["rev_server_cidr"]);
 					if (!validCIDRIP($cidr))
 					{
-						$error .= "条件转发子网 (\"".htmlspecialchars($cidr)."\") 无效！<br>".
-						          "该字段需要按本地子网的 CIDR 表示法填写（例如, 192.168.0.0/16）。<br>";
+						$error .= "Conditional forwarding subnet (\"".htmlspecialchars($cidr)."\") is invalid!<br>".
+						          "This field requires CIDR notation for local subnets (e.g., 192.168.0.0/16).<br>";
 					}
 
 					// Validate target IP
 					$target = trim($_POST["rev_server_target"]);
 					if (!validIP($target))
 					{
-						$error .= "条件转发目标IP地址 (\"".htmlspecialchars($target)."\") 无效！<br>";
+						$error .= "Conditional forwarding target IP (\"".htmlspecialchars($target)."\") is invalid!<br>";
 					}
 
 					// Validate conditional forwarding domain name (empty is okay)
 					$domain = trim($_POST["rev_server_domain"]);
 					if(strlen($domain) > 0 && !validDomain($domain))
 					{
-						$error .= "条件转发域名 (\"".htmlspecialchars($domain)."\") 无效！<br>";
+						$error .= "Conditional forwarding domain name (\"".htmlspecialchars($domain)."\") is invalid!<br>";
 					}
 
 					if(!$error)
@@ -365,11 +365,11 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					$IPs = implode (",", $DNSservers);
 					$return = pihole_execute("-a setdns \"".$IPs."\" ".$extra);
 					$success .= htmlspecialchars(end($return))."<br>";
-					$success .= "DNS 设置已更新（使用".$DNSservercount."个DNS服务器）";
+					$success .= "The DNS settings have been updated (using ".$DNSservercount." DNS servers)";
 				}
 				else
 				{
-					$error .= "已恢复为之前保存的设置";
+					$error .= "The settings have been reset to their previous values";
 				}
 
 				break;
@@ -380,17 +380,17 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 				if($_POST["action"] === "Disable")
 				{
 					pihole_execute("-l off");
-					$success .= "日志记录已被禁用，日志已被清空";
+					$success .= "Logging has been disabled and logs have been flushed";
 				}
 				elseif($_POST["action"] === "Disable-noflush")
 				{
 					pihole_execute("-l off noflush");
-					$success .= "日志记录已被禁用，您的日志<strong> 未 </strong>被清空";
+					$success .= "Logging has been disabled, your logs have <strong>not</strong> been flushed";
 				}
 				else
 				{
 					pihole_execute("-l on");
-					$success .= "已启用日志记录";
+					$success .= "Logging has been enabled";
 				}
 
 				break;
@@ -410,7 +410,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 				{
 					if(!validDomainWildcard($domain) || validIP($domain))
 					{
-						$error .= "域名".htmlspecialchars($domain)." 无效（只使用域名）！<br>";
+						$error .= "Top Domains/Ads entry ".htmlspecialchars($domain)." is invalid (use only domains)!<br>";
 					}
 					if(!$first)
 					{
@@ -429,7 +429,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 				{
 					if(!validDomainWildcard($client) && !validIP($client))
 					{
-						$error .= "客户端".htmlspecialchars($client)." 无效（只使用主机名称和 IP 地址）！<br>";
+						$error .= "Top Clients entry ".htmlspecialchars($client)." is invalid (use only host names and IP addresses)!<br>";
 					}
 					if(!$first)
 					{
@@ -448,33 +448,33 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					// All entries are okay
 					pihole_execute("-a setexcludedomains ".$domainlist);
 					pihole_execute("-a setexcludeclients ".$clientlist);
-					$success .= "API 设置已更新<br>";
+					$success .= "The API settings have been updated<br>";
 				}
 				else
 				{
-					$error .= "已恢复为之前保存的设置";
+					$error .= "The settings have been reset to their previous values";
 				}
 
 				// Set query log options
 				if(isset($_POST["querylog-permitted"]) && isset($_POST["querylog-blocked"]))
 				{
 					pihole_execute("-a setquerylog all");
-					$success .= "所有记录将在查询请求日志中显示";
+					$success .= "All entries will be shown in Query Log";
 				}
 				elseif(isset($_POST["querylog-permitted"]))
 				{
 					pihole_execute("-a setquerylog permittedonly");
-					$success .= "只有放行的域名在查询请求日志中显示";
+					$success .= "Only permitted will be shown in Query Log";
 				}
 				elseif(isset($_POST["querylog-blocked"]))
 				{
 					pihole_execute("-a setquerylog blockedonly");
-					$success .= "只有吞噬的域名在查询请求日志中显示";
+					$success .= "Only blocked entries will be shown in Query Log";
 				}
 				else
 				{
 					pihole_execute("-a setquerylog nothing");
-					$success .= "查询日志中不显示任何记录";
+					$success .= "No entries will be shown in Query Log";
 				}
 
 				break;
@@ -487,7 +487,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 				}
 				if(strlen($adminemail) > 0 && !validEmail($adminemail))
 				{
-					$error .= "管理员E-Mail地址(".htmlspecialchars($adminemail).") 无效！<br>";
+					$error .= "Administrator email address (".htmlspecialchars($adminemail).") is invalid!<br>";
 				}
 				else
 				{
@@ -507,27 +507,27 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					if(array_key_exists($_POST["webtheme"], $available_themes))
 						exec('sudo pihole -a theme '.$_POST["webtheme"]);
 				}
-				$success .= "网页UI 设置已更新";
+				$success .= "The webUI settings have been updated";
 				break;
 
 			case "poweroff":
 				pihole_execute("-a poweroff");
-				$success = "主机将在 5 秒后关机...";
+				$success = "The system will poweroff in 5 seconds...";
 				break;
 
 			case "reboot":
 				pihole_execute("-a reboot");
-				$success = "主机将在 5 秒后重启...";
+				$success = "The system will reboot in 5 seconds...";
 				break;
 
 			case "restartdns":
 				pihole_execute("-a restartdns");
-				$success = "DNS 服务器已重新启动";
+				$success = "The DNS server has been restarted";
 				break;
 
 			case "flushlogs":
 				pihole_execute("-f");
-				$success = "Pi-hole 日志文件已清空";
+				$success = "The Pi-hole log file has been flushed";
 				break;
 
 			case "DHCP":
@@ -547,14 +547,14 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					$mac = $_POST["removestatic"];
 					if(!validMAC($mac))
 					{
-						$error .= "MAC地址 (".htmlspecialchars($mac).") 无效！<br>";
+						$error .= "MAC address (".htmlspecialchars($mac).") is invalid!<br>";
 					}
 					$mac = strtoupper($mac);
 
 					if(!strlen($error))
 					{
 						pihole_execute("-a removestaticdhcp ".$mac);
-						$success .= "MAC地址 ".htmlspecialchars($mac)." 的静态地址分配已删除";
+						$success .= "The static address with MAC address ".htmlspecialchars($mac)." has been removed";
 					}
 					break;
 				}
@@ -565,21 +565,21 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					$from = $_POST["from"];
 					if (!validIP($from))
 					{
-						$error .= "开始IP地址 (".htmlspecialchars($from).") 无效！<br>";
+						$error .= "From IP (".htmlspecialchars($from).") is invalid!<br>";
 					}
 
 					// Validate to IP
 					$to = $_POST["to"];
 					if (!validIP($to))
 					{
-						$error .= "结束IP地址 (".htmlspecialchars($to).") 无效！<br>";
+						$error .= "To IP (".htmlspecialchars($to).") is invalid!<br>";
 					}
 
 					// Validate router IP
 					$router = $_POST["router"];
 					if (!validIP($router))
 					{
-						$error .= "路由器IP地址 (".htmlspecialchars($router).") 无效！<br>";
+						$error .= "Router IP (".htmlspecialchars($router).") is invalid!<br>";
 					}
 
 					$domain = $_POST["domain"];
@@ -587,7 +587,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					// Validate Domain name
 					if(!validDomain($domain))
 					{
-						$error .= "域名 ".htmlspecialchars($domain)." 无效！<br>";
+						$error .= "Domain name ".htmlspecialchars($domain)." is invalid!<br>";
 					}
 
 					$leasetime = $_POST["leasetime"];
@@ -595,7 +595,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					// Validate Lease time length
 					if(!is_numeric($leasetime) || intval($leasetime) < 0)
 					{
-						$error .= "地址租期 ".htmlspecialchars($leasetime)." 无效！<br>";
+						$error .= "Lease time ".htmlspecialchars($leasetime)." is invalid!<br>";
 					}
 
 					if(isset($_POST["useIPv6"]))
@@ -621,13 +621,13 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					if(!strlen($error))
 					{
 						pihole_execute("-a enabledhcp ".$from." ".$to." ".$router." ".$leasetime." ".$domain." ".$ipv6." ".$rapidcommit);
-						$success .= "DHCP 服务器已激活".htmlspecialchars($type);
+						$success .= "The DHCP server has been activated ".htmlspecialchars($type);
 					}
 				}
 				else
 				{
 					pihole_execute("-a disabledhcp");
-					$success = "DHCP 服务器已关闭";
+					$success = "The DHCP server has been deactivated";
 				}
 
 				break;
@@ -649,20 +649,20 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 					if($privacylevel > $level)
 					{
 						pihole_execute("-a restartdns");
-						$success .= "隐私级别已降低，DNS 服务器已重新启动";
+						$success .= "The privacy level has been decreased and the DNS resolver has been restarted";
 					}
 					elseif($privacylevel < $level)
 					{
-						$success .= "隐私级别已提升";
+						$success .= "The privacy level has been increased";
 					}
 					else
 					{
-						$success .= "隐私级别未改变";
+						$success .= "The privacy level has not been changed";
 					}
 				}
 				else
 				{
-					$error .= "无效的隐私级别 (".$level.")!";
+					$error .= "Invalid privacy level (".$level.")!";
 				}
 				break;
 			// Flush network table
@@ -675,7 +675,7 @@ function addStaticDHCPLease($mac, $ip, $hostname) {
 				}
 				if(strlen($error) == 0)
 				{
-					$success .= "客户端概览已清空";
+					$success .= "The network table has been flushed";
 				}
 				break;
 

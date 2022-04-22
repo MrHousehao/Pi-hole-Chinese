@@ -33,8 +33,8 @@ function updateTopLists() {
             "</td> <td>" +
             data.top_queries[domain] +
             "</td> <td>" +
-            '<button type="button" class="btn btn-default btn-xs text-red"><i class="fa fa-ban"></i>添加到黑名单</button>' +
-            '<button type="button" class="btn btn-default btn-xs text-orange"><i class="fa fa-balance-scale"></i>审查</button>' +
+            '<button type="button" class="btn btn-default btn-xs text-red"><i class="fa fa-ban"></i> Blacklist</button>' +
+            '<button type="button" class="btn btn-default btn-xs text-orange"><i class="fa fa-balance-scale"></i> Audit</button>' +
             "</td> </tr> "
         );
       }
@@ -58,7 +58,7 @@ function updateTopLists() {
               "</td> <td>" +
               data.top_ads[domain] +
               "</td> <td>" +
-              '<button type="button" class="btn btn-default btn-sm text-orange"><i class="fa fa-balance-scale"></i>审查</button>' +
+              '<button type="button" class="btn btn-default btn-sm text-orange"><i class="fa fa-balance-scale"></i> Audit</button>' +
               "</td> </tr> "
           );
         } else {
@@ -69,8 +69,8 @@ function updateTopLists() {
               "</td> <td>" +
               data.top_ads[domain] +
               "</td> <td>" +
-              '<button type="button" class="btn btn-default btn-xs text-green"><i class="fas fa-check"></i>添加到白名单</button>' +
-              '<button type="button" class="btn btn-default btn-xs text-orange"><i class="fa fa-balance-scale"></i>审查</button>' +
+              '<button type="button" class="btn btn-default btn-xs text-green"><i class="fas fa-check"></i> Whitelist</button>' +
+              '<button type="button" class="btn btn-default btn-xs text-orange"><i class="fa fa-balance-scale"></i> Audit</button>' +
               "</td> </tr> "
           );
         }

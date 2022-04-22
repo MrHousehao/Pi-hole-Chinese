@@ -15,7 +15,7 @@ var until = moment(end__).utc().valueOf() / 1000;
 var timeoutWarning = $("#timeoutWarning");
 var listsStillLoading = 0;
 
-var dateformat = "YYYY年MM月DD日 HH:mm";
+var dateformat = "MMMM Do YYYY, HH:mm";
 
 $(function () {
   $("#querytime").daterangepicker(
@@ -27,20 +27,20 @@ $(function () {
       startDate: start__,
       endDate: end__,
       ranges: {
-        今天: [moment().startOf("day"), moment()],
-        昨天: [
+        Today: [moment().startOf("day"), moment()],
+        Yesterday: [
           moment().subtract(1, "days").startOf("day"),
           moment().subtract(1, "days").endOf("day"),
         ],
-        "最近7天": [moment().subtract(7, "days"), moment()],
-        "最近30天": [moment().subtract(30, "days"), moment()],
-        "本月": [moment().startOf("month"), moment()],
-        "上月": [
+        "Last 7 Days": [moment().subtract(7, "days"), moment()],
+        "Last 30 Days": [moment().subtract(30, "days"), moment()],
+        "This Month": [moment().startOf("month"), moment()],
+        "Last Month": [
           moment().subtract(1, "month").startOf("month"),
           moment().subtract(1, "month").endOf("month"),
         ],
-        "今年": [moment().startOf("year"), moment()],
-        "全部": [moment(0), moment()],
+        "This Year": [moment().startOf("year"), moment()],
+        "All Time": [moment(0), moment()],
       },
       opens: "center",
       showDropdowns: true,
@@ -184,7 +184,7 @@ function updateTopAdsChart() {
 }
 
 $("#querytime").on("apply.daterangepicker", function (ev, picker) {
-  $(this).val(picker.startDate.format(dateformat) + " 到 " + picker.endDate.format(dateformat));
+  $(this).val(picker.startDate.format(dateformat) + " to " + picker.endDate.format(dateformat));
   timeoutWarning.show();
   listsStillLoading = 3;
   updateTopClientsChart();

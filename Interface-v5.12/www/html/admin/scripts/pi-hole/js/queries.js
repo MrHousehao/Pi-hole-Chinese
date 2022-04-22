@@ -26,15 +26,15 @@ var replyTypes = [
   "NONE",
   "BLOB",
 ];
-var colTypes = ["时间","查询类型","域名","客户端","状态","响应类型"];
+var colTypes = ["time", "query type", "domain", "client", "status", "reply type"];
 
 function handleAjaxError(xhr, textStatus) {
   if (textStatus === "timeout") {
-    alert("服务器发送数据时间过长。");
+    alert("The server took too long to send the data.");
   } else if (xhr.responseText.indexOf("Connection refused") !== -1) {
-    alert("加载数据时出错：连接被拒绝。请确认FTL是否已运行。");
+    alert("An error occurred while loading the data: Connection refused. Is FTL running?");
   } else {
-    alert("加载数据时发生未知错误。\n" + xhr.responseText);
+    alert("An unknown error occurred while loading the data.\n" + xhr.responseText);
   }
 
   $("#all-queries_processing").hide();
@@ -117,109 +117,109 @@ $(function () {
 
       switch (data[4]) {
         case "1":
-          fieldtext = "<span class='text-red'>吞噬（引力场）</span>";
+          fieldtext = "<span class='text-red'>Blocked (gravity)</span>";
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i>添加到白名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i> Whitelist</button>';
           blocked = true;
           break;
         case "2":
           fieldtext =
             replyid === 0
-              ? "<span class='text-green'>OK</span>，转发至"
-              : "<span class='text-green'>OK</span>，回应自";
+              ? "<span class='text-green'>OK</span>, sent to "
+              : "<span class='text-green'>OK</span>, answered by ";
           fieldtext +=
             "<br class='hidden-lg'>" +
             (data.length > 10 && data[10] !== "N/A" ? data[10] : "") +
             dnssecStatus;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-red"><i class="fa fa-ban"></i>添加到黑名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-red"><i class="fa fa-ban"></i> Blacklist</button>';
           break;
         case "3":
           fieldtext =
-            "<span class='text-green'>OK</span> <br class='hidden-lg'>（缓存）" + dnssecStatus;
+            "<span class='text-green'>OK</span> <br class='hidden-lg'>(cache)" + dnssecStatus;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-red"><i class="fa fa-ban"></i>添加到黑名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-red"><i class="fa fa-ban"></i> Blacklist</button>';
           break;
         case "4":
-          fieldtext = "<span class='text-red'>吞噬<br class='hidden-lg'>（正则表达式黑名单）";
+          fieldtext = "<span class='text-red'>Blocked <br class='hidden-lg'>(regex blacklist)";
           blocked = true;
           if (data.length > 9 && data[9] > 0) {
             regexLink = true;
           }
 
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i>添加到白名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i> Whitelist</button>';
           break;
         case "5":
-          fieldtext = "<span class='text-red'>吞噬<br class='hidden-lg'>（确切黑名单）";
+          fieldtext = "<span class='text-red'>Blocked <br class='hidden-lg'>(exact blacklist)";
           blocked = true;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i>添加到白名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i> Whitelist</button>';
           break;
         case "6":
-          fieldtext = "<span class='text-red'>吞噬<br class='hidden-lg'>（外部，IP）";
+          fieldtext = "<span class='text-red'>Blocked <br class='hidden-lg'>(external, IP)";
           blocked = true;
           buttontext = "";
           break;
         case "7":
           fieldtext =
-            "<span class='text-red'>吞噬<br class='hidden-lg'>（外部，NULL）</span>";
+            "<span class='text-red'>Blocked <br class='hidden-lg'>(external, NULL)</span>";
           blocked = true;
           buttontext = "";
           break;
         case "8":
           fieldtext =
-            "<span class='text-red'>吞噬<br class='hidden-lg'>（外部，NXRA）</span>";
+            "<span class='text-red'>Blocked <br class='hidden-lg'>(external, NXRA)</span>";
           blocked = true;
           buttontext = "";
           break;
         case "9":
-          fieldtext = "<span class='text-red'>吞噬（引力场，CNAME）</span>";
+          fieldtext = "<span class='text-red'>Blocked (gravity, CNAME)</span>";
           blocked = true;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i>添加到白名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i> Whitelist</button>';
           isCNAME = true;
           break;
         case "10":
           fieldtext =
-            "<span class='text-red'>吞噬<br class='hidden-lg'>（正则表达式黑名单，CNAME）</span>";
+            "<span class='text-red'>Blocked <br class='hidden-lg'>(regex blacklist, CNAME)</span>";
           blocked = true;
           if (data.length > 9 && data[9] > 0) {
             regexLink = true;
           }
 
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i>添加到白名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i> Whitelist</button>';
           isCNAME = true;
           break;
         case "11":
           fieldtext =
-            "<span class='text-red'>吞噬<br class='hidden-lg'>（确切黑名单，CNAME）</span>";
+            "<span class='text-red'>Blocked <br class='hidden-lg'>(exact blacklist, CNAME)</span>";
           blocked = true;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i>添加到白名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green"><i class="fas fa-check"></i> Whitelist</button>';
           isCNAME = true;
           break;
         case "12":
-          fieldtext = "<span class='text-green'>重试</span>";
+          fieldtext = "<span class='text-green'>Retried</span>";
           break;
         case "13":
-          fieldtext = "<span class='text-green'>重试</span> <br class='hidden-lg'>（忽略）";
+          fieldtext = "<span class='text-green'>Retried</span> <br class='hidden-lg'>(ignored)";
           break;
         case "14":
           fieldtext =
-            "<span class='text-green'>OK</span> <br class='hidden-lg'>（已转发）" +
+            "<span class='text-green'>OK</span> <br class='hidden-lg'>(already forwarded)" +
             dnssecStatus;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-red"><i class="fa fa-ban"></i>添加到黑名单</button>';
+            '<button type="button" class="btn btn-default btn-sm text-red"><i class="fa fa-ban"></i> Blacklist</button>';
           break;
         case "15":
           fieldtext =
-            "<span class='text-orange'>吞噬<br class='hidden-lg'>（数据库正忙）</span>";
+            "<span class='text-orange'>Blocked <br class='hidden-lg'>(database is busy)</span>";
           blocked = true;
           break;
         default:
-          fieldtext = "未知（" + parseInt(data[4], 10) + "）";
+          fieldtext = "Unknown (" + parseInt(data[4], 10) + ")";
       }
 
       // Add EDE here if available and not included in dnssecStatus
@@ -267,7 +267,7 @@ $(function () {
       if (isCNAME) {
         var CNAMEDomain = data[8];
         // Add domain in CNAME chain causing the query to have been blocked
-        $("td:eq(2)", row).text(domain + "\n（吞噬" + CNAMEDomain + "）");
+        $("td:eq(2)", row).text(domain + "\n(blocked " + CNAMEDomain + ")");
       } else {
         $("td:eq(2)", row).text(domain);
       }
@@ -300,8 +300,8 @@ $(function () {
           utils.showAlert(
             "error",
             "",
-            "删除 DHCP 租约时出错",
-            "FTL 没有运行"
+            "Error while deleting DHCP lease for ",
+            "FTL is not running"
           );
           data = {};
           return data;
@@ -323,7 +323,7 @@ $(function () {
     order: [[0, "desc"]],
     columns: [
       {
-        width: "10%",
+        width: "15%",
         render: function (data, type) {
           if (type === "display") {
             return moment
@@ -334,16 +334,16 @@ $(function () {
           return data;
         },
       },
-      { width: "8%" },
-      { width: "25%" },
-      { width: "15%", type: "ip-address" },
-      { width: "20%", orderData: 4 },
-      { width: "15%", orderData: 5 },
+      { width: "4%" },
+      { width: "36%" },
+      { width: "8%", type: "ip-address" },
+      { width: "14%", orderData: 4 },
+      { width: "8%", orderData: 5 },
       { width: "10%", orderData: 4 },
     ],
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "全部"],
+      [10, 25, 50, 100, "All"],
     ],
     stateSave: true,
     stateDuration: 0,
@@ -453,7 +453,7 @@ $(function () {
         input.attr("autocorrect", "off");
         input.attr("autocapitalize", "off");
         input.attr("spellcheck", false);
-        input.attr("placeholder", "类型/域名/客户端");
+        input.attr("placeholder", "Type / Domain / Client");
       }
     },
   });
@@ -482,10 +482,10 @@ function tooltipText(index, text) {
   }
 
   if (index in tableFilters && tableFilters[index].length > 0) {
-    return "点击从筛选器移除" + colTypes[index] + ' "' + text + '"。';
+    return "Click to remove " + colTypes[index] + ' "' + text + '" from filter.';
   }
 
-  return "点击增加" + colTypes[index] + ' "' + text + '"到筛选器。';
+  return "Click to add " + colTypes[index] + ' "' + text + '" to filter.';
 }
 
 function addColumnFilter(event, colID, filterstring) {

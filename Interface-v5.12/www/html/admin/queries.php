@@ -13,36 +13,36 @@ if(isset($setupVars["API_QUERY_LOG_SHOW"]))
 {
 	if($setupVars["API_QUERY_LOG_SHOW"] === "all")
 	{
-		$showing = "显示";
+		$showing = "showing";
 	}
 	elseif($setupVars["API_QUERY_LOG_SHOW"] === "permittedonly")
 	{
-		$showing = "显示已放行";
+		$showing = "showing permitted";
 	}
 	elseif($setupVars["API_QUERY_LOG_SHOW"] === "blockedonly")
 	{
-		$showing = "显示已吞噬";
+		$showing = "showing blocked";
 	}
 	elseif($setupVars["API_QUERY_LOG_SHOW"] === "nothing")
 	{
-		$showing = "不显示查询请求（由于隐私设置）";
+		$showing = "showing no queries (due to setting)";
 	}
 }
 else if(isset($_GET["type"]) && $_GET["type"] === "blocked")
 {
-	$showing = "显示已吞噬";
+	$showing = "showing blocked";
 }
 else
 {
 	// If filter variable is not set, we
 	// automatically show all queries
-	$showing = "显示";
+	$showing = "showing";
 }
 
 $showall = false;
 if(isset($_GET["all"]))
 {
-	$showing .= "Pi-hole日志中的所有查询";
+	$showing .= " all queries within the Pi-hole log";
 }
 else if(isset($_GET["client"]))
 {
@@ -50,40 +50,40 @@ else if(isset($_GET["client"]))
 	if (isset($_GET["type"]) && $_GET["type"] === "blocked")
 	{
 		// Show blocked queries for this client + link to all
-		$showing .= "吞噬来自客户端的查询".htmlentities($_GET["client"]);
-		$showing .= ", <a href=\"?client=".htmlentities($_GET["client"])."\">显示全部</a>";
+		$showing .= " blocked queries for client ".htmlentities($_GET["client"]);
+		$showing .= ", <a href=\"?client=".htmlentities($_GET["client"])."\">show all</a>";
 	}
 	else
 	{
 		// Show All queries for this client + link to show only blocked
-		$showing .= "客户端的所有查询".htmlentities($_GET["client"]);
-		$showing .= ", <a href=\"?client=".htmlentities($_GET["client"])."&type=blocked\">只显示吞噬</a>";
+		$showing .= " all queries for client ".htmlentities($_GET["client"]);
+		$showing .= ", <a href=\"?client=".htmlentities($_GET["client"])."&type=blocked\">show blocked only</a>";
 	}
 }
 else if(isset($_GET["forwarddest"]))
 {
 	if($_GET["forwarddest"] === "blocked")
-		$showing .= "查询请求被Pi-hole吞噬";
+		$showing .= " queries blocked by Pi-hole";
 	elseif($_GET["forwarddest"] === "cached")
-		$showing .= "查询请求的回应来自缓存";
+		$showing .= " queries answered from cache";
 	else
-		$showing .= "查询请求的回应来上游服务器".htmlentities($_GET["forwarddest"]);
+		$showing .= " queries for upstream destination ".htmlentities($_GET["forwarddest"]);
 }
 else if(isset($_GET["querytype"]))
 {
-	$showing .= " 类型 ".getQueryTypeStr($_GET["querytype"])." 查询请求";
+	$showing .= " type ".getQueryTypeStr($_GET["querytype"])." queries";
 }
 else if(isset($_GET["domain"]))
 {
-	$showing .= "查询的域名".htmlentities($_GET["domain"]);
+	$showing .= " queries for domain ".htmlentities($_GET["domain"]);
 }
 else if(isset($_GET["from"]) || isset($_GET["until"]))
 {
-	$showing .= "指定时间段的查询请求";
+	$showing .= " queries within specified time interval";
 }
 else
 {
-	$showing .= "最多显示100个查询请求";
+	$showing .= " up to 100 queries";
 	$showall = true;
 }
 
@@ -91,7 +91,7 @@ if(strlen($showing) > 0)
 {
 	$showing = "(".$showing.")";
 	if($showall)
-		$showing .= ", <a href=\"?all\">显示全部</a>";
+		$showing .= ", <a href=\"?all\">show all</a>";
 }
 ?>
 
@@ -114,15 +114,15 @@ if(strlen($showing) > 0)
                             <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                         </div>
                     </span>
-                    <div class="alProcessing">添加 <span id="alDomain"></span>到<span id="alList"></span>...</div>
-                    <div class="alSuccess text-bold text-green" style="display: none"><span id="alDomain"></span> 已成功添加到<span id="alList"></span></div>
+                    <div class="alProcessing">Adding <span id="alDomain"></span> to the <span id="alList"></span>...</div>
+                    <div class="alSuccess text-bold text-green" style="display: none"><span id="alDomain"></span> successfully added to the <span id="alList"></span></div>
                     <div class="alFailure text-bold text-red" style="display: none">
-                        <span id="alNetErr">超时或网络连接错误！</span>
+                        <span id="alNetErr">Timeout or Network Connection Error!</span>
                         <span id="alCustomErr"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -133,41 +133,41 @@ if(strlen($showing) > 0)
     <div class="col-md-12">
       <div class="box" id="recent-queries">
         <div class="box-header with-border">
-          <h3 class="box-title">最近查询<?php echo $showing; ?></h3>
+          <h3 class="box-title">Recent Queries <?php echo $showing; ?></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <table id="all-queries" class="table table-striped table-bordered" width="100%">
                 <thead>
                     <tr>
-                        <th>时间</th>
-                        <th>类型</th>
-                        <th>域名</th>
-                        <th>客户端</th>
-                        <th>状态</th>
-                        <th>响应时间</th>
-                        <th>操作</th>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th>Domain</th>
+                        <th>Client</th>
+                        <th>Status</th>
+                        <th>Reply</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>时间</th>
-                        <th>类型</th>
-                        <th>域名</th>
-                        <th>客户端</th>
-                        <th>状态</th>
-                        <th>响应时间</th>
-                        <th>操作</th>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th>Domain</th>
+                        <th>Client</th>
+                        <th>Status</th>
+                        <th>Reply</th>
+                        <th>Action</th>
                     </tr>
                 </tfoot>
             </table>
-            <p>备注：来自<code>pi.hole</code>和该主机名的查询请求不会被记录。</p>
-            <p><strong>筛选器说明：</strong></p>
+            <p>Note: Queries for <code>pi.hole</code> and the hostname are never logged.</p>
+            <p><strong>Filtering options:</strong></p>
             <ul>
-                <li>点击表中的值在筛选器中添加/移除该值进行筛选</li>
-                <li>计算机：按住<kbd>Ctrl</kbd>、<kbd>Alt</kbd>或<kbd>&#8984;</kbd>可高亮选择文字以便复制到剪贴板</li>
-                <li>手机：长按可高亮并选择文字以便复制到剪贴板
-            </ul><br/><button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">清除筛选器</button>
+                <li>Click a value in a column to add/remove that value to/from the filter</li>
+                <li>On a computer: Hold down <kbd>Ctrl</kbd>, <kbd>Alt</kbd>, or <kbd>&#8984;</kbd> to allow highlighting for copying to clipboard</li>
+                <li>On a mobile: Long press to highlight the text and enable copying to clipboard
+            </ul><br/><button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">Clear filters</button>
         </div>
         <!-- /.box-body -->
       </div>

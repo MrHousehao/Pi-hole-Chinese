@@ -7,7 +7,7 @@
 *    Please see LICENSE file for your rights under this license */
 
 if (!isset($api)) {
-    die("不允许直接调用api_FTL.php！");
+    die("Direct call to api_FTL.php is not allowed!");
 }
 
 if (isset($_GET['type'])) {

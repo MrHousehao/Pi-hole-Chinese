@@ -14,14 +14,14 @@
 <span class="graphs-ticks"></span>
 
 <div class="page-header">
-    <h1>从Pi-hole数据库调阅吞噬数据图形统计信息</h1>
+    <h1>Compute graphical statistics from the Pi-hole query database</h1>
 </div>
 <div class="row">
   <div class="col-md-12">
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">
-          选择时间范围
+          Select date and time range
         </h3>
       </div>
       <div class="box-body">
@@ -31,7 +31,7 @@
               <div class="input-group-addon">
                 <i class="far fa-clock"></i>
               </div>
-              <input type="button" class="form-control pull-right" id="querytime" value="点击选择日期和时间范围">
+              <input type="button" class="form-control pull-right" id="querytime" value="Click to select date and time range">
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@
 <div class="row">
   <div class="col-md-12">
     <div id="timeoutWarning" class="alert alert-warning alert-dismissible fade in" role="alert" hidden>
-        根据选择的时间范围，当Pi-hole检索大量数据时，请求可能会超时。<br/><span id="err"></span>
+        Depending on how large of a range you specified, the request may time out while Pi-hole tries to retrieve all the data.<br/><span id="err"></span>
     </div>
   </div>
 </div>
@@ -53,7 +53,7 @@
     <div class="box" id="queries-over-time">
       <div class="box-header with-border">
         <h3 class="box-title">
-          所选时间范围的吞噬数据统计
+          Queries over the selected time period
         </h3>
       </div>
       <div class="box-body">

@@ -17,12 +17,12 @@ function gravity_last_update($raw = false)
 		if($raw)
 		{
 			// Array output
-			return array("文件已存在" => false);
+			return array("file_exists" => false);
 		}
 		else
 		{
 			// String output
-			return "引力场数据库不可用";
+			return "Gravity database not available";
 		}
 	}
 	// Now that we know that $date_file_created_unix is a valid response, we can convert it to an integer
@@ -47,15 +47,15 @@ function gravity_last_update($raw = false)
 	if($gravitydiff->d > 1)
 	{
 		// String output (more than one day ago)
-		return $gravitydiff->format("引力场已于%a天%H小时%I分前更新");
+		return $gravitydiff->format("Adlists updated %a days, %H:%I (hh:mm) ago");
 	}
 	elseif($gravitydiff->d == 1)
 	{
 		// String output (one day ago)
-		return $gravitydiff->format("引力场已于1天%H小时%I分前更新");
+		return $gravitydiff->format("Adlists updated one day, %H:%I (hh:mm) ago");
 	}
 
 	// String output (less than one day ago)
-	return $gravitydiff->format("引力场已于%H小时%I分前更新");
+	return $gravitydiff->format("Adlists updated %H:%I (hh:mm) ago");
 }
 ?>

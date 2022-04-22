@@ -71,7 +71,7 @@ $(function () {
     ],
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "全部"],
+      [10, 25, 50, 100, "All"],
     ],
     order: [[0, "asc"]],
     stateSave: true,
@@ -111,7 +111,7 @@ function addCustomDNS() {
       } else showAlert("error", response.message);
     },
     error: function () {
-      showAlert("error", "添加此自定义 DNS 映射时出错");
+      showAlert("error", "Error while adding this custom DNS entry");
     },
   });
 }
@@ -133,7 +133,7 @@ function deleteCustomDNS() {
       } else showAlert("error", response.message);
     },
     error: function (jqXHR, exception) {
-      showAlert("error", "删除此自定义 DNS 映射时出错");
+      showAlert("error", "Error while deleting this custom DNS entry");
       console.log(exception); // eslint-disable-line no-console
     },
   });

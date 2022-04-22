@@ -13,12 +13,12 @@ $available_themes = array();
 *  Array[1] = Is this a dark mode theme? (Sets background to black during page reloading to avoid white "flashing")
 *  Array[2] = Style sheet name
 */
-$available_themes["default-light"] = array("Pi-hole默认主题（明亮, 默认）", false, "default-light");
-$available_themes["default-dark"] = array("Pi-hole 午夜主题（暗黑）", true, "default-dark");
-$available_themes["default-darker"] = array("Pi-hole 深夜主题（暗黑）", true, "default-darker");
+$available_themes["default-light"] = array("Pi-hole default theme (light, default)", false, "default-light");
+$available_themes["default-dark"] = array("Pi-hole midnight theme (dark)", true, "default-dark");
+$available_themes["default-darker"] = array("Pi-hole deep-midnight theme (dark)", true, "default-darker");
 // Option to have the theme go with the device dark mode setting, always set the background to black to avoid flashing
-$available_themes["default-auto"] = array("Pi-hole 自动主题（明亮/暗黑）", true, "default-auto");
-$available_themes["lcars"] = array("星际迷航 LCARS 主题（暗黑）", true, "lcars");
+$available_themes["default-auto"] = array("Pi-hole auto theme (light/dark)", true, "default-auto");
+$available_themes["lcars"] = array("Star Trek LCARS theme (dark)", true, "lcars");
 
 
 $webtheme = "";
