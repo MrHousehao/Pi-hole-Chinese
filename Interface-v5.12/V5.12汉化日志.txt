@@ -2,7 +2,7 @@
 基于Pi-hole网页界面v5.12版本进行汉化，轻微调整PHP和JS代码以适应汉化界面。 
 对应版本Pi-hole的AdminLTE-5.12，搞错版本我不负责！
 AdminLTE-5.12汉化日志
-
+https://github.com/MrHousehao/Pi-hole-Chinese/commit/90ddbb1bdb2097c8077bec0073752e71d23107d9
 # 注意：由于复选框样式是按名称保存在浏览器的缓存中的，如之前使用的是官方原版，汉化以后需要重新选择复选框样式！！！
 
 以下是替换方法（自己做笔记用，大佬请忽略）
