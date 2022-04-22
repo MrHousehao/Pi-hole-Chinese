@@ -36,12 +36,12 @@ if($auth) {
     // The size of each block (in pixels) should be an integer
     $qr->printSVG(10);
     echo "</div>";
-    echo '原始 API 令牌：<code class="token">' . $pwhash . "</code></div>";
+    echo 'Raw API Token: <code class="token">' . $pwhash . "</code></div>";
   } else {
-    echo "<p>未设置密码</p>";
+    echo "<p>No password set</p>";
   }
 } else {
-  echo "<p>未授权！</p>";
+  echo "<p>Not authorized!</p>";
 }
 ?>
 </body>
