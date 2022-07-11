@@ -7,7 +7,7 @@
 *  Please see LICENSE file for your rights under this license. */
 
 require "password.php";
-if(!$auth) die("Not authorized");
+if(!$auth) die("未授权");
 
 ob_end_flush();
 ini_set("output_buffering", "0");

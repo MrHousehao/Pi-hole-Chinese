@@ -436,7 +436,7 @@ $('button[id="removedynamic"]').on("click", function () {
           $(this).remove();
         });
       } else {
-        utils.showAlert("error", "删除DHCP静态地址分配" + ipname, response + "时出错");
+        utils.showAlert("error", "删除DHCP静态地址分配" + ipname, response);
       }
     },
     error: function (jqXHR, exception) {

@@ -76,7 +76,7 @@
         <div class="box" id="recent-queries">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    List of local DNS domains
+                    本地DNS映射配置表
                 </h3>
             </div>
             <!-- /.box-header -->

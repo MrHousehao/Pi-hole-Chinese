@@ -9,7 +9,7 @@ require "password.php";
 require "auth.php";
 
 if (!$auth) {
-    die("Unauthorized");
+    die("未授权");
 }
 
 check_cors();
@@ -43,7 +43,7 @@ function echoEvent($datatext) {
     $data = str_replace(array_keys($ANSIcolors), $ANSIcolors, htmlspecialchars($datatext));
 
     if (!isset($_GET["IE"])) {
-        echo "data: ".implode("\ndata: ", explode("\n", $data))."\n\n";
+        echo "数据：".implode("\ndata: ", explode("\n", $data))."\n\n";
     } else {
         echo $data;
     }

@@ -236,8 +236,8 @@
     <!-- JS Warning -->
     <div>
         <input type="checkbox" id="js-hide">
-        <div class="js-warn" id="js-warn-exit"><h1>JavaScript Is Disabled</h1><p>JavaScript is required for the site to function.</p>
-            <p>To learn how to enable JavaScript click <a href="https://www.enable-javascript.com/" rel="noopener" target="_blank">here</a></p><label for="js-hide">Close</label>
+        <div class="js-warn" id="js-warn-exit"><h1>JavaScript 已禁用</h1><p>网站运行需要 JavaScript。</p>
+            <p>要了解如何启用 JavaScript，请点击<a href="https://www.enable-javascript.com/" rel="noopener" target="_blank">如何启用 JavaScript</a></p><label for="js-hide">关闭</label>
         </div>
     </div>
     <!-- /JS Warning -->
@@ -264,14 +264,14 @@ if($auth) {
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle-svg" data-toggle="push-menu" role="button">
                 <i aria-hidden="true" class="fa fa-bars"></i>
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">切换导航</span>
                 <span class="warning-count hidden" id="top-warning-count"></span>
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <li<?php echo !$hostname ? ' class="hidden"' : "" ?>>
                         <p class="navbar-text">
-                            <span class="hidden-xs hidden-sm">hostname:</span>
+                            <span class="hidden-xs hidden-sm">主机名称：</span>
                             <code><?php echo $hostname; ?></code>
                         </p>
                     </li>
@@ -285,8 +285,8 @@ if($auth) {
                             <li class="user-header">
                                 <img src="img/logo.svg" alt="Pi-hole Logo" style="border: 0" width="90" height="90">
                                 <p>
-                                    Open Source Ad Blocker
-                                    <small>Designed For Raspberry Pi</small>
+                                    开源广告拦截器
+                                    <small>专为 Raspberry Pi 设计</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -296,13 +296,13 @@ if($auth) {
                                         <a class="btn-link" href="https://github.com/pi-hole" rel="noopener" target="_blank">GitHub</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a class="btn-link" href="https://pi-hole.net/" rel="noopener" target="_blank">Website</a>
+                                        <a class="btn-link" href="https://pi-hole.net/" rel="noopener" target="_blank">官网</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
-                                        <a class="btn-link" href="https://github.com/pi-hole/pi-hole/releases" rel="noopener" target="_blank">Updates</a>
+                                        <a class="btn-link" href="https://github.com/pi-hole/pi-hole/releases" rel="noopener" target="_blank">更新</a>
                                     </div>
                                     <div id="sessiontimer" class="col-xs-12 text-center">
-                                        <strong>Session is valid for <span id="sessiontimercounter"><?php if($auth && strlen($pwhash) > 0){echo $maxlifetime;}else{echo "0";} ?></span></strong>
+                                        <strong>登录有效期剩余<span id="sessiontimercounter"><?php if($auth && strlen($pwhash) > 0){echo $maxlifetime;}else{echo "0";} ?></span></strong>
                                     </div>
                                 </div>
                             </li>
@@ -311,7 +311,7 @@ if($auth) {
                                 <!-- Donate Button -->
                                 <div class="text-center">
                                     <a class="btn btn-primary btn-lg donate" href="https://pi-hole.net/donate/" rel="noopener" target="_blank">
-                                        <i class="fas fa-fw menu-icon fa-donate"></i> Donate
+                                        <i class="fas fa-fw menu-icon fa-donate"></i>赞助
                                     </a>
                                 </div>
                             </li>
@@ -331,30 +331,30 @@ if($auth) {
                     <img src="img/logo.svg" alt="Pi-hole logo">
                 </div>
                 <div class="pull-left info">
-                    <p>Status</p>
+                    <p>状态</p>
                     <?php
                     $pistatus = piholeStatus();
                     if ($pistatus == 53) {
-                        echo '<span id="status"><i class="fa fa-w fa-circle text-green-light"></i> Active</span>';
+                        echo '<span id="status"><i class="fa fa-w fa-circle text-green-light"></i>激活</span>';
                     } elseif ($pistatus == 0) {
-                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> Blocking disabled</span>';
+                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i>离线</span>';
                     } elseif ($pistatus == -1) {
-                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> DNS service not running</span>';
+                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> DNS 服务器未运行</span>';
                     } elseif ($pistatus == -2) {
-                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i> Unknown</span>';
+                        echo '<span id="status"><i class="fa fa-w fa-circle text-red"></i>未知</span>';
                     } else {
-                        echo '<span id="status"><i class="fa fa-w fa-circle text-orange"></i> DNS service on port '.$pistatus.'</span>';
+                        echo '<span id="status"><i class="fa fa-w fa-circle text-orange"></i> DNS 服务器端口'.$pistatus.'</span>';
                     }
                     ?>
                     <br/>
                     <?php
-                    echo '<span title="Detected '.$nproc.' cores"><i class="fa fa-w fa-circle ';
+                    echo '<span title="检测到 '.$nproc.' 个核心"><i class="fa fa-w fa-circle ';
                     if ($loaddata[0] > $nproc) {
                         echo "text-red";
                     } else {
                         echo "text-green-light";
                     }
-                    echo '"></i> Load:&nbsp;&nbsp;' . $loaddata[0] . "&nbsp;&nbsp;" . $loaddata[1] . "&nbsp;&nbsp;". $loaddata[2] . "</span>";
+                    echo '"></i>负载：&nbsp;&nbsp;' . $loaddata[0] . "&nbsp;&nbsp;" . $loaddata[1] . "&nbsp;&nbsp;". $loaddata[2] . "</span>";
                     ?>
                     <br/>
                     <?php
@@ -365,9 +365,9 @@ if($auth) {
                         echo "text-green-light";
                     }
                     if($memory_usage > 0.0) {
-                        echo '"></i> Memory usage:&nbsp;&nbsp;' . sprintf("%.1f",100.0*$memory_usage) . "&thinsp;%</span>";
+                        echo '"></i>内存使用：&nbsp;&nbsp;' . sprintf("%.1f",100.0*$memory_usage) . "&thinsp;%</span>";
                     } else {
-                        echo '"></i> Memory usage:&nbsp;&nbsp; N/A</span>';
+                        echo '"></i>内存使用：&nbsp;&nbsp; 无数据</span>';
                     }
                     ?>
                     <br/>
@@ -379,7 +379,7 @@ if($auth) {
                           $tempcolor = "text-red";
                         }
                         echo '<span id="temperature"><i class="fa fa-w fa-fire '.$tempcolor.'" style="width: 1em !important"></i> ';
-                        echo 'Temp:&nbsp;<span id="rawtemp" hidden>' .$celsius. '</span>';
+                        echo '温度：&nbsp;<span id="rawtemp" hidden>' .$celsius. '</span>';
                         echo '<span id="tempdisplay"></span></span>';
                       }
                     ?>
@@ -404,41 +404,41 @@ if($auth) {
             }
             ?>
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header text-uppercase">Main navigation</li>
+                <li class="header text-uppercase">导航栏</li>
                 <!-- Home Page -->
                 <li<?php if($scriptname === "index.php"){ ?> class="active"<?php } ?>>
                     <a href="index.php">
-                        <i class="fa fa-fw menu-icon fa-home"></i> <span>Dashboard</span>
+                        <i class="fa fa-fw menu-icon fa-home"></i> <span>运行状态</span>
                     </a>
                 </li>
                 <?php if($auth){ ?>
                 <!-- Query Log -->
                 <li<?php if($scriptname === "queries.php"){ ?> class="active"<?php } ?>>
                     <a href="queries.php">
-                        <i class="fa fa-fw menu-icon fa-file-alt"></i> <span>Query Log</span>
+                        <i class="fa fa-fw menu-icon fa-file-alt"></i> <span>查询请求日志</span>
                     </a>
                 </li>
                 <li class="treeview<?php if($scriptname === "db_queries.php" || $scriptname === "db_lists.php" || $scriptname === "db_graph.php"){ ?> active<?php } ?>">
                   <a href="#">
-                    <i class="fa fa-fw menu-icon fa-history"></i> <span>Long-term data</span>
+                    <i class="fa fa-fw menu-icon fa-history"></i> <span>数据库</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
                   </a>
                   <ul class="treeview-menu">
-                    <li<?php if($scriptname === "db_graph.php"){ ?> class="active"<?php } ?>>
-                        <a href="db_graph.php">
-                            <i class="fa fa-fw menu-icon fa-chart-bar"></i> Graphics
-                        </a>
-                    </li>
                     <li<?php if($scriptname === "db_queries.php"){ ?> class="active"<?php } ?>>
                         <a href="db_queries.php">
-                            <i class="fa fa-fw menu-icon fa-file-alt"></i> Query Log
+                            <i class="fa fa-fw menu-icon fa-file-alt"></i>查询请求日志
+                        </a>
+                    </li>
+                    <li<?php if($scriptname === "db_graph.php"){ ?> class="active"<?php } ?>>
+                        <a href="db_graph.php">
+                            <i class="fa fa-fw menu-icon fa-chart-bar"></i>图形统计
                         </a>
                     </li>
                     <li<?php if($scriptname === "db_lists.php"){ ?> class="active"<?php } ?>>
                         <a href="db_lists.php">
-                            <i class="fa fa-fw menu-icon fa-list"></i> Top Lists
+                            <i class="fa fa-fw menu-icon fa-list"></i>统计表
                         </a>
                     </li>
                   </ul>
@@ -446,19 +446,19 @@ if($auth) {
                 <!-- Whitelist -->
                 <li<?php if($scriptname === "whitelist"){ ?> class="active"<?php } ?>>
                     <a href="groups-domains.php?type=white">
-                        <i class="fa fa-fw menu-icon fa-check-circle"></i> <span>Whitelist</span>
+                        <i class="fa fa-fw menu-icon fa-check-circle"></i> <span>白名单</span>
                     </a>
                 </li>
                 <!-- Blacklist -->
                 <li<?php if($scriptname === "blacklist"){ ?> class="active"<?php } ?>>
                     <a href="groups-domains.php?type=black">
-                        <i class="fa fa-fw menu-icon fa-ban"></i> <span>Blacklist</span>
+                        <i class="fa fa-fw menu-icon fa-ban"></i> <span>黑名单</span>
                     </a>
                 </li>
                 <!-- Group Management -->
                 <li class="treeview<?php if (in_array($scriptname, array("groups.php", "groups-adlists.php", "groups-clients.php", "groups-domains.php"))){ ?> active<?php } ?>">
                   <a href="#">
-                    <i class="fa fa-fw menu-icon fa-users-cog"></i> <span>Group Management</span>
+                    <i class="fa fa-fw menu-icon fa-users-cog"></i> <span>群组管理</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -466,22 +466,22 @@ if($auth) {
                   <ul class="treeview-menu">
                     <li<?php if($scriptname === "groups.php"){ ?> class="active"<?php } ?>>
                         <a href="groups.php">
-                            <i class="fa fa-fw menu-icon fa-user-friends"></i> Groups
+                            <i class="fa fa-fw menu-icon fa-user-friends"></i>群组
                         </a>
                     </li>
                     <li<?php if($scriptname === "groups-clients.php"){ ?> class="active"<?php } ?>>
                         <a href="groups-clients.php">
-                            <i class="fa fa-fw menu-icon fa-laptop"></i> Clients
+                            <i class="fa fa-fw menu-icon fa-laptop"></i>客户端
                         </a>
                     </li>
                     <li<?php if($scriptname === "groups-domains.php"){ ?> class="active"<?php } ?>>
                         <a href="groups-domains.php">
-                            <i class="fa fa-fw menu-icon fa-list"></i> Domains
+                            <i class="fa fa-fw menu-icon fa-list"></i>域名
                         </a>
                     </li>
                     <li<?php if($scriptname === "groups-adlists.php"){ ?> class="active"<?php } ?>>
                         <a href="groups-adlists.php">
-                            <i class="fa fa-fw menu-icon fa-shield-alt"></i> Adlists
+                            <i class="fa fa-fw menu-icon fa-shield-alt"></i>引力场
                         </a>
                     </li>
                   </ul>
@@ -489,7 +489,7 @@ if($auth) {
                 <!-- Toggle -->
                 <li id="pihole-disable" class="treeview"<?php if ($pistatus == "0") { ?> hidden<?php } ?>>
                   <a href="#">
-                    <i class="fa fa-fw menu-icon fa-stop"></i> <span>Disable&nbsp;&nbsp;&nbsp;<span id="flip-status-disable"></span></span>
+                    <i class="fa fa-fw menu-icon fa-stop"></i> <span>停用&nbsp;&nbsp;&nbsp;<span id="flip-status-disable"></span></span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -497,27 +497,27 @@ if($auth) {
                   <ul class="treeview-menu">
                     <li>
                         <a href="#" id="pihole-disable-indefinitely">
-                            <i class="fa fa-fw menu-icon fa-infinity"></i> Indefinitely
+                            <i class="fa fa-fw menu-icon fa-infinity"></i>永久
                         </a>
                     </li>
                     <li>
                         <a href="#" id="pihole-disable-10s">
-                            <i class="fa fa-fw menu-icon fa-clock"></i> For 10 seconds
+                            <i class="fa fa-fw menu-icon fa-clock"></i>10 秒
                         </a>
                     </li>
                     <li>
                         <a href="#" id="pihole-disable-30s">
-                            <i class="fa fa-fw menu-icon fa-clock"></i> For 30 seconds
+                            <i class="fa fa-fw menu-icon fa-clock"></i>30 秒
                         </a>
                     </li>
                     <li>
                         <a href="#" id="pihole-disable-5m">
-                            <i class="fa fa-fw menu-icon fas fa-clock"></i> For 5 minutes
+                            <i class="fa fa-fw menu-icon fas fa-clock"></i>5 分钟
                         </a>
                     </li>
                     <li>
                       <a href="#" id="pihole-disable-cst" data-toggle="modal" data-target="#customDisableModal">
-                            <i class="fa fa-fw menu-icon fa-user-clock"></i> Custom time
+                            <i class="fa fa-fw menu-icon fa-user-clock"></i>自定义时间
                       </a>
                     </li>
                   </ul>
@@ -526,7 +526,7 @@ if($auth) {
                 <li id="pihole-enable" class="treeview"<?php if (!in_array($pistatus,["0","-1","-2"])) { ?> hidden<?php } ?>>
                     <a href="#">
                       <i class="fa fa-fw menu-icon fa-play"></i>
-                      <span id="enableLabel">Enable&nbsp;&nbsp;&nbsp;
+                      <span id="enableLabel">启用&nbsp;&nbsp;&nbsp;
                         <span id="flip-status-enable"></span>
                       </span>
                     </a>
@@ -534,7 +534,7 @@ if($auth) {
                 <!-- Tools -->
                 <li class="treeview<?php if (in_array($scriptname, array("messages.php", "gravity.php", "queryads.php", "auditlog.php", "taillog.php", "taillog-FTL.php", "debug.php", "network.php"))){ ?> active<?php } ?>">
                   <a href="#">
-                    <i class="fa fa-fw menu-icon fa-tools"></i> <span>Tools</span>
+                    <i class="fa fa-fw menu-icon fa-tools"></i> <span>工具</span>
                     <span class="warning-count hidden"></span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -544,26 +544,26 @@ if($auth) {
                     <!-- Pi-hole diagnosis -->
                     <li<?php if($scriptname === "messages.php"){ ?> class="active"<?php } ?>>
                         <a href="messages.php">
-                            <i class="fa fa-fw menu-icon fa-file-medical-alt"></i> Pi-hole diagnosis
+                            <i class="fa fa-fw menu-icon fa-file-medical-alt"></i> Pi-hole 诊断
                             <span class="pull-right-container warning-count hidden"></span>
                         </a>
                     </li>
                     <!-- Run gravity.sh -->
                     <li<?php if($scriptname === "gravity.php"){ ?> class="active"<?php } ?>>
                         <a href="gravity.php">
-                            <i class="fa fa-fw menu-icon fa-arrow-circle-down"></i> Update Gravity
+                            <i class="fa fa-fw menu-icon fa-arrow-circle-down"></i> 更新引力场
                         </a>
                     </li>
                     <!-- Query Lists -->
                     <li<?php if($scriptname === "queryads.php"){ ?> class="active"<?php } ?>>
                         <a href="queryads.php">
-                            <i class="fa fa-fw menu-icon fa-search"></i> Search Adlists
+                            <i class="fa fa-fw menu-icon fa-search"></i>引力场定位
                         </a>
                     </li>
                     <!-- Audit log -->
                     <li<?php if($scriptname === "auditlog.php"){ ?> class="active"<?php } ?>>
                         <a href="auditlog.php">
-                            <i class="fa fa-fw menu-icon fa-balance-scale"></i> Audit log
+                            <i class="fa fa-fw menu-icon fa-balance-scale"></i>审核日志
                         </a>
                     </li>
                     <!-- Tail pihole.log -->
@@ -582,7 +582,7 @@ if($auth) {
                                     <path id="svg_5" fill="currentColor" d="M37.633,129.408c0.127-2.222,0.92-22.949,24.208-24.209 c14.148-1.019,24.59,10.159,38.314,10.159c34.254-2.575,30.009-48.417,0-48.417c-7.5-0.019-14.699,2.949-20.006,8.249 l-34.226,34.212c-5.299,5.307-8.268,12.506-8.249,20.006"/>
                                 </g>
                             </svg>
-                            Tail pihole.log
+                            实时显示 pihole.log
                         </a>
                     </li>
                     <!-- Tail FTL.log -->
@@ -595,19 +595,19 @@ if($auth) {
                                     <path opacity=".6" d="M10 186.2a283.868 283.868 0 0 1 42.976-2.992c26.697 0 44.014 4.806 57.58 15.023 14.604 10.853 23.782 28.17 23.782 52.991 0 26.914-9.798 45.487-23.364 56.96-14.806 12.31-37.348 18.154-64.882 18.154A276.442 276.442 0 0 1 10 324.29V186.2zm31.922 114.726a57.564 57.564 0 0 0 11.054.636c28.79.201 47.564-15.659 47.564-49.24.217-29.208-16.899-44.65-44.231-44.65a66.665 66.665 0 0 0-14.387 1.241v92.013zm113.283 24.015V184.325h37.209l29.146 51.595a408.098 408.098 0 0 1 22.945 48.06h.62a523.847 523.847 0 0 1-2.697-58.618v-41.037h29.208V324.94h-33.394l-30.046-54.262a523.459 523.459 0 0 1-24.402-49.611l-.62.201c.821 18.605 1.24 38.402 1.24 61.348v42.355l-29.209-.03zm145.004-32.759a81.099 81.099 0 0 0 35.27 8.76c14.605 0 22.326-6.047 22.326-15.225 0-8.76-6.682-13.767-23.581-19.829-23.364-8.123-38.604-21.069-38.604-41.518 0-23.984 20.03-42.355 53.208-42.355a86.246 86.246 0 0 1 35.89 7.1l-7.1 25.658a66.804 66.804 0 0 0-29.456-6.666c-13.783 0-20.45 6.201-20.45 13.55 0 8.976 7.923 12.945 26.077 19.829 24.806 9.178 36.511 22.108 36.511 41.937 0 23.58-18.155 43.611-56.743 43.611-16.077 0-31.921-4.186-39.86-8.558l6.512-26.294z"/>
                                 </g>
                             </svg>
-                            Tail FTL.log
+                            实时显示 pihole-FTL.log
                         </a>
                     </li>
                     <!-- Generate debug log -->
                     <li<?php if($scriptname === "debug.php"){ ?> class="active"<?php } ?>>
                         <a href="debug.php">
-                            <i class="fa fa-fw menu-icon fa-ambulance"></i> Generate debug log
+                            <i class="fa fa-fw menu-icon fa-ambulance"></i>生成调试日志
                         </a>
                     </li>
                     <!-- Network -->
                     <li<?php if($scriptname === "network.php"){ ?> class="active"<?php } ?>>
                         <a href="network.php">
-                            <i class="fa fa-fw menu-icon fa-network-wired"></i> Network
+                            <i class="fa fa-fw menu-icon fa-network-wired"></i>客户端概览
                         </a>
                     </li>
                   </ul>
@@ -615,13 +615,13 @@ if($auth) {
                 <!-- Settings -->
                 <li<?php if($scriptname === "settings.php"){ ?> class="active"<?php } ?>>
                     <a href="settings.php">
-                        <i class="fa fa-fw menu-icon fa-cog"></i> <span>Settings</span>
+                        <i class="fa fa-fw menu-icon fa-cog"></i> <span>设置</span>
                     </a>
                 </li>
                 <!-- Local DNS Records -->
                 <li class="treeview <?php if(in_array($scriptname, array("dns_records.php", "cname_records.php"))){ ?>active<?php } ?>">
                   <a href="#">
-                    <i class="fa fa-fw menu-icon fa-address-book"></i> <span>Local DNS</span>
+                    <i class="fa fa-fw menu-icon fa-address-book"></i> <span>本地 DNS 映射</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
                     </span>
@@ -629,12 +629,12 @@ if($auth) {
                   <ul class="treeview-menu">
                     <li<?php if($scriptname === "dns_records.php"){ ?> class="active"<?php } ?>>
                         <a href="dns_records.php">
-                            <i class="fa fa-fw menu-icon fa-address-book"></i> DNS Records
+                            <i class="fa fa-fw menu-icon fa-address-book"></i>DNS 映射
                         </a>
                     </li>
                     <li<?php if($scriptname === "cname_records.php"){ ?> class="active"<?php } ?>>
                         <a href="cname_records.php">
-                            <i class="fa fa-fw menu-icon fa-address-book"></i> CNAME Records
+                            <i class="fa fa-fw menu-icon fa-address-book"></i>CNAME 映射
                         </a>
                     </li>
                   </ul>
@@ -645,7 +645,7 @@ if($auth) {
                 if(strlen($pwhash) > 0) { ?>
                 <li>
                     <a href="?logout">
-                        <i class="fa fa-fw menu-icon fa-sign-out-alt"></i> <span>Logout</span>
+                        <i class="fa fa-fw menu-icon fa-sign-out-alt"></i> <span>注销</span>
                     </a>
                 </li>
                 <?php } ?>
@@ -656,20 +656,20 @@ if($auth) {
                 if(strlen($pwhash) > 0 && !$auth) { ?>
                 <li<?php if($scriptname === "login"){ ?> class="active"<?php } ?>>
                     <a href="index.php?login">
-                        <i class="fa fa-fw menu-icon fa-user"></i> <span>Login</span>
+                        <i class="fa fa-fw menu-icon fa-user"></i> <span>登录</span>
                     </a>
                 </li>
                 <?php } ?>
                 <!-- Donate -->
                 <li>
                     <a href="https://pi-hole.net/donate/" rel="noopener" target="_blank">
-                        <i class="fas fa-fw menu-icon fa-donate"></i> <span>Donate</span>
+                        <i class="fas fa-fw menu-icon fa-donate"></i> <span>赞助</span>
                     </a>
                 </li>
                  <!-- Docs -->
                  <li>
                     <a href="https://docs.pi-hole.net/" rel="noopener" target="_blank">
-                        <i class="fa fa-fw menu-icon fa-question-circle"></i> <span>Documentation</span>
+                        <i class="fa fa-fw menu-icon fa-question-circle"></i> <span>资料</span>
                     </a>
                 </li>
             </ul>

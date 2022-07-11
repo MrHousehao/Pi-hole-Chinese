@@ -70,7 +70,7 @@ function check_cors() {
     $server_host = str_replace(array("[","]"), array("",""), $server_host);
 
     if(isset($_SERVER['HTTP_HOST']) && !in_array($server_host, $AUTHORIZED_HOSTNAMES)) {
-        log_and_die("Failed Host Check: " . $server_host .' vs '. htmlspecialchars(join(', ', $AUTHORIZED_HOSTNAMES)));
+        log_and_die("主机检查失败：" . $server_host .' vs '. htmlspecialchars(join(', ', $AUTHORIZED_HOSTNAMES)));
     }
 
     if(isset($_SERVER['HTTP_ORIGIN'])) {
@@ -85,7 +85,7 @@ function check_cors() {
         $server_origin = str_replace(array("[","]","http://","https://"), array("","","",""), $server_origin);
 
         if(!in_array($server_origin, $AUTHORIZED_HOSTNAMES)) {
-            log_and_die("Failed CORS: " . htmlspecialchars($server_origin) .' vs '. htmlspecialchars(join(', ', $AUTHORIZED_HOSTNAMES)));
+            log_and_die("CORS 失败：" . htmlspecialchars($server_origin) .' vs '. htmlspecialchars(join(', ', $AUTHORIZED_HOSTNAMES)));
         }
         header("Access-Control-Allow-Origin: ${_SERVER['HTTP_ORIGIN']}");
     }
@@ -108,15 +108,15 @@ function check_csrf($token) {
     }
 
     if(!isset($_SESSION['token'])) {
-        log_and_die("Session expired! Please re-login on the Pi-hole dashboard.");
+        log_and_die("登录已过期！请重新登录 Pi-hole 运行状态页面。");
     }
 
     if(empty($token)) {
-        log_and_die("Empty token! Check if cookies are enabled on your system.");
+        log_and_die("令牌为空！请检查系统是否开启了Cookies。");
     }
 
     if(!hash_equals($_SESSION['token'], $token)) {
-        log_and_die("Wrong token! Please re-login on the Pi-hole dashboard.");
+        log_and_die("令牌错误！请重新登录 Pi-hole 运行状态页面。");
     }
 }
 
@@ -125,7 +125,7 @@ function check_domain(&$domains) {
     {
         $validDomain = validDomain($domain);
         if(!$validDomain){
-            log_and_die(htmlspecialchars($domain. ' is not a valid domain'));
+            log_and_die(htmlspecialchars($domain. ' 是一个无效的域名'));
         }
     }
 }

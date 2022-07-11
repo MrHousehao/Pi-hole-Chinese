@@ -51,11 +51,11 @@ $(function () {
     rowCallback: function (row, data) {
       $(row).attr("data-id", data.id);
       var tooltip =
-        "Added: " +
+        "添加时间：" +
         utils.datetime(data.date_added, false) +
-        "\nLast modified: " +
+        "\n上次修改：" +
         utils.datetime(data.date_modified, false) +
-        "\nDatabase ID: " +
+        "\n数据库ID：" +
         data.id;
       $("td:eq(1)", row).html(
         '<input id="name_' + data.id + '" title="' + tooltip + '" class="form-control">'
@@ -70,8 +70,8 @@ $(function () {
       );
       var statusEl = $("#status_" + data.id, row);
       statusEl.bootstrapToggle({
-        on: "Enabled",
-        off: "Disabled",
+        on: "启用",
+        off: "停用",
         size: "small",
         onstyle: "success",
         width: "80px",
@@ -105,7 +105,7 @@ $(function () {
     buttons: [
       {
         text: '<span class="far fa-square"></span>',
-        titleAttr: "Select All",
+        titleAttr: "全选",
         className: "btn-sm datatable-bt selectAll",
         action: function () {
           table.rows({ page: "current" }).select();
@@ -113,7 +113,7 @@ $(function () {
       },
       {
         text: '<span class="far fa-plus-square"></span>',
-        titleAttr: "Select All",
+        titleAttr: "全选",
         className: "btn-sm datatable-bt selectMore",
         action: function () {
           table.rows({ page: "current" }).select();
@@ -122,12 +122,12 @@ $(function () {
       {
         extend: "selectNone",
         text: '<span class="far fa-check-square"></span>',
-        titleAttr: "Deselect All",
+        titleAttr: "取消全选",
         className: "btn-sm datatable-bt removeAll",
       },
       {
         text: '<span class="far fa-trash-alt"></span>',
-        titleAttr: "Delete Selected",
+        titleAttr: "删除所选",
         className: "btn-sm datatable-bt deleteSelected",
         action: function () {
           // For each ".selected" row ...
@@ -149,7 +149,7 @@ $(function () {
       "<'row'<'col-sm-12'i>>",
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     stateSave: true,
     stateDuration: 0,
@@ -238,7 +238,7 @@ function delItems(ids) {
         utils.showAlert(
           "success",
           "far fa-trash-alt",
-          "Successfully deleted groups: " + idstring,
+          "已成功删除群组：" + idstring,
           "<ul>" + items + "</ul>"
         );
         for (var id in ids) {
@@ -247,7 +247,7 @@ function delItems(ids) {
           }
         }
       } else {
-        utils.showAlert("error", "", "Error while deleting groups: " + idstring, response.message);
+        utils.showAlert("error", "", "删除" + idstring, response.message + "群组时出错");
       }
 
       // Clear selection after deletion
@@ -256,7 +256,7 @@ function delItems(ids) {
     })
     .fail(function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "Error while deleting groups: " + idstring, jqXHR.responseText);
+      utils.showAlert("error", "", "删除" + idstring, jqXHR.responseText + "群组时出错");
       console.log(exception); // eslint-disable-line no-console
     });
 }
@@ -266,12 +266,12 @@ function addGroup() {
   var desc = utils.escapeHtml($("#new_desc").val());
 
   utils.disableAll();
-  utils.showAlert("info", "", "Adding group...", name);
+  utils.showAlert("info", "", "添加群组中...", name);
 
   if (name.length === 0) {
     // enable the ui elements again
     utils.enableAll();
-    utils.showAlert("warning", "", "Warning", "Please specify a group name");
+    utils.showAlert("warning", "", "警告", "请指定一个群组名称");
     return;
   }
 
@@ -283,18 +283,18 @@ function addGroup() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "fas fa-plus", "Successfully added group", name);
+        utils.showAlert("success", "fas fa-plus", "成功添加群组", name);
         $("#new_name").val("");
         $("#new_desc").val("");
         table.ajax.reload();
         table.rows().deselect();
       } else {
-        utils.showAlert("error", "", "Error while adding new group", response.message);
+        utils.showAlert("error", "", "添加新群组时出错", response.message);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "Error while adding new group", jqXHR.responseText);
+      utils.showAlert("error", "", "添加新群组时出错", jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     },
   });
@@ -308,34 +308,34 @@ function editGroup() {
   var status = tr.find("#status_" + id).is(":checked") ? 1 : 0;
   var desc = utils.escapeHtml(tr.find("#desc_" + id).val());
 
-  var done = "edited";
-  var notDone = "editing";
+  var done = "修改";
+  var notDone = "正在修改";
   switch (elem) {
     case "status_" + id:
       if (status === 0) {
-        done = "disabled";
-        notDone = "disabling";
+        done = "停用";
+        notDone = "正在停用";
       } else if (status === 1) {
-        done = "enabled";
-        notDone = "enabling";
+        done = "启用";
+        notDone = "正在启用";
       }
 
       break;
     case "name_" + id:
-      done = "edited name of";
-      notDone = "editing name of";
+      done = "修改名称，";
+      notDone = "正在修改名称";
       break;
     case "desc_" + id:
-      done = "edited description of";
-      notDone = "editing description of";
+      done = "修改描述，";
+      notDone = "正在修改描述";
       break;
     default:
-      alert("bad element or invalid data-id!");
+      alert("元素错误或数据id无效！");
       return;
   }
 
   utils.disableAll();
-  utils.showAlert("info", "", "Editing group...", name);
+  utils.showAlert("info", "", "修改群组中...", name);
   $.ajax({
     url: "scripts/pi-hole/php/groups.php",
     method: "post",
@@ -351,12 +351,12 @@ function editGroup() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "fas fa-pencil-alt", "Successfully " + done + " group", name);
+        utils.showAlert("success", "fas fa-pencil-alt", "成功" + done + " 群组：", name);
       } else {
         utils.showAlert(
           "error",
           "",
-          "Error while " + notDone + " group with ID " + id,
+          "群组ID为" + id + "在" + notDone + "出错",
           response.message
         );
       }
@@ -366,7 +366,7 @@ function editGroup() {
       utils.showAlert(
         "error",
         "",
-        "Error while " + notDone + " group with ID " + id,
+        "群组ID为" + id + "在" + notDone + "出错",
         jqXHR.responseText
       );
       console.log(exception); // eslint-disable-line no-console

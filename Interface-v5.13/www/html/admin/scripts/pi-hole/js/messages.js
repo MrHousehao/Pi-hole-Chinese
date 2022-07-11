@@ -75,7 +75,7 @@ function renderMessage(data, type, row) {
       );
 
     case "DNSMASQ_CONFIG":
-      return "FTL failed to start due to " + row.message;
+      return "FTL 无法启动，因为" + row.message;
 
     case "RATE_LIMIT":
       return (
@@ -90,44 +90,44 @@ function renderMessage(data, type, row) {
 
     case "DNSMASQ_WARN":
       return (
-        "Warning in <code>dnsmasq</code> core:<pre>" +
+        "<code>dnsmasq</code>核心警告：<pre>" +
         row.message +
-        '</pre> Check out <a href="https://docs.pi-hole.net/ftldns/dnsmasq_warn/" target="_blank">our documentation</a> for further information.'
+        '</pre>查看<a href="https://docs.pi-hole.net/ftldns/dnsmasq_warn/" target="_blank">Pi-hole支持文档</a>以获取更多信息。'
       );
 
     case "LOAD":
       return (
-        "Long-term load (15min avg) larger than number of processors: <strong>" +
+        "平均负载（15分钟内）超出可处理数量：<strong>" +
         parseFloat(row.blob1).toFixed(1) +
         " &gt; " +
         parseInt(row.blob2, 10) +
-        "</strong><br>This may slow down DNS resolution and can cause bottlenecks."
+        "</strong><br>这可能会降低 DNS 的解析速度，并导致阻塞"
       );
 
     case "SHMEM":
       return (
-        "RAM shortage (<code>" +
+        "RAM 不足（<code>" +
         utils.escapeHtml(row.message) +
-        "</code>) ahead: <strong>" +
+        "</code>）预置：<strong>" +
         parseInt(row.blob1, 10) +
-        "% used</strong><pre>" +
+        "% 使用</strong><pre>" +
         utils.escapeHtml(row.blob2) +
         "</pre>"
       );
 
     case "DISK":
       return (
-        "Disk shortage (<code>" +
+        "磁盘不足（<code>" +
         utils.escapeHtml(row.message) +
-        "</code>) ahead: <strong>" +
+        "</code）预置：<strong>" +
         parseInt(row.blob1, 10) +
-        "% used</strong><pre>" +
+        "% 使用</strong><pre>" +
         utils.escapeHtml(row.blob2) +
         "</pre>"
       );
 
     default:
-      return "Unknown message type<pre>" + JSON.stringify(row) + "</pre>";
+      return "未知消息类型<pre>" + JSON.stringify(row) + "</pre>";
   }
 }
 
@@ -244,10 +244,10 @@ $(function () {
       "<'row'<'col-sm-12'i>>",
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     language: {
-      emptyTable: "No issues found.",
+      emptyTable: "没有发现任何问题。",
     },
     stateSave: true,
     stateDuration: 0,
@@ -325,7 +325,7 @@ function delMsg(ids) {
 
   utils.disableAll();
   var idstring = ids.join(", ");
-  utils.showAlert("info", "", "Deleting messages: " + idstring, "...");
+  utils.showAlert("info", "", "删除信息：" + idstring, "中...");
 
   $.ajax({
     url: "scripts/pi-hole/php/message.php",
@@ -339,7 +339,7 @@ function delMsg(ids) {
         utils.showAlert(
           "success",
           "far fa-trash-alt",
-          "Successfully deleted messages: " + idstring,
+          "成功删除信息：" + idstring,
           ""
         );
         for (var id in ids) {
@@ -348,7 +348,7 @@ function delMsg(ids) {
           }
         }
       } else {
-        utils.showAlert("error", "", "Error while deleting message: " + idstring, response.message);
+        utils.showAlert("error", "", "删除信息：" + idstring + "时出错", response.message);
       }
 
       // Clear selection after deletion
@@ -360,7 +360,7 @@ function delMsg(ids) {
     )
     .fail(function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "Error while deleting message: " + idstring, jqXHR.responseText);
+      utils.showAlert("error", "", "删除信息：" + idstring + "时出错", jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     });
 }

@@ -42,7 +42,7 @@ $(function () {
     ],
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     order: [[0, "asc"]],
     stateSave: true,
@@ -70,7 +70,7 @@ function addCustomDNS() {
   var domain = utils.escapeHtml($("#domain").val());
 
   utils.disableAll();
-  utils.showAlert("info", "", "Adding custom DNS entry...", "");
+  utils.showAlert("info", "", "添加自定义 DNS 映射中...", "");
 
   $.ajax({
     url: "scripts/pi-hole/php/customdns.php",
@@ -80,19 +80,19 @@ function addCustomDNS() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "far fa-check-circle", "Custom DNS added", domain + ": " + ip);
+        utils.showAlert("success", "far fa-check-circle", "已添加自定义 DNS 映射", domain + ": " + ip);
 
         // Clean up field values and reload table data
         $("#domain").val("");
         $("#ip").val("");
         table.ajax.reload();
       } else {
-        utils.showAlert("error", "fas fa-times", "Failure! Something went wrong", response.message);
+        utils.showAlert("error", "fas fa-times", "失败！出了一点问题", response.message);
       }
     },
     error: function () {
       utils.enableAll();
-      utils.showAlert("error", "fas fa-times", "Error while adding custom DNS entry", "");
+      utils.showAlert("error", "fas fa-times", "添加自定义 DNS 映射时出错", "");
     },
   });
 }
@@ -102,7 +102,7 @@ function deleteCustomDNS() {
   var domain = $(this).attr("data-domain");
 
   utils.disableAll();
-  utils.showAlert("info", "", "Deleting custom DNS entry...", "");
+  utils.showAlert("info", "", "删除自定义 DNS 映射中...", "");
 
   $.ajax({
     url: "scripts/pi-hole/php/customdns.php",
@@ -112,15 +112,15 @@ function deleteCustomDNS() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "far fa-check-circle", "Custom DNS deleted", domain + ": " + ip);
+        utils.showAlert("success", "far fa-check-circle", "已删除自定义 DNS 映射", domain + ": " + ip);
         table.ajax.reload();
       } else {
-        utils.showAlert("error", "fas fa-times", "Failure! Something went wrong", response.message);
+        utils.showAlert("error", "fas fa-times", "失败！出了一点问题", response.message);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "fas fa-times", "Error while deleting custom DNS entry", "");
+      utils.showAlert("error", "fas fa-times", "删除自定义 DNS 映射时出错", "");
       console.log(exception); // eslint-disable-line no-console
     },
   });

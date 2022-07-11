@@ -16,7 +16,7 @@ if (!isset($api)) {
         check_cors();
         check_csrf($_POST['token']);
     } else {
-        log_and_die('Not allowed (login session invalid or expired, please relogin on the Pi-hole dashboard)!');
+        log_and_die('不允许（登录无效或已过期，请重新登录Pi-hole）！');
     }
 }
 
@@ -62,7 +62,7 @@ if ($_POST['action'] == 'get_groups') {
         $added = 0;
         $stmt = $db->prepare('INSERT INTO "group" (name,description) VALUES (:name,:desc)');
         if (!$stmt) {
-            throw new Exception('While preparing statement: ' . $db->lastErrorMsg());
+            throw new Exception('准备报告时：' . $db->lastErrorMsg());
         }
 
         $desc = $_POST['desc'];
@@ -71,7 +71,7 @@ if ($_POST['action'] == 'get_groups') {
             $desc = null;
         }
         if (!$stmt->bindValue(':desc', $desc, SQLITE3_TEXT)) {
-            throw new Exception('While binding desc: ' . $db->lastErrorMsg());
+            throw new Exception('绑定描述时：' . $db->lastErrorMsg());
         }
 
         foreach ($names as $name) {
@@ -81,13 +81,13 @@ if ($_POST['action'] == 'get_groups') {
             }
 
             if (!$stmt->bindValue(':name', $name, SQLITE3_TEXT)) {
-                throw new Exception('While binding name: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " groups");
+                throw new Exception('绑定名称时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加 ' . $total . "个中的". $added . "个群组");
             }
 
             if (!$stmt->execute()) {
-                throw new Exception('While executing: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " groups");
+                throw new Exception('执行时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加 ' . $total . "个中的". $added . "个群组");
             }
             $added++;
         }
@@ -105,16 +105,16 @@ if ($_POST['action'] == 'get_groups') {
 
         $stmt = $db->prepare('UPDATE "group" SET enabled=:enabled, name=:name, description=:desc WHERE id = :id');
         if (!$stmt) {
-            throw new Exception('While preparing statement: ' . $db->lastErrorMsg());
+            throw new Exception('准备报告时：' . $db->lastErrorMsg());
         }
 
         $status = ((int) $_POST['status']) !== 0 ? 1 : 0;
         if (!$stmt->bindValue(':enabled', $status, SQLITE3_INTEGER)) {
-            throw new Exception('While binding enabled: ' . $db->lastErrorMsg());
+            throw new Exception('启用绑定时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':name', $name, SQLITE3_TEXT)) {
-            throw new Exception('While binding name: ' . $db->lastErrorMsg());
+            throw new Exception('绑定名称时：' . $db->lastErrorMsg());
         }
 
         if (strlen($desc) === 0) {
@@ -122,15 +122,15 @@ if ($_POST['action'] == 'get_groups') {
             $desc = null;
         }
         if (!$stmt->bindValue(':desc', $desc, SQLITE3_TEXT)) {
-            throw new Exception('While binding desc: ' . $db->lastErrorMsg());
+            throw new Exception('绑定描述时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id: ' . $db->lastErrorMsg());
+            throw new Exception('绑定ID时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
-            throw new Exception('While executing: ' . $db->lastErrorMsg());
+            throw new Exception('执行时：' . $db->lastErrorMsg());
         }
 
         $reload = true;
@@ -355,7 +355,7 @@ if ($_POST['action'] == 'get_groups') {
             }
 
             if (!$stmt->bindValue(':ip', $ip, SQLITE3_TEXT)) {
-                throw new Exception('While binding ip: ' . $db->lastErrorMsg());
+                throw new Exception('绑定ID时：' . $db->lastErrorMsg());
             }
 
             $comment = html_entity_decode($_POST['comment']);
@@ -364,13 +364,13 @@ if ($_POST['action'] == 'get_groups') {
                     $comment = null;
             }
             if (!$stmt->bindValue(':comment', $comment, SQLITE3_TEXT)) {
-                throw new Exception('While binding comment: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " clients");
+                throw new Exception('绑定描述时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个客户端");
             }
 
             if (!$stmt->execute()) {
-                throw new Exception('While executing: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " clients");
+                throw new Exception('执行时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个客户端");
             }
             $added++;
         }
@@ -387,7 +387,7 @@ if ($_POST['action'] == 'get_groups') {
 
         $stmt = $db->prepare('UPDATE client SET comment=:comment WHERE id = :id');
         if (!$stmt) {
-            throw new Exception('While preparing statement: ' . $db->lastErrorMsg());
+            throw new Exception('准备报告时：' . $db->lastErrorMsg());
         }
 
         $comment = html_entity_decode($_POST['comment']);
@@ -396,15 +396,15 @@ if ($_POST['action'] == 'get_groups') {
                 $comment = null;
         }
         if (!$stmt->bindValue(':comment', $comment, SQLITE3_TEXT)) {
-            throw new Exception('While binding comment: ' . $db->lastErrorMsg());
+            throw new Exception('绑定描述时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id: ' . $db->lastErrorMsg());
+            throw new Exception('绑定ID时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
-            throw new Exception('While executing: ' . $db->lastErrorMsg());
+            throw new Exception('执行时：' . $db->lastErrorMsg());
         }
 
         $stmt = $db->prepare('DELETE FROM client_by_group WHERE client_id = :id');
@@ -413,7 +413,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id: ' . $db->lastErrorMsg());
+            throw new Exception('绑定ID时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
@@ -430,11 +430,11 @@ if ($_POST['action'] == 'get_groups') {
             }
 
             if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-                throw new Exception('While binding id: ' . $db->lastErrorMsg());
+                throw new Exception('绑定ID时：' . $db->lastErrorMsg());
             }
 
             if (!$stmt->bindValue(':gid', intval($gid), SQLITE3_INTEGER)) {
-                throw new Exception('While binding gid: ' . $db->lastErrorMsg());
+                throw new Exception('绑定gid时：' . $db->lastErrorMsg());
             }
 
             if (!$stmt->execute()) {
@@ -442,7 +442,7 @@ if ($_POST['action'] == 'get_groups') {
             }
         }
         if(!$db->query('COMMIT;')) {
-            throw new Exception('While committing changes to the database: ' . $db->lastErrorMsg());
+            throw new Exception('提交对数据库的更改时：' . $db->lastErrorMsg());
         }
 
         $reload = true;
@@ -649,12 +649,12 @@ if ($_POST['action'] == 'get_groups') {
                 {
                     // This is the case when idn_to_ascii() modified the string
                     if($input !== $domain && strlen($domain) > 0)
-                        $errormsg = 'Domain ' . htmlentities($input) . ' (converted to "' . htmlentities(utf8_encode($domain)) . '") is not a valid domain because ' . $msg . '.';
+                        $errormsg = '域名' . htmlentities($input) . ' (转化为"' . htmlentities(utf8_encode($domain)) . '")不是有效的域名，因为' . $msg . '.';
                     elseif($input !== $domain)
-                        $errormsg = 'Domain ' . htmlentities($input) . ' is not a valid domain because ' . $msg . '.';
+                        $errormsg = '域名' . htmlentities($input) . '不是有效的域名，因为' . $msg . '.';
                     else
-                        $errormsg = 'Domain ' . htmlentities(utf8_encode($domain)) . ' is not a valid domain because ' . $msg . '.';
-                    throw new Exception($errormsg . '<br>Added ' . $added . " out of ". $total . " domains");
+                        $errormsg = '域名' . htmlentities(utf8_encode($domain)) . '不是有效的域名，因为' . $msg . '.';
+                    throw new Exception($errormsg . '<br>已添加' . $total . "个中的". $added . "个域名");
                 }
             }
 
@@ -672,46 +672,46 @@ if ($_POST['action'] == 'get_groups') {
             // want from us.
             if($_POST['action'] == 'replace_domain') {
                 if (!$check_stmt->bindValue(':domain', $domain, SQLITE3_TEXT)) {
-                    throw new Exception('While binding domain to check: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                    'Added ' . $added . " out of ". $total . " domains");
+                    throw new Exception('检查绑定的域名时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                    '已添加' . $total . "个中的". $added . "个域名");
                 }
 
                 $check_result = $check_stmt->execute();
                 if (!$check_result) {
-                    throw new Exception('While executing check: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                    'Added ' . $added . " out of ". $total . " domains");
+                    throw new Exception('执行检查时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                    '已添加' . $total . "个中的". $added . "个域名");
                 }
 
                 // Check return value of CHECK query (0 = only default group, 1 = special group assignments)
                 $only_default_group = (($check_result->fetchArray(SQLITE3_NUM)[0]) == 0) ? true : false;
                 if(!$only_default_group) {
-                    throw new Exception('Domain ' . $domain . ' is configured with special group settings.<br>'.
-                    'Please modify the domain on the respective group management pages.');
+                    throw new Exception('域名' . $domain . '配置了特殊的群组设置。<br>'.
+                    '请在相应的群组管理页面上修改域。');
                 }
 
                 if (!$delete_stmt->bindValue(':domain', $domain, SQLITE3_TEXT)) {
-                    throw new Exception('While binding domain: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                    'Added ' . $added . " out of ". $total . " domains");
+                    throw new Exception('绑定域名时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                    '已添加' . $total . "个中的". $added . "个域名");
                 }
 
                 if (!$delete_stmt->execute()) {
-                    throw new Exception('While executing: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                    'Added ' . $added . " out of ". $total . " domains");
+                    throw new Exception('执行时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                    '已添加' . $total . "个中的". $added . "个域名");
                 }
             }
 
 
             if (!$insert_stmt->bindValue(':domain', $domain, SQLITE3_TEXT) ||
                 !$update_stmt->bindValue(':domain', $domain, SQLITE3_TEXT)) {
-                throw new Exception('While binding domain: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " domains");
+                throw new Exception('绑定域名时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个域名");
             }
 
             // First execute INSERT OR IGNORE statement to create a record for
             // this domain (ignore if already existing)
             if (!$insert_stmt->execute()) {
-                throw new Exception('While executing INSERT OR IGNORE: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " domains");
+                throw new Exception('执行INSERT OT IGNORE时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个域名");
             }
 
             // Then update the record with a new comment (and modification date
@@ -719,8 +719,8 @@ if ($_POST['action'] == 'get_groups') {
             // the initial DELETE event (losing group assignments in case an
             // entry did already exist).
             if (!$update_stmt->execute()) {
-                throw new Exception('While executing UPDATE: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " domains");
+                throw new Exception('执行UPDATE时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个域名");
             }
             $added++;
         }
@@ -733,15 +733,15 @@ if ($_POST['action'] == 'get_groups') {
         $difference = $after - $before;
         if($total === 1) {
             if($difference !== 1) {
-                    $msg = "Not adding ". htmlentities(utf8_encode($domain)) . " as it is already on the list";
+                    $msg = "没有添加". htmlentities(utf8_encode($domain)) . "因为配置中已经有相同的条目";
             } else {
-                    $msg = "Added " . htmlentities(utf8_encode($domain));
+                    $msg = "已添加" . htmlentities(utf8_encode($domain));
             }
         } else {
             if($difference !== $total) {
-                    $msg = "Added " . ($after-$before) . " out of ". $total . " domains (skipped duplicates)";
+                    $msg = "已添加" . $total ."个中的" . ($after-$before) . "域名（忽略重复项）";
             } else {
-                    $msg = "Added " . $total . " domains";
+                    $msg = "已添加" . $total . "个域名";
             }
         }
         $reload = true;
@@ -756,7 +756,7 @@ if ($_POST['action'] == 'get_groups') {
 
         $stmt = $db->prepare('UPDATE domainlist SET enabled=:enabled, comment=:comment, type=:type WHERE id = :id');
         if (!$stmt) {
-            throw new Exception('While preparing statement: ' . $db->lastErrorMsg());
+            throw new Exception('准备报告时：' . $db->lastErrorMsg());
         }
 
         $status = intval($_POST['status']);
@@ -765,7 +765,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if (!$stmt->bindValue(':enabled', $status, SQLITE3_INTEGER)) {
-            throw new Exception('While binding enabled: ' . $db->lastErrorMsg());
+            throw new Exception('启用绑定时：' . $db->lastErrorMsg());
         }
 
         $comment = html_entity_decode($_POST['comment']);
@@ -774,19 +774,19 @@ if ($_POST['action'] == 'get_groups') {
                 $comment = null;
         }
         if (!$stmt->bindValue(':comment', $comment, SQLITE3_TEXT)) {
-            throw new Exception('While binding comment: ' . $db->lastErrorMsg());
+            throw new Exception('绑定描述时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':type', intval($_POST['type']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding type: ' . $db->lastErrorMsg());
+            throw new Exception('绑定类型时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id: ' . $db->lastErrorMsg());
+            throw new Exception('绑定ID时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
-            throw new Exception('While executing: ' . $db->lastErrorMsg());
+            throw new Exception('执行时：' . $db->lastErrorMsg());
         }
 
         $stmt = $db->prepare('DELETE FROM domainlist_by_group WHERE domainlist_id = :id');
@@ -795,7 +795,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id: ' . $db->lastErrorMsg());
+            throw new Exception('绑定ID时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
@@ -912,7 +912,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if(!$db->query('COMMIT;')) {
-            throw new Exception('While committing changes to the database: ' . $db->lastErrorMsg());
+            throw new Exception('提交对数据库的更改时：' . $db->lastErrorMsg());
         }
 
         $reload = true;
@@ -960,7 +960,7 @@ if ($_POST['action'] == 'get_groups') {
 
         $stmt = $db->prepare('INSERT INTO adlist (address,comment) VALUES (:address,:comment)');
         if (!$stmt) {
-            throw new Exception('While preparing statement: ' . $db->lastErrorMsg());
+            throw new Exception('准备报告时：' . $db->lastErrorMsg());
         }
 
         $comment = html_entity_decode($_POST['comment']);
@@ -969,7 +969,7 @@ if ($_POST['action'] == 'get_groups') {
             $comment = null;
         }
         if (!$stmt->bindValue(':comment', $comment, SQLITE3_TEXT)) {
-            throw new Exception('While binding comment: ' . $db->lastErrorMsg());
+            throw new Exception('绑定描述时：' . $db->lastErrorMsg());
         }
 
         $added_list = "";
@@ -985,13 +985,13 @@ if ($_POST['action'] == 'get_groups') {
             $check_address = preg_replace("|([^:/]*://)?([^/]+)@|", "$1$2", $address, 1);
 
             if(preg_match("/[^a-zA-Z0-9:\/?&%=~._()-;]/", $check_address) !== 0) {
-                throw new Exception('<strong>Invalid adlist URL ' . htmlentities($address) . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " adlists");
+                throw new Exception('<strong>无效的引力场URL ' . htmlentities($address) . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个引力场");
             }
 
             if (!$stmt->bindValue(':address', $address, SQLITE3_TEXT)) {
-                throw new Exception('While binding address: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                'Added ' . $added . " out of ". $total . " adlists");
+                throw new Exception('绑定地址时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个引力场");
             }
 
             if (!$stmt->execute()) {
@@ -1002,8 +1002,8 @@ if ($_POST['action'] == 'get_groups') {
                     $ignored++;
                     $ignored_list .= "<small>" . $address . "</small><br>";
                 } else {
-                    throw new Exception('While executing: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                    'Added ' . $added . " out of " . $total . " adlists");
+                    throw new Exception('执行时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                '已添加' . $total . "个中的". $added . "个引力场");
                 }
             } else {
                 $added++;
@@ -1012,7 +1012,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if(!$db->query('COMMIT;')) {
-            throw new Exception('While committing changes to the database: ' . $db->lastErrorMsg());
+            throw new Exception('提交对数据库的更改时：' . $db->lastErrorMsg());
         }
 
         $reload = true;
@@ -1040,7 +1040,7 @@ if ($_POST['action'] == 'get_groups') {
 
         $stmt = $db->prepare('UPDATE adlist SET enabled=:enabled, comment=:comment WHERE id = :id');
         if (!$stmt) {
-            throw new Exception('While preparing statement: ' . $db->lastErrorMsg());
+            throw new Exception('准备报告时：' . $db->lastErrorMsg());
         }
 
         $status = intval($_POST['status']);
@@ -1049,7 +1049,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if (!$stmt->bindValue(':enabled', $status, SQLITE3_INTEGER)) {
-            throw new Exception('While binding enabled: ' . $db->lastErrorMsg());
+            throw new Exception('启用绑定时：' . $db->lastErrorMsg());
         }
 
         $comment = html_entity_decode($_POST['comment']);
@@ -1058,15 +1058,15 @@ if ($_POST['action'] == 'get_groups') {
                 $comment = null;
         }
         if (!$stmt->bindValue(':comment', $comment, SQLITE3_TEXT)) {
-            throw new Exception('While binding comment: ' . $db->lastErrorMsg());
+            throw new Exception('绑定描述时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id: ' . $db->lastErrorMsg());
+            throw new Exception('绑定ID时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
-            throw new Exception('While executing: ' . $db->lastErrorMsg());
+            throw new Exception('执行时：' . $db->lastErrorMsg());
         }
 
         $stmt = $db->prepare('DELETE FROM adlist_by_group WHERE adlist_id = :id');
@@ -1075,7 +1075,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id: ' . $db->lastErrorMsg());
+            throw new Exception('绑定ID时：' . $db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
@@ -1092,11 +1092,11 @@ if ($_POST['action'] == 'get_groups') {
             }
 
             if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-                throw new Exception('While binding id: ' . $db->lastErrorMsg());
+                throw new Exception('绑定ID时：' . $db->lastErrorMsg());
             }
 
             if (!$stmt->bindValue(':gid', intval($gid), SQLITE3_INTEGER)) {
-                throw new Exception('While binding gid: ' . $db->lastErrorMsg());
+                throw new Exception('绑定gid时：' . $db->lastErrorMsg());
             }
 
             if (!$stmt->execute()) {
@@ -1105,7 +1105,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if(!$db->query('COMMIT;')) {
-            throw new Exception('While committing changes to the database: ' . $db->lastErrorMsg());
+            throw new Exception('提交对数据库的更改时：' . $db->lastErrorMsg());
         }
 
         $reload = true;
@@ -1146,7 +1146,7 @@ if ($_POST['action'] == 'get_groups') {
         }
 
         if(!$db->query('COMMIT;')) {
-            throw new Exception('While committing changes to the database: ' . $db->lastErrorMsg());
+            throw new Exception('提交对数据库的更改时：' . $db->lastErrorMsg());
         }
 
         $reload = true;
@@ -1166,7 +1166,7 @@ if ($_POST['action'] == 'get_groups') {
 
             $stmt = $db->prepare('REPLACE INTO domain_audit (domain) VALUES (:domain)');
             if (!$stmt) {
-                throw new Exception('While preparing statement: ' . $db->lastErrorMsg());
+                throw new Exception('在准备报告时：' . $db->lastErrorMsg());
             }
 
             foreach ($domains as $domain) {
@@ -1176,34 +1176,34 @@ if ($_POST['action'] == 'get_groups') {
                 }
 
                 if (!$stmt->bindValue(':domain', $domain, SQLITE3_TEXT)) {
-                    throw new Exception('While binding domain: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                    'Added ' . $added . " out of ". $total . " domains");
+                    throw new Exception('绑定域名时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                    '已添加' . $total . "个中的". $added . "个域名");
                 }
 
                 if (!$stmt->execute()) {
-                    throw new Exception('While executing: <strong>' . $db->lastErrorMsg() . '</strong><br>'.
-                    'Added ' . $added . " out of ". $total . " domains");
+                    throw new Exception('执行时：<strong>' . $db->lastErrorMsg() . '</strong><br>'.
+                    '已添加' . $total . "个中的". $added . "个域名");
                 }
                 $added++;
             }
 
             if(!$db->query('COMMIT;')) {
-                throw new Exception('While committing changes to the database: ' . $db->lastErrorMsg());
+                throw new Exception('提交对数据库的更改时：' . $db->lastErrorMsg());
             }
 
             $after = intval($db->querySingle("SELECT COUNT(*) FROM domain_audit;"));
             $difference = $after - $before;
             if($total === 1) {
                 if($difference !== 1) {
-                        $msg = "Not adding ". htmlentities(utf8_encode($domain)) . " as it is already on the list";
+                        $msg = "没有添加". htmlentities(utf8_encode($domain)) . "因为配置中已经有相同的条目";
                 } else {
-                        $msg = "Added " . htmlentities(utf8_encode($domain));
+                        $msg = "已添加" . htmlentities(utf8_encode($domain));
                 }
             } else {
                 if($difference !== $total) {
-                        $msg = "Added " . ($after-$before) . " out of ". $total . " domains (skipped duplicates)";
+                        $msg = "已添加" . $total . "个中的". ($after-$before) . "个域名（忽略重复项）";
                 } else {
-                        $msg = "Added " . $total . " domains";
+                        $msg = "已添加" . $total . "个域名";
                 }
             }
 
@@ -1214,7 +1214,7 @@ if ($_POST['action'] == 'get_groups') {
             JSON_error($ex->getMessage());
         }
 } else {
-    log_and_die('Requested action not supported!');
+    log_and_die('不支持请求的操作！');
 }
 // Reload lists in pihole-FTL after having added something
 if ($reload) {

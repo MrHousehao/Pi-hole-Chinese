@@ -9,14 +9,14 @@
 ?>
 <!-- Title -->
 <div class="page-header">
-    <h1>Generate debug log</h1>
+    <h1>生成调试日志</h1>
 </div>
 <div>
     <input type="checkbox" id="upload">
-    <label for="upload">Upload debug log and provide token (shown at the end of the report) once finished</label>
+    <label for="upload">上传调试日志并在完成后提供令牌</label>
 </div>
-<p>Once you click this button a debug log will be generated and can automatically be uploaded if we detect a working internet connection.</p>
-<button type="button" id="debugBtn" class="btn btn-lg btn-primary btn-block">Generate debug log</button>
+<p>单击此按钮后，如果网络（互联网）连接正常，系统将生成调试日志并自动上传。</p>
+<button type="button" id="debugBtn" class="btn btn-lg btn-primary btn-block">生成调试日志</button>
 <pre id="output" style="width: 100%; height: 100%;" hidden></pre>
 
 <script src="scripts/pi-hole/js/debug.js?v=<?=$cacheVer?>"></script>
