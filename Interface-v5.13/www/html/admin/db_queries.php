@@ -10,7 +10,7 @@
 
 <!-- Title -->
 <div class="page-header">
-    <h1>Specify date range to be queried from the Pi-hole query database</h1>
+    <h1>从Pi-hole数据库调阅查询请求日志</h1>
 </div>
 
 <div class="row">
