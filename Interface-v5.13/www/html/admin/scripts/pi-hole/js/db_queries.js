@@ -407,7 +407,7 @@ $(function () {
     order: [[0, "desc"]],
     columns: [
       {
-        width: "12%",
+        width: "10%",
         render: function (data, type) {
           if (type === "display") {
             return moment
@@ -418,9 +418,9 @@ $(function () {
           return data;
         },
       },
-      { width: "9%" },
+      { width: "6%" },
       { width: "36%" },
-      { width: "10%", type: "ip-address" },
+      { width: "8%", type: "ip-address" },
       { width: "15%" },
       { width: "9%" },
       { width: "9%" },
