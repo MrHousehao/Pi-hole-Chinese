@@ -13,7 +13,7 @@ var end__ = moment();
 var until = Math.round(moment(end__).utc().valueOf() / 1000);
 var interval = 0;
 
-var dateformat = "MMMM Do YYYY, HH:mm";
+var dateformat = "YYYY年MM月DD日 HH:mm";
 
 // get the database min timestamp
 var mintimestamp;
@@ -31,20 +31,20 @@ $(function () {
       startDate: start__,
       endDate: end__,
       ranges: {
-        Today: [moment().startOf("day"), moment()],
-        Yesterday: [
+        今天: [moment().startOf("day"), moment()],
+        昨天: [
           moment().subtract(1, "days").startOf("day"),
           moment().subtract(1, "days").endOf("day"),
         ],
-        "Last 7 Days": [moment().subtract(7, "days"), moment()],
-        "Last 30 Days": [moment().subtract(30, "days"), moment()],
-        "This Month": [moment().startOf("month"), moment()],
-        "Last Month": [
+        "最近7天": [moment().subtract(7, "days"), moment()],
+        "最近30天": [moment().subtract(30, "days"), moment()],
+        "本月": [moment().startOf("month"), moment()],
+        "上月": [
           moment().subtract(1, "month").startOf("month"),
           moment().subtract(1, "month").endOf("month"),
         ],
-        "This Year": [moment().startOf("year"), moment()],
-        "All Time": [moment(mintimestamp), moment()],
+        "今年": [moment().startOf("year"), moment()],
+        "全部": [moment(mintimestamp), moment()],
       },
       opens: "center",
       showDropdowns: true,
@@ -217,7 +217,7 @@ $(function () {
       labels: [],
       datasets: [
         {
-          label: "Blocked DNS Queries",
+          label: "吞噬DNS查询请求",
           fill: true,
           backgroundColor: blockedColor,
           borderColor: blockedColor,
@@ -228,7 +228,7 @@ $(function () {
           pointHitRadius: 5,
         },
         {
-          label: "Permitted DNS Queries",
+          label: "放行DNS查询请求",
           fill: true,
           backgroundColor: permittedColor,
           borderColor: permittedColor,
@@ -284,7 +284,7 @@ $(function () {
                 untilTime += "\n";
               }
 
-              return ("Queries from " + fromTime + " to " + untilTime + " on " + fromDate).split(
+              return ("统计时间从 " + fromTime + " 到 " + untilTime + " ，日期 " + fromDate).split(
                 "\n "
               );
             }
@@ -296,11 +296,11 @@ $(function () {
             }
 
             return (
-              "Queries from " +
+              "统计时间从 " +
               fromDate +
               " " +
               fromTime +
-              " to " +
+              " 到 " +
               untilDate +
               " " +
               untilTime
@@ -383,7 +383,7 @@ $(function () {
 });
 
 $("#querytime").on("apply.daterangepicker", function (ev, picker) {
-  $(this).val(picker.startDate.format(dateformat) + " to " + picker.endDate.format(dateformat));
+  $(this).val(picker.startDate.format(dateformat) + " 到 " + picker.endDate.format(dateformat));
   $("#queries-over-time").show();
   updateQueriesOverTime();
 });

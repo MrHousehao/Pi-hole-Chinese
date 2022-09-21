@@ -13,14 +13,14 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 
 <!-- Title -->
 <div class="page-header">
-    <h1>Audit log (showing live data)</h1>
+    <h1>审核日志（显示实时数据）</h1>
 </div>
 
 <div class="row">
     <div class="col-xs-12 col-lg-6">
         <div class="box" id="domain-frequency">
             <div class="box-header with-border">
-                <h3 class="box-title">Allowed queries</h3>
+                <h3 class="box-title">已放行的数据</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -28,9 +28,9 @@ require 'scripts/pi-hole/php/header_authenticated.php';
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Domain</th>
-                                <th>Hits</th>
-                                <th>Actions</th>
+                                <th>域名</th>
+                                <th>次数</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +50,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
     <div class="col-xs-12 col-lg-6">
         <div class="box" id="ad-frequency">
             <div class="box-header with-border">
-                <h3 class="box-title">Blocked queries</h3>
+                <h3 class="box-title">已吞噬的数据</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -58,9 +58,9 @@ require 'scripts/pi-hole/php/header_authenticated.php';
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Domain</th>
-                                <th>Hits</th>
-                                <th>Actions</th>
+                                <th>域名</th>
+                                <th>次数</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>

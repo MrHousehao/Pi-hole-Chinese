@@ -80,7 +80,7 @@ function SQLite3_connect($filename, $mode = SQLITE3_OPEN_READONLY)
 function add_to_table($db, $table, $domains, $comment = null, $wildcardstyle = false, $returnnum = false, $type = -1)
 {
     if (!is_int($type)) {
-        return 'Error: Argument type has to be of type integer (is '.gettype($type).')';
+        return '错误：参数类型必须为整数类型（为'.gettype($type).')';
     }
 
     // Begin transaction
@@ -89,7 +89,7 @@ function add_to_table($db, $table, $domains, $comment = null, $wildcardstyle = f
             return 0;
         }
 
-        return "Error: Unable to begin transaction for {$table} table.";
+        return "错误：无法开始处理{$table} 列表。.";
     }
 
     // To which column should the record be added to?
@@ -126,7 +126,7 @@ function add_to_table($db, $table, $domains, $comment = null, $wildcardstyle = f
             return 0;
         }
 
-        return "Error: Failed to prepare statement for {$table} table (type = {$type}, field = {$field}).";
+        return "错误：未能为r {$table} 列表(类型 = {$type}, 字段 = {$field})准备语句。";
     }
 
     // Loop over domains and inject the lines into the database
@@ -159,7 +159,7 @@ function add_to_table($db, $table, $domains, $comment = null, $wildcardstyle = f
                 $plural = 's';
             }
 
-            return 'Error: '.$db->lastErrorMsg().', added '.$num.' domain'.$plural;
+            return '错误：'.$db->lastErrorMsg().'，已添加'.$num.'个域名'.$plural;
         }
     }
 
@@ -187,7 +187,7 @@ function add_to_table($db, $table, $domains, $comment = null, $wildcardstyle = f
         $plural = 's';
     }
 
-    return 'Success, added '.$modified.' of '.$num.' domain'.$plural.$extra;
+    return '成功，已添加'.$modified.'个中的'.$num.'个域名'.$plural.$extra;
 }
 
 /**
@@ -204,7 +204,7 @@ function add_to_table($db, $table, $domains, $comment = null, $wildcardstyle = f
 function remove_from_table($db, $table, $domains, $returnnum = false, $type = -1)
 {
     if (!is_int($type)) {
-        return 'Error: Argument type has to be of type integer (is '.gettype($type).')';
+        return '错误：参数类型必须为整数类型（为'.gettype($type).'）';
     }
 
     // Begin transaction
@@ -213,7 +213,7 @@ function remove_from_table($db, $table, $domains, $returnnum = false, $type = -1
             return 0;
         }
 
-        return 'Error: Unable to begin transaction for domainlist table.';
+        return '错误：无法开始处理域名配置表。';
     }
 
     // Get initial count of domains in this table
@@ -238,7 +238,7 @@ function remove_from_table($db, $table, $domains, $returnnum = false, $type = -1
             return 0;
         }
 
-        return 'Error: Failed to prepare statement for '.$table.' table (type = '.$type.').';
+        return '错误：未能为'.$table.'列表(类型 = '.$type.')准备语句。';
     }
 
     // Loop over domains and remove the lines from the database
@@ -259,7 +259,7 @@ function remove_from_table($db, $table, $domains, $returnnum = false, $type = -1
                 $plural = 's';
             }
 
-            return 'Error: '.$db->lastErrorMsg().', removed '.$num.' domain'.$plural;
+            return '错误：'.$db->lastErrorMsg().'，已删除'.$num.'个域名'.$plural;
         }
     }
 
@@ -276,7 +276,7 @@ function remove_from_table($db, $table, $domains, $returnnum = false, $type = -1
         $plural = 's';
     }
 
-    return 'Success, removed '.$num.' domain'.$plural;
+    return '成功，已删除'.$num.'个域名'.$plural;
 }
 
 if (!class_exists('ListType')) {

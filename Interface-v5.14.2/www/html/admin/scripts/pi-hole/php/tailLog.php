@@ -9,7 +9,7 @@
 
 require 'password.php';
 if (!$auth) {
-    exit('Not authorized');
+    exit('未授权');
 }
 
 function formatLine($line)
@@ -37,7 +37,7 @@ if (isset($_GET['FTL'])) {
 }
 
 if (!$file) {
-    exit(json_encode(array('offset' => 0, 'lines' => array("Failed to open log file. Check permissions!\n"))));
+    exit(json_encode(array('offset' => 0, 'lines' => array("无法打开日志文件。检查权限！\n"))));
 }
 
 if (isset($_GET['offset'])) {
