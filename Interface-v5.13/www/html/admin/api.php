@@ -20,7 +20,7 @@ if (isset($_GET['enable']) && $auth) {
 	if(isset($_GET["auth"]))
 	{
 	if($_GET["auth"] !== $pwhash)
-		die("Not authorized!");
+		die("未经授权！");
 	}
 	else
 	{
@@ -39,7 +39,7 @@ elseif (isset($_GET['disable']) && $auth)
 	if(isset($_GET["auth"]))
 	{
 		if($_GET["auth"] !== $pwhash)
-			die("Not authorized!");
+			die("未经授权！");
 	}
 	else
 	{
@@ -91,10 +91,10 @@ elseif (isset($_GET['versions']))
 elseif (isset($_GET['list']))
 {
 	if (!$auth)
-		die("Not authorized!");
+		die("未经授权！");
 
 	if(!isset($_GET["list"]))
-		die("List has not been specified.");
+		die("尚未指定列表。");
 
 	switch ($_GET["list"]) {
 		case 'black':
@@ -111,7 +111,7 @@ elseif (isset($_GET['list']))
 			break;
 
 		default:
-			die("Invalid list [supported: black, regex_black, white, regex_white]");
+			die("无效列表 [支持：黑名单，正侧表达式黑名单，白名单，正则表达式白名单]");
 	}
 
 	if (isset($_GET['add']))
@@ -141,7 +141,7 @@ elseif(isset($_GET['customdns']) && $auth)
 {
 	if (isset($_GET["auth"])) {
 		if ($_GET["auth"] !== $pwhash) {
-			die("Not authorized!");
+			die("未经授权！");
 		}
 	} else {
 		// Skip token validation if explicit auth string is given
@@ -162,14 +162,14 @@ elseif(isset($_GET['customdns']) && $auth)
 			break;
 
 		default:
-			die("Wrong action");
+			die("操作错误");
 	}
 }
 elseif(isset($_GET['customcname']) && $auth)
 {
 	if (isset($_GET["auth"])) {
 		if ($_GET["auth"] !== $pwhash) {
-			die("Not authorized!");
+			die("未经授权！");
 		}
 	} else {
 		// Skip token validation if explicit auth string is given
@@ -190,7 +190,7 @@ elseif(isset($_GET['customcname']) && $auth)
 			break;
 
 		default:
-			die("Wrong action");
+			die("操作错误");
 	}
 }
 
