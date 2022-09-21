@@ -89,7 +89,7 @@ function add_to_table($db, $table, $domains, $comment = null, $wildcardstyle = f
             return 0;
         }
 
-        return "错误：无法开始处理{$table} 列表。.";
+        return "错误：无法开始处理{$table} 列表。";
     }
 
     // To which column should the record be added to?

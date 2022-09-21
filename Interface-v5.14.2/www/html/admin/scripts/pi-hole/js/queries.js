@@ -245,7 +245,7 @@ $(function () {
       if (regexLink) {
         $("td:eq(4)", row).hover(
           function () {
-            this.title = "Click to show matching regex filter";
+            this.title = "单击以显示匹配的正则表达式";
             this.style.color = "#72afd2";
           },
           function () {

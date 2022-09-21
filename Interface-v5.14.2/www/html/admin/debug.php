@@ -15,7 +15,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
     <h1>生成调试日志</h1>
 </div>
 <div class="box">
-    <div class="box-header with-border"><h1 class="box-title">Options:</h1></div>
+    <div class="box-header with-border"><h1 class="box-title">选项：</h1></div>
     <div class="box-body">
         <div>
             <input type="checkbox" id="dbcheck">
@@ -25,7 +25,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         </div>
         <div>
             <input type="checkbox" id="upload">
-            <label for="upload"><strong>上传调试日志并在完成后提供令牌</strong>
+            <label for="upload"><strong>上传调试日志并在完成后提供令牌。</strong>
                 <br class="hidden-md hidden-lg"><span>完成后，URL令牌将显示在报告末尾。</span>
             </label>
         </div>

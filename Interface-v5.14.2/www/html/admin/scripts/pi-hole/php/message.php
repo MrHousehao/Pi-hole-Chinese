@@ -31,12 +31,12 @@ if ($_POST['action'] == 'delete_message' && isset($_POST['id'])) {
     try {
         $ids = json_decode($_POST['id']);
         if (!is_array($ids)) {
-            throw new Exception('Invalid payload: id is not an array');
+            throw new Exception('无效负载：id不是数组');
         }
         // Exploit prevention: Ensure all entries in the ID array are integers
         foreach ($ids as $value) {
             if (!is_numeric($value)) {
-                throw new Exception('负载无效：id包含非数字');
+                throw new Exception('无效负载：id包含非数字');
             }
         }
         $stmt = $db->prepare('DELETE FROM message WHERE id IN ('.implode(',', $ids).')');

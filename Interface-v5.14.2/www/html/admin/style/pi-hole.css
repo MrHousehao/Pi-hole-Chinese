@@ -670,7 +670,7 @@ li:not(.menu-open) .treeview-menu .warning-count {
     padding: 4px 8px;
   }
   #domainsTable td:nth-child(2n + 1) {
-    width: calc(100% - 120px);
+    width: calc(100% - 150px);
   }
   #domainsTable td:nth-child(1) {
     width: 40px;

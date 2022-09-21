@@ -20,7 +20,7 @@ $data = array();
 if (isset($_GET['enable']) && $auth) {
     if (isset($_GET['auth'])) {
         if ($_GET['auth'] !== $pwhash) {
-            exit('Not authorized!');
+            exit('未经授权！');
         }
     } else {
         // Skip token validation if explicit auth string is given
@@ -34,7 +34,7 @@ if (isset($_GET['enable']) && $auth) {
 } elseif (isset($_GET['disable']) && $auth) {
     if (isset($_GET['auth'])) {
         if ($_GET['auth'] !== $pwhash) {
-            exit('Not authorized!');
+            exit('未经授权！');
         }
     } else {
         // Skip token validation if explicit auth string is given

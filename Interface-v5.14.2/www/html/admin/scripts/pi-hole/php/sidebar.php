@@ -72,7 +72,7 @@
                     </a>
                 </li>
 
-                <li class="header text-uppercase">Analysis</li>
+                <li class="header text-uppercase">分析</li>
                 <!-- Query Log -->
                 <li class="menu-analysis<?php if ($scriptname === 'queries.php') { ?> active<?php } ?>">
                     <a href="queries.php">
