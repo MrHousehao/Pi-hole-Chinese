@@ -79,7 +79,7 @@ if ($serverName === "pi.hole"
         <body id='splashpage'>
             <div id="pihole_card">
               <img src='/admin/img/logo.svg' alt='Pi-hole logo' id="pihole_logo_splash" />
-              <p>Pi-<strong>hole</strong>: 您的互联网广告黑洞 您想去管理页面吗？</p>
+              <p>Pi-<strong>hole</strong>: 您的互联网广告黑洞</p>
               <a href='/admin'>您想去管理页面吗？</a>
             </div>
         </body>
