@@ -66,8 +66,8 @@ if ($serverName === "pi.hole"
             <div>
             <img src='/admin/img/logo.svg' alt='Pi-hole logo' width='256' height='377'>
             <br>
-            <p>Pi-<strong>hole</strong>: Your black hole for Internet advertisements</p>
-            <a href='/admin'>Did you mean to go to the admin panel?</a>
+            <p>Pi-<strong>hole</strong>: 您的互联网广告黑洞</p>
+            <a href='/admin'>您想去管理页面吗？</a>
             </div>
         </body>
     </html>

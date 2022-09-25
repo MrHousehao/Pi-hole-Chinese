@@ -12,19 +12,19 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 ?>
 <!-- Title -->
 <div class="page-header">
-    <h1>Output the last lines of the FTL.log file (live)</h1>
+    <h1>在线输出pihole-FTL.log文件的最新记录（实时）</h1>
 </div>
 
 <div>
     <input type="checkbox" checked id="chk1">
-    <label for="chk1">Automatic scrolling on update</label>
+    <label for="chk1">更新时自动滚动</label>
 </div>
 
 <pre id="output" style="width: 100%; height: 100%; max-height:650px; overflow-y:scroll;"></pre>
 
 <div>
     <input type="checkbox" checked id="chk2">
-    <label for="chk2">Automatic scrolling on update</label>
+    <label for="chk2">更新时自动滚动</label>
 </div>
 
 <script src="scripts/pi-hole/js/taillog-FTL.js?v=<?php echo $cacheVer; ?>"></script>
