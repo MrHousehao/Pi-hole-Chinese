@@ -775,7 +775,7 @@ li:not(.menu-open) .treeview-menu .warning-count {
 .filter_types span {
   display: inline-block;
   margin: 0 0 2px 10px !important;
-  width: 120px;
+  width: 150px;
   min-height: 1.2em;
 }
 

@@ -32,12 +32,12 @@ if (isset($_GET['domain'])) {
     // Convert domain name to IDNA ASCII form for international domains
     $url = convertUnicodeToIDNA($_GET['domain']);
     if (!validDomain($url)) {
-        echoEvent(htmlentities($url).' is an invalid domain!');
+        echoEvent(htmlentities($url).'是无效的域名！');
 
         exit;
     }
 } else {
-    echoEvent('No domain provided');
+    echoEvent('没有提供域名');
 
     exit;
 }

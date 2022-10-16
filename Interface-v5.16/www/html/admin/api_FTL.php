@@ -8,7 +8,7 @@
 */
 
 if (!isset($api)) {
-    exit('Direct call to api_FTL.php is not allowed!');
+    exit('不允许直接调用api_FTL.php！');
 }
 
 if (isset($_GET['type'])) {

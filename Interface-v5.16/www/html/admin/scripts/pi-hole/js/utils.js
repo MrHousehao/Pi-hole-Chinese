@@ -118,7 +118,7 @@ function showAlert(type, icon, title, message) {
       opts = {
         type: "danger",
         icon: "fas fa-times",
-        title: "&nbsp;<strong>Error, something went wrong!</strong><br>",
+        title: "&nbsp;<strong>错误，出了点问题！</strong><br>",
         message: message,
       };
       if (info) {
@@ -212,20 +212,20 @@ function validateHostname(name) {
 // set bootstrap-select defaults
 function setBsSelectDefaults() {
   var bsSelectDefaults = $.fn.selectpicker.Constructor.DEFAULTS;
-  bsSelectDefaults.noneSelectedText = "none selected";
+  bsSelectDefaults.noneSelectedText = "未选择";
   bsSelectDefaults.selectedTextFormat = "count > 1";
   bsSelectDefaults.actionsBox = true;
   bsSelectDefaults.width = "fit";
   bsSelectDefaults.container = "body";
   bsSelectDefaults.dropdownAlignRight = "auto";
-  bsSelectDefaults.selectAllText = "All";
-  bsSelectDefaults.deselectAllText = "None";
+  bsSelectDefaults.selectAllText = "全部";
+  bsSelectDefaults.deselectAllText = "空";
   bsSelectDefaults.countSelectedText = function (num, total) {
     if (num === total) {
-      return "All selected (" + num + ")";
+      return "全选" + num + "个群组";
     }
 
-    return num + " selected";
+    return "已选" + num + "个群组";
   };
 }
 
@@ -290,7 +290,7 @@ function addFromQueryLog(domain, list) {
     return;
   }
 
-  var listtype = list === "white" ? "Whitelist" : "Blacklist";
+  var listtype = list === "white" ? "白名单" : "黑名单";
 
   alProcessing.children(alDomain).text(domain);
   alProcessing.children(alList).text(listtype);
@@ -306,7 +306,7 @@ function addFromQueryLog(domain, list) {
         list: list,
         token: token,
         action: "replace_domain",
-        comment: "Added from Query Log",
+        comment: "通过查询请求日志添加",
       },
       success: function (response) {
         alProcessing.hide();
@@ -355,7 +355,7 @@ function addTD(content) {
 }
 
 function colorBar(percentage, total, cssClass) {
-  var title = percentage.toFixed(1) + "% of " + total;
+  var title = "占总计" +  total + "条查询请求的" + percentage.toFixed(1) + "%";
   var bar = '<div class="progress-bar ' + cssClass + '" style="width: ' + percentage + '%"></div>';
   return '<div class="progress progress-sm" title="' + title + '"> ' + bar + " </div>";
 }
@@ -366,11 +366,11 @@ function checkMessages() {
     : false;
   $.getJSON("api_db.php?status" + (ignoreNonfatal ? "&ignore=DNSMASQ_WARN" : ""), function (data) {
     if ("message_count" in data && data.message_count > 0) {
-      var more = '\nAccess "Tools/Pi-hole diganosis" for further details.';
+      var more = '\n更多详细信息，请访问"工具/Pi-hole 诊断"。';
       var title =
         data.message_count > 1
-          ? "There are " + data.message_count + " warnings." + more
-          : "There is one warning." + more;
+          ? "发现" + data.message_count + "个警告." + more
+          : "发现 1 个警告。" + more;
 
       $(".warning-count").prop("title", title);
       $(".warning-count").text(data.message_count);
