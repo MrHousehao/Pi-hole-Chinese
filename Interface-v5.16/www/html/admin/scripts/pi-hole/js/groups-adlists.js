@@ -60,7 +60,7 @@ function format(data) {
         break;
       case 3:
         statusText =
-          '引力场无法获得更新，Pi-hole使用本地存储的副本（<span class="list-status-3">check list</span>）';
+          '引力场无法获得更新，Pi-hole使用本地存储的副本（<span class="list-status-3">请检查配置</span>）';
         break;
       case 4:
         statusText =
