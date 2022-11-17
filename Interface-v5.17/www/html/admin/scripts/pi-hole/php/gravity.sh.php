@@ -10,7 +10,7 @@
 require 'password.php';
 
 if (!$auth) {
-    exit('Not authorized');
+    exit('未授权');
 }
 
 ob_end_flush();

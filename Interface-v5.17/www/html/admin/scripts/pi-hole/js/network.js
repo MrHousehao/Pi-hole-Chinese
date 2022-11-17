@@ -19,11 +19,11 @@ var DAY_IN_SECONDS = 24 * 60 * 60;
 
 function handleAjaxError(xhr, textStatus) {
   if (textStatus === "timeout") {
-    alert("The server took too long to send the data.");
+    alert("服务器发送数据时间过长。");
   } else if (xhr.responseText.indexOf("Connection refused") !== -1) {
-    alert("An error occurred while loading the data: Connection refused. Is FTL running?");
+    alert("加载数据时出错：连接被拒绝。请确认FTL是否已运行。");
   } else {
-    alert("An unknown error occurred while loading the data.\n" + xhr.responseText);
+    alert("加载数据时发生未知错误。\n" + xhr.responseText);
   }
 
   $("#network-entries_processing").hide();
@@ -65,7 +65,7 @@ function deleteNetworkEntry() {
   var id = tr.attr("data-id");
 
   utils.disableAll();
-  utils.showAlert("info", "", "Deleting network table entry with ID " + parseInt(id, 10), "...");
+  utils.showAlert("info", "", "正在删除ID为" + parseInt(id, 10), "的网络概览表...");
   $.ajax({
     url: "scripts/pi-hole/php/network.php",
     method: "post",
@@ -77,7 +77,7 @@ function deleteNetworkEntry() {
         utils.showAlert(
           "success",
           "far fa-trash-alt",
-          "Successfully deleted network table entry # ",
+          "已成功删除网络概览表项 # ",
           id
         );
         tableApi.row(tr).remove().draw(false).ajax.reload(null, false);
@@ -85,7 +85,7 @@ function deleteNetworkEntry() {
         utils.showAlert(
           "error",
           "",
-          "Error while network table entry with ID " + id,
+          "创建ID为" + id + "网络概览表时出错",
           response.message
         );
       }
@@ -95,7 +95,7 @@ function deleteNetworkEntry() {
       utils.showAlert(
         "error",
         "",
-        "Error while deleting network table entry with ID " + id,
+        "删除ID为" + id + "网络概览表时出错",
         jqXHR.responseText
       );
       console.log(exception); // eslint-disable-line no-console
@@ -173,7 +173,7 @@ $(function () {
           if (name.length > 0) {
             allnames.push(name + " (" + data.ip[index] + ")");
           } else {
-            allnames.push("No host name for " + data.ip[index] + " known");
+            allnames.push("" + data.ip[index] + "的主机名称未知");
           }
         }
 
@@ -236,13 +236,13 @@ $(function () {
     order: [[6, "desc"]],
     columns: [
       { data: "id", visible: false },
-      { data: "ip", type: "ip-address", width: "10%" },
-      { data: "hwaddr", width: "10%" },
-      { data: "interface", width: "4%" },
-      { data: "name", width: "15%" },
+      { data: "ip", type: "ip-address", width: "1%" },
+      { data: "hwaddr", width: "12%" },
+      { data: "interface", width: "3%" },
+      { data: "name", width: "6%" },
       {
         data: "firstSeen",
-        width: "8%",
+        width: "9%",
         render: function (data, type) {
           if (type === "display") {
             return utils.datetime(data);
@@ -253,7 +253,7 @@ $(function () {
       },
       {
         data: "lastQuery",
-        width: "8%",
+        width: "9%",
         render: function (data, type) {
           if (type === "display") {
             return utils.datetime(data);
@@ -262,9 +262,9 @@ $(function () {
           return data;
         },
       },
-      { data: "numQueries", width: "9%", render: $.fn.dataTable.render.text() },
+      { data: "numQueries", width: "8%", render: $.fn.dataTable.render.text() },
       { data: "", width: "6%", orderable: false },
-      { data: "", width: "6%", orderable: false },
+      { data: "", width: "3%", orderable: false },
     ],
 
     drawCallback: function () {
@@ -274,7 +274,7 @@ $(function () {
     },
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     stateSave: true,
     stateDuration: 0,

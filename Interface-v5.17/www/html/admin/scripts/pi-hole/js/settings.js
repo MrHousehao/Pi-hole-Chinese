@@ -41,7 +41,7 @@ $(function () {
     // force user to reload the page if necessary
     var reloadEl = contents.find("span[data-forcereload]");
     if (reloadEl.length > 0) {
-      var msg = "The page must now be reloaded to display the imported entries";
+      var msg = "现在必须重新加载页面以显示导入的条目";
       reloadEl.append(msg);
       BtnEls.toggleClass("hidden")
         .not(".hidden")
@@ -65,32 +65,32 @@ $(function () {
   });
 });
 $(".confirm-poweroff").confirm({
-  text: "Are you sure you want to send a poweroff command to your Pi-hole?",
-  title: "Confirmation required",
+  text: "确定要向Pi-hole发送关闭主机指令吗？",
+  title: "需要确认",
   confirm: function () {
     $("#poweroffform").submit();
   },
   cancel: function () {
     // nothing to do
   },
-  confirmButton: "Yes, poweroff",
-  cancelButton: "No, go back",
+  confirmButton: "是，关闭主机",
+  cancelButton: "不，撤销指令",
   post: true,
   confirmButtonClass: "btn-danger",
   cancelButtonClass: "btn-success",
   dialogClass: "modal-dialog",
 });
 $(".confirm-reboot").confirm({
-  text: "Are you sure you want to send a reboot command to your Pi-hole?",
-  title: "Confirmation required",
+  text: "确定要向Pi-hole发送重启主机指令吗？",
+  title: "需要确认",
   confirm: function () {
     $("#rebootform").submit();
   },
   cancel: function () {
     // nothing to do
   },
-  confirmButton: "Yes, reboot",
-  cancelButton: "No, go back",
+  confirmButton: "是，重启主机",
+  cancelButton: "不，撤销指令",
   post: true,
   confirmButtonClass: "btn-danger",
   cancelButtonClass: "btn-success",
@@ -98,16 +98,16 @@ $(".confirm-reboot").confirm({
 });
 
 $(".confirm-restartdns").confirm({
-  text: "Are you sure you want to send a restart command to your DNS server?",
-  title: "Confirmation required",
+  text: "确定要重新启动DNS服务器吗?",
+  title: "需要确认",
   confirm: function () {
     $("#restartdnsform").submit();
   },
   cancel: function () {
     // nothing to do
   },
-  confirmButton: "Yes, restart DNS",
-  cancelButton: "No, go back",
+  confirmButton: "是，DNS服务器",
+  cancelButton: "不，撤销指令",
   post: true,
   confirmButtonClass: "btn-danger",
   cancelButtonClass: "btn-success",
@@ -115,16 +115,16 @@ $(".confirm-restartdns").confirm({
 });
 
 $(".confirm-flushlogs").confirm({
-  text: "Are you sure you want to flush your logs?",
-  title: "Confirmation required",
+  text: "确定要清空日志吗？",
+  title: "需要确认",
   confirm: function () {
     $("#flushlogsform").submit();
   },
   cancel: function () {
     // nothing to do
   },
-  confirmButton: "Yes, flush logs",
-  cancelButton: "No, go back",
+  confirmButton: "是，清空日志",
+  cancelButton: "不，撤销指令",
   post: true,
   confirmButtonClass: "btn-danger",
   cancelButtonClass: "btn-success",
@@ -132,16 +132,16 @@ $(".confirm-flushlogs").confirm({
 });
 
 $(".confirm-flusharp").confirm({
-  text: "Are you sure you want to flush your network table?",
-  title: "Confirmation required",
+  text: "确定要清空客户端概览吗？",
+  title: "需要确认",
   confirm: function () {
     $("#flusharpform").submit();
   },
   cancel: function () {
     // nothing to do
   },
-  confirmButton: "Yes, flush my network table",
-  cancelButton: "No, go back",
+  confirmButton: "是，清空客户端概览",
+  cancelButton: "不，撤销指令",
   post: true,
   confirmButtonClass: "btn-warning",
   cancelButtonClass: "btn-success",
@@ -149,16 +149,16 @@ $(".confirm-flusharp").confirm({
 });
 
 $(".confirm-disablelogging-noflush").confirm({
-  text: "Are you sure you want to disable logging?",
-  title: "Confirmation required",
+  text: "确定要禁用查询请求的日志记录吗？",
+  title: "需要确认",
   confirm: function () {
     $("#disablelogsform-noflush").submit();
   },
   cancel: function () {
     // nothing to do
   },
-  confirmButton: "Yes, disable logs",
-  cancelButton: "No, go back",
+  confirmButton: "是，禁用日志记录",
+  cancelButton: "不，撤销指令",
   post: true,
   confirmButtonClass: "btn-warning",
   cancelButtonClass: "btn-success",
@@ -166,16 +166,16 @@ $(".confirm-disablelogging-noflush").confirm({
 });
 
 $(".api-token").confirm({
-  text: "Make sure that nobody else can scan this code around you. They will have full access to the API without having to know the password. Note that the generation of the QR code will take some time.",
-  title: "Confirmation required",
+  text: "请确保您周围没有其他人可以扫描您的二维码，凭令牌可以完全访问API。请注意，生成二维码需要一些时间。",
+  title: "需要确认",
   confirm: function () {
     $("#apiTokenModal").modal("show");
   },
   cancel: function () {
     // nothing to do
   },
-  confirmButton: "Yes, show API token",
-  cancelButton: "No, go back",
+  confirmButton: "是，显示API令牌",
+  cancelButton: "不，撤销指令",
   post: true,
   confirmButtonClass: "btn-danger",
   cancelButtonClass: "btn-success",
@@ -240,7 +240,7 @@ $(function () {
         "<'row'<'col-sm-5'i><'col-sm-7'p>>",
       lengthMenu: [
         [5, 10, 25, 50, 100, -1],
-        [5, 10, 25, 50, 100, "All"],
+        [5, 10, 25, 50, 100, "全部"],
       ],
       columnDefs: [
         { bSortable: false, orderable: false, targets: -1 },
@@ -254,7 +254,7 @@ $(function () {
             // Show "unknown", when host is "*"
             var str;
             if (data === "*") {
-              str = "<i>unknown</i>";
+              str = "<i>未知</i>";
             } else {
               str = typeof data === "string" ? utils.escapeHtml(data) : data;
             }
@@ -285,7 +285,7 @@ $(function () {
         "<'row'<'col-sm-5'i><'col-sm-7'p>>",
       lengthMenu: [
         [5, 10, 25, 50, 100, -1],
-        [5, 10, 25, 50, 100, "All"],
+        [5, 10, 25, 50, 100, "全部"],
       ],
       columnDefs: [
         { bSortable: false, orderable: false, targets: -1 },
@@ -410,7 +410,7 @@ $('button[id="removedynamic"]').on("click", function () {
   var ipname = name + " (" + ipaddr + ")";
 
   utils.disableAll();
-  utils.showAlert("info", "", "Deleting DHCP lease...", ipname);
+  utils.showAlert("info", "", "DHCP静态地址分配删除中...", ipname);
   $.ajax({
     url: "api.php",
     method: "get",
@@ -425,7 +425,7 @@ $('button[id="removedynamic"]').on("click", function () {
         utils.showAlert(
           "success",
           "far fa-trash-alt",
-          "Successfully deleted DHCP lease for ",
+          "已成功删除，DHCP静态地址分配：",
           ipname
         );
         // Remove column on success
@@ -436,12 +436,12 @@ $('button[id="removedynamic"]').on("click", function () {
           $(this).remove();
         });
       } else {
-        utils.showAlert("error", "Error while deleting DHCP lease for " + ipname, response);
+        utils.showAlert("error", "删除DHCP静态地址分配" + ipname + "时出错", response);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "Error while deleting DHCP lease for " + ipname, jqXHR.responseText);
+      utils.showAlert("error", "删除DHCP静态地址分配" + ipname + "时出错", jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     },
   });

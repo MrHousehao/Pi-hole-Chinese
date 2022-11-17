@@ -14,7 +14,7 @@ require 'savesettings.php';
 
 if (php_sapi_name() !== 'cli') {
     if (!$auth) {
-        exit('Not authorized');
+        exit('未授权');
     }
     check_csrf(isset($_POST['token']) ? $_POST['token'] : '');
 }
@@ -361,92 +361,92 @@ if (isset($_POST['action'])) {
         foreach (new RecursiveIteratorIterator($archive) as $file) {
             if (isset($_POST['blacklist']) && $file->getFilename() === 'blacklist.txt') {
                 $num = archive_insert_into_table($file, 'blacklist', $flushtables);
-                echo 'Processed blacklist (exact) ('.$num.noun($num).")<br>\n";
+                echo '已处理黑名单（确切）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['whitelist']) && $file->getFilename() === 'whitelist.txt') {
                 $num = archive_insert_into_table($file, 'whitelist', $flushtables);
-                echo 'Processed whitelist (exact) ('.$num.noun($num).")<br>\n";
+                echo '已处理白名单（确切）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['regexlist']) && $file->getFilename() === 'regex.list') {
                 $num = archive_insert_into_table($file, 'regex_blacklist', $flushtables);
-                echo 'Processed blacklist (regex) ('.$num.noun($num).")<br>\n";
+                echo '已处理黑名单（正侧表达式）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             // Also try to import legacy wildcard list if found
             if (isset($_POST['regexlist']) && $file->getFilename() === 'wildcardblocking.txt') {
                 $num = archive_insert_into_table($file, 'regex_blacklist', $flushtables, true);
-                echo 'Processed blacklist (regex, wildcard style) ('.$num.noun($num).")<br>\n";
+                echo '已处理黑名单（正侧表达式/通配符）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['auditlog']) && $file->getFilename() === 'auditlog.list') {
                 $num = archive_insert_into_table($file, 'domain_audit', $flushtables);
-                echo 'Processed audit log ('.$num.noun($num).")<br>\n";
+                echo '已处理审核日志（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['adlist']) && $file->getFilename() === 'adlists.list') {
                 $num = archive_insert_into_table($file, 'adlist', $flushtables);
-                echo 'Processed adlists ('.$num.noun($num).")<br>\n";
+                echo '已处理引力场（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['blacklist']) && $file->getFilename() === 'blacklist.exact.json') {
                 $num = archive_restore_table($file, 'blacklist', $flushtables);
-                echo 'Processed blacklist (exact) ('.$num.noun($num).")<br>\n";
+                echo '已处理黑名单（确切）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['regexlist']) && $file->getFilename() === 'blacklist.regex.json') {
                 $num = archive_restore_table($file, 'regex_blacklist', $flushtables);
-                echo 'Processed blacklist (regex) ('.$num.noun($num).")<br>\n";
+                echo '已处理黑名单（正侧表达式）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['whitelist']) && $file->getFilename() === 'whitelist.exact.json') {
                 $num = archive_restore_table($file, 'whitelist', $flushtables);
-                echo 'Processed whitelist (exact) ('.$num.noun($num).")<br>\n";
+                echo '已处理白名单（确切）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['regex_whitelist']) && $file->getFilename() === 'whitelist.regex.json') {
                 $num = archive_restore_table($file, 'regex_whitelist', $flushtables);
-                echo 'Processed whitelist (regex) ('.$num.noun($num).")<br>\n";
+                echo '已处理白名单（正侧表达式）（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['adlist']) && $file->getFilename() === 'adlist.json') {
                 $num = archive_restore_table($file, 'adlist', $flushtables);
-                echo 'Processed adlist ('.$num.noun($num).")<br>\n";
+                echo '已处理引力场（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['auditlog']) && $file->getFilename() === 'domain_audit.json') {
                 $num = archive_restore_table($file, 'domain_audit', $flushtables);
-                echo 'Processed domain_audit ('.$num.noun($num).")<br>\n";
+                echo 'Processed domain_audit ('.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['group']) && $file->getFilename() === 'group.json') {
                 $num = archive_restore_table($file, 'group', $flushtables);
-                echo 'Processed group ('.$num.noun($num).")<br>\n";
+                echo 'Processed group ('.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['client']) && $file->getFilename() === 'client.json') {
                 $num = archive_restore_table($file, 'client', $flushtables);
-                echo 'Processed client ('.$num.noun($num).")<br>\n";
+                echo 'Processed client ('.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['client']) && $file->getFilename() === 'client_by_group.json') {
                 $num = archive_restore_table($file, 'client_by_group', $flushtables);
-                echo 'Processed client group assignments ('.$num.noun($num).")<br>\n";
+                echo '已处理客户端群组分配（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
@@ -454,13 +454,13 @@ if (isset($_POST['action'])) {
                 || isset($_POST['blacklist']) || isset($_POST['regex_blacklist']))
                 && $file->getFilename() === 'domainlist_by_group.json') {
                 $num = archive_restore_table($file, 'domainlist_by_group', $flushtables);
-                echo 'Processed black-/whitelist group assignments ('.$num.noun($num).")<br>\n";
+                echo '已处理黑名单/白名单群组分配（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
             if (isset($_POST['adlist']) && $file->getFilename() === 'adlist_by_group.json') {
                 $num = archive_restore_table($file, 'adlist_by_group', $flushtables);
-                echo 'Processed adlist group assignments ('.$num.noun($num).")<br>\n";
+                echo '已处理引力场群组分配（'.noun($num).$num."条配置）<br>\n";
                 $importedsomething = true;
             }
 
@@ -507,7 +507,7 @@ if (isset($_POST['action'])) {
                     }
                 }
                 ob_end_clean();
-                echo 'Processed local DNS records ('.$num.noun($num).")<br>\n";
+                echo '已处理本地 DNS 记录（'.noun($num).$num."条配置）<br>\n";
                 if ($num > 0) {
                     // we need a full pihole restart
                     $fullpiholerestart = true;
@@ -539,7 +539,7 @@ if (isset($_POST['action'])) {
                     }
                 }
                 ob_end_clean();
-                echo 'Processed local CNAME records ('.$num.noun($num).")<br>\n";
+                echo '已处理本地 CNAME 记录（'.noun($num).$num."条配置）<br>\n";
                 if ($num > 0) {
                     // we need a full pihole restart
                     $fullpiholerestart = true;
@@ -562,7 +562,7 @@ if (isset($_POST['action'])) {
             echo "<br>\n<span data-forcereload></span>";
         }
     } else {
-        exit('No file transmitted or parameter error.');
+        exit('无文件传输或参数错误。');
     }
 } else {
     $hostname = gethostname() ? str_replace('.', '_', gethostname()).'-' : '';

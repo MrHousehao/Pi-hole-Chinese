@@ -32,26 +32,26 @@ require 'scripts/pi-hole/php/header.php';
 
         <div class="card">
             <div class="card-body login-card-body">
-                <div id="cookieInfo" class="panel-title text-center text-red" style="font-size: 150%" hidden>Verify that cookies are allowed for <code><?php echo $_SERVER['HTTP_HOST']; ?></code></div>
+                <div id="cookieInfo" class="panel-title text-center text-red" style="font-size: 150%" hidden>请检查浏览器是否允许使用Cookie<code><?php echo $_SERVER['HTTP_HOST']; ?></code></div>
                 <?php if ($wrongpassword) { ?>
                 <div class="form-group has-error login-box-msg">
-                    <label class="control-label"><i class="fa fa-times-circle"></i> Wrong password!</label>
+                    <label class="control-label"><i class="fa fa-times-circle"></i>密码错误！</label>
                 </div>
                 <?php } ?>
 
                 <form action="" id="loginform" method="post">
                     <div class="form-group login-options has-feedback<?php if ($wrongpassword) { ?> has-error<?php } ?>">
                         <div class="pwd-field">
-                            <input type="password" id="loginpw" name="pw" class="form-control" placeholder="Password" spellcheck="false" autocomplete="current-password" autofocus>
+                            <input type="password" id="loginpw" name="pw" class="form-control" placeholder="密码" spellcheck="false" autocomplete="current-password" autofocus>
                             <span class="fa fa-key form-control-feedback"></span>
                         </div>
                         <div>
                             <input type="checkbox" id="logincookie" name="persistentlogin">
-                            <label for="logincookie">Remember me for 7 days</label>
+                            <label for="logincookie">自动登录（七天内）</label>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary form-control"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;&nbsp;Log in</button>
+                        <button type="submit" class="btn btn-primary form-control"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;&nbsp;登录</button>
                     </div>
                 </form>
                 <br>
@@ -59,7 +59,7 @@ require 'scripts/pi-hole/php/header.php';
                     <div class="col-xs-12">
                         <div class="box box-<?php if (!$wrongpassword) { ?>info collapsed-box<?php } else { ?>danger<?php }?>">
                             <div class="box-header with-border pointer no-user-select" data-widget="collapse">
-                                <h3 class="box-title">Forgot password?</h3>
+                                <h3 class="box-title">忘记密码？</h3>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool">
                                         <i class="fa <?php if ($wrongpassword) { ?>fa-minus<?php } else { ?>fa-plus<?php } ?>"></i>
@@ -67,10 +67,7 @@ require 'scripts/pi-hole/php/header.php';
                                 </div>
                             </div>
                             <div class="box-body">
-                                <p>After installing Pi-hole for the first time, a password is generated and displayed
-                                    to the user. The password cannot be retrieved later on, but it is possible to set
-                                    a new password (or explicitly disable the password by setting an empty password)
-                                    using the command
+                                <p>首次安装 Pi-hole 后，会生成密码并显示给用户。以后无法检索密码，但可以在终端输入以下命令设置新密码（或通过设置空密码禁用密码）
                                 </p>
                                 <pre>sudo pihole -a -p</pre>
                             </div>
@@ -80,9 +77,9 @@ require 'scripts/pi-hole/php/header.php';
             </div>
             <!-- /.login-card-body -->
             <div class="login-footer" style="margin-top: 15px; display: flex; justify-content: space-between;">
-                <a class="btn btn-default btn-sm" role="button" href="https://docs.pi-hole.net/" target="_blank"><i class="fas fa-question-circle"></i> Documentation</a>
+                <a class="btn btn-default btn-sm" role="button" href="https://docs.pi-hole.net/" target="_blank"><i class="fas fa-question-circle"></i> 资料</a>
                 <a class="btn btn-default btn-sm" role="button" href="https://github.com/pi-hole/" target="_blank"><i class="fab fa-github"></i> Github</a>
-                <a class="btn btn-default btn-sm" role="button" href="https://discourse.pi-hole.net/" target="_blank"><i class="fab fa-discourse"></i> Pi-hole Discourse</a>
+                <a class="btn btn-default btn-sm" role="button" href="https://discourse.pi-hole.net/" target="_blank"><i class="fab fa-discourse"></i> Pi-hole 论坛</a>
             </div>
         </div>
     </section>
@@ -90,7 +87,7 @@ require 'scripts/pi-hole/php/header.php';
 
 <div class="login-donate">
     <div class="text-center" style="font-size:125%">
-        <strong><a href="https://pi-hole.net/donate/" rel="noopener" target="_blank"><i class="fa fa-heart text-red"></i> Donate</a></strong> if you found this useful.
+        <strong>如果您觉得Pi-hole有用，请<a href="https://pi-hole.net/donate/" rel="noopener" target="_blank"><i class="fa fa-heart text-red"></i> 赞助</a></strong> Pi-hole。
     </div>
 </div>
 <script src="scripts/pi-hole/js/footer.js?v=<?php echo $cacheVer; ?>"></script>

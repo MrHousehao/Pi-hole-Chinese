@@ -13,8 +13,8 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 
 <!-- Title -->
 <div class="page-header">
-    <h1>Pi-hole diagnosis</h1>
-    <small>On this page, you can see messages from your Pi-hole concerning possible issues.</small>
+    <h1>Pi-hole 诊断</h1>
+    <small>在此页面，您可以查看来自Pi-hole问题的有关信息。</small>
 </div>
 
 <div class="row">
@@ -27,19 +27,19 @@ require 'scripts/pi-hole/php/header_authenticated.php';
                         <tr>
                             <th>ID</th>
                             <th>&nbsp;</th>
-                            <th>Time</th>
-                            <th>Type</th>
-                            <th>Message</th>
-                            <th>Data1</th>
-                            <th>Data2</th>
-                            <th>Data3</th>
-                            <th>Data4</th>
-                            <th>Data5</th>
+                            <th>时间</th>
+                            <th>类型</th>
+                            <th>信息</th>
+                            <th>数据1</th>
+                            <th>数据2</th>
+                            <th>数据3</th>
+                            <th>数据4</th>
+                            <th>数据5</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
                 </table>
-                <p>Note: If errors are shown, you can <a href="debug.php">generate a debug log</a>, which will do a thorough Pi-hole evaluation.</p>
+                <p>备注：如果显示错误，您可以<a href="debug.php">生成调试日志</a>，这将会对Pi-hole进行全面的诊断。</p>
             </div>
             <!-- /.box-body -->
         </div>
