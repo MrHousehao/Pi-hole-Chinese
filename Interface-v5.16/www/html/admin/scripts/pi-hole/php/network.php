@@ -61,5 +61,5 @@ if ($_POST['action'] == 'delete_network_entry' && isset($_POST['id'])) {
         JSON_error($ex->getMessage());
     }
 } else {
-    log_and_die('支持请求的操作！');
+    log_and_die('不支持请求的操作！');
 }
