@@ -10,7 +10,7 @@
 
 3、如果不喜欢的请自行搜索更换回原文直译词语。
 
-![image](https://github.com/MrHousehao/Pi-hole-Chinese/blob/Pi-hole-Chinese/scrnli_2022_10_16%2014-22-19.png)
+![image](https://github.com/MrHousehao/Pi-hole-Chinese/blob/Pi-hole-Chinese/scrnli_2022_11_17%2022-07-09.png)
 
 # 以下是替换方法（自己做笔记用，大佬请忽略）
 
