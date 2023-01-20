@@ -46,7 +46,7 @@ if (isset($_GET['all'])) {
     }
 } elseif (isset($_GET['forwarddest'])) {
     if ($_GET['forwarddest'] === 'blocked') {
-        $showing .= ' 被Pi-hole吞噬的查询请求';
+        $showing .= ' 被 Pi-hole 吞噬的查询请求';
     } elseif ($_GET['forwarddest'] === 'cached') {
         $showing .= ' 查询请求的回应来自缓存';
     } else {
@@ -59,7 +59,7 @@ if (isset($_GET['all'])) {
 } elseif (isset($_GET['from']) || isset($_GET['until'])) {
     $showing .= ' 指定时间段的查询请求';
 } else {
-    $showing .= ' 最多显示100个查询请求';
+    $showing .= ' 最多显示 100 个查询请求';
     $showall = true;
 }
 
