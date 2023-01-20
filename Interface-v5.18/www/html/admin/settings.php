@@ -20,7 +20,7 @@ $piholeFTLConf = piholeFTLConfig(DEFAULT_FTLCONFFILE, true);
 // Handling of PHP internal errors
 $last_error = error_get_last();
 if (isset($last_error) && ($last_error['type'] === E_WARNING || $last_error['type'] === E_ERROR)) {
-    $error .= 'There was a problem applying your settings.<br>Debugging information:<br>PHP error ('.htmlspecialchars($last_error['type']).'): '.htmlspecialchars($last_error['message']).' in '.htmlspecialchars($last_error['file']).':'.htmlspecialchars($last_error['line']);
+    $error .= '应用设置时发生了一个错误。<br>调试信息：<br>PHP 错误 ('.htmlspecialchars($last_error['type']).'): '.htmlspecialchars($last_error['message']).' in '.htmlspecialchars($last_error['file']).':'.htmlspecialchars($last_error['line']);
 }
 
 // Timezone is set in docker via ENV otherwise get it from commandline
@@ -50,18 +50,18 @@ if (isset($_POST['submit'])) {
 
 <?php if (strlen($success) > 0) { ?>
     <div id="alInfo" class="alert alert-info alert-dismissible fade in" role="alert">
-        <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+        <button type="button" class="close" data-hide="alert" aria-label="关闭"><span aria-hidden="true">&times;</span>
         </button>
-        <h4><i class="icon fa fa-info"></i> Info</h4>
+        <h4><i class="icon fa fa-info"></i> 信息</h4>
         <?php echo $success; ?>
     </div>
 <?php } ?>
 
 <?php if (strlen($error) > 0) { ?>
     <div id="alError" class="alert alert-danger alert-dismissible fade in" role="alert">
-        <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+        <button type="button" class="close" data-hide="alert" aria-label="关闭"><span aria-hidden="true">&times;</span>
         </button>
-        <h4><i class="icon fa fa-ban"></i> Error</h4>
+        <h4><i class="icon fa fa-ban"></i> 错误</h4>
         <?php echo $error; ?>
     </div>
 <?php } ?>
@@ -207,7 +207,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array('sysadmin', 'dns', 'piho
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation"<?php if ($tab === 'sysadmin') { ?> class="active"<?php } ?>>
-                    <a href="#sysadmin" aria-controls="sysadmin" aria-expanded="<?php echo $tab === 'sysadmin' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">System</a>
+                    <a href="#sysadmin" aria-controls="sysadmin" aria-expanded="<?php echo $tab === 'sysadmin' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">系统</a>
                 </li>
                 <li role="presentation"<?php if ($tab === 'dns') { ?> class="active"<?php } ?>>
                     <a href="#dns" aria-controls="dns" aria-expanded="<?php echo $tab === 'dns' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">DNS</a>
@@ -216,13 +216,13 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array('sysadmin', 'dns', 'piho
                     <a href="#piholedhcp" aria-controls="piholedhcp" aria-expanded="<?php echo $tab === 'piholedhcp' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">DHCP</a>
                 </li>
                 <li role="presentation"<?php if ($tab === 'api') { ?> class="active"<?php } ?>>
-                    <a href="#api" aria-controls="api" aria-expanded="<?php echo $tab === 'api' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">API / Web interface</a>
+                    <a href="#api" aria-controls="api" aria-expanded="<?php echo $tab === 'api' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">API / Web 界面</a>
                 </li>
                 <li role="presentation"<?php if ($tab === 'privacy') { ?> class="active"<?php } ?>>
-                    <a href="#privacy" aria-controls="privacy" aria-expanded="<?php echo $tab === 'privacy' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">Privacy</a>
+                    <a href="#privacy" aria-controls="privacy" aria-expanded="<?php echo $tab === 'privacy' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">隐私</a>
                 </li>
                 <li role="presentation"<?php if ($tab === 'teleporter') { ?> class="active"<?php } ?>>
-                    <a href="#teleporter" aria-controls="teleporter" aria-expanded="<?php echo $tab === 'teleporter' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">Teleporter</a>
+                    <a href="#teleporter" aria-controls="teleporter" aria-expanded="<?php echo $tab === 'teleporter' ? 'true' : 'false'; ?>" role="tab" data-toggle="tab">传送器</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -232,7 +232,7 @@ if (isset($_GET['tab']) && in_array($_GET['tab'], array('sysadmin', 'dns', 'piho
                         <div class="col-md-12">
                             <div class="box">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">FTL Information</h3>
+                                    <h3 class="box-title">FTL 信息</h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
@@ -244,60 +244,60 @@ if ($FTLpid !== 0) {
                                             <table class="table table-striped table-bordered nowrap">
                                                 <tbody>
                                                     <tr>
-                                                        <th scope="row">FTL version:</th>
+                                                        <th scope="row">FTL 版本：</th>
                                                         <td><?php echo $FTLversion; ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">Process identifier (PID):</th>
+                                                        <th scope="row">进程 ID（PID）：</th>
                                                         <td><?php echo $FTLpid; ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">Time FTL started:</th>
+                                                        <th scope="row">FTL 启动时间：</th>
                                                         <td><?php print_r(get_FTL_data($FTLpid, 'lstart'));
     echo ' '.$timezone; ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">User / Group:</th>
+                                                        <th scope="row">用户 / 群组：</th>
                                                         <td><?php print_r(get_FTL_data($FTLpid, 'euser')); ?> / <?php print_r(get_FTL_data($FTLpid, 'egroup')); ?></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">Total CPU utilization:</th>
+                                                        <th scope="row">CPU 总利用率：</th>
                                                         <td><?php print_r(get_FTL_data($FTLpid, '%cpu')); ?>%</td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">Memory utilization:</th>
+                                                        <th scope="row">内存使用率：</th>
                                                         <td><?php print_r(get_FTL_data($FTLpid, '%mem')); ?>%</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">
-                                                            <span title="Resident memory is the portion of memory occupied by a process that is held in main memory (RAM). The rest of the occupied memory exists in the swap space or file system.">Used memory:</span>
+                                                            <span title="常驻内存是进程占用的内存部分，它保存在主内存 (RAM) 中。 其余被占用的内存存在于交换空间或文件系统中。">已用内存：</span>
                                                         </th>
                                                         <td><?php echo formatSizeUnits(1e3 * floatval(get_FTL_data($FTLpid, 'rss'))); ?></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">
-                                                            <span title="Size of the DNS domain cache">DNS cache size:</span>
+                                                            <span title="DNS 域名缓存大小">DNS 缓存大小：</span>
                                                         </th>
                                                         <td id="cache-size">&nbsp;</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">
-                                                            <span title="Number of cache insertions">DNS cache insertions:</span>
+                                                            <span title="缓存注入数">DNS 缓存注入：</span>
                                                         </th>
                                                         <td id="cache-inserted">&nbsp;</td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">
-                                                            <span title="Number of cache entries that had to be removed although they are not expired (increase cache size to reduce this number)" lookatme-text="DNS cache evictions:">DNS cache evictions:</span>
+                                                            <span title="虽然未过期但必须删除的缓存数量（增加缓存大小以减少缓存被逐出）" lookatme-text="DNS cache evictions:">DNS 缓存逐出：</span>
                                                         </th>
                                                         <td id="cache-live-freed">&nbsp;</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            See also our <a href="https://docs.pi-hole.net/ftldns/dns-cache/" rel="noopener" target="_blank">DNS cache documentation</a>.
+                                            另请参阅我们的<a href="https://docs.pi-hole.net/ftldns/dns-cache/" rel="noopener" target="_blank">DNS 缓存</a>。
                                             <?php
 } else { ?>
-                                            <div>The FTL service is offline!</div>
+                                            <div>FTL 服务离线！</div>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -312,37 +312,37 @@ if ($FTLpid !== 0) {
                                     <div class="row">
                                         <div class="col-md-4">
                                             <?php if ($piHoleLogging) { ?>
-                                                <button type="button" class="btn btn-warning confirm-disablelogging-noflush btn-block">Disable query logging</button>
+                                                <button type="button" class="btn btn-warning confirm-disablelogging-noflush btn-block">禁用查询请求的日志记录</button>
                                             <?php } else { ?>
                                                 <form role="form" method="post">
                                                     <input type="hidden" name="action" value="Enable">
                                                     <input type="hidden" name="field" value="Logging">
                                                     <input type="hidden" name="token" value="<?php echo $token; ?>">
-                                                    <button type="submit" class="btn btn-success btn-block">Enable query logging</button>
+                                                    <button type="submit" class="btn btn-success btn-block">启用查询请求的日志记录</button>
                                                 </form>
                                             <?php } ?>
                                         </div>
                                         <p class="hidden-md hidden-lg"></p>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-warning confirm-flusharp btn-block">Flush network table</button>
+                                            <button type="button" class="btn btn-warning confirm-flusharp btn-block">清空客户端概览</button>
                                         </div>
                                         <p class="hidden-md hidden-lg"></p>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-warning confirm-restartdns btn-block">Restart DNS resolver</button>
+                                            <button type="button" class="btn btn-warning confirm-restartdns btn-block">重新启动 DNS 服务器</button>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-danger confirm-flushlogs btn-block">Flush logs (last 24 hours)</button>
+                                            <button type="button" class="btn btn-danger confirm-flushlogs btn-block">清空日志（最近 24 小时）</button>
                                         </div>
                                         <p class="hidden-md hidden-lg"></p>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-danger confirm-poweroff btn-block">Power off system</button>
+                                            <button type="button" class="btn btn-danger confirm-poweroff btn-block">关闭主机</button>
                                         </div>
                                         <p class="hidden-md hidden-lg"></p>
                                         <div class="col-md-4">
-                                            <button type="button" class="btn btn-danger confirm-reboot btn-block">Restart system</button>
+                                            <button type="button" class="btn btn-danger confirm-reboot btn-block">重启主机</button>
                                         </div>
                                     </div>
 
@@ -452,23 +452,23 @@ if ($FTLpid !== 0) {
                             <div class="col-md-6">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">DHCP Settings</h3>
+                                        <h3 class="box-title">DHCP 设置</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div><input type="checkbox" name="active" id="DHCPchk" <?php if ($DHCP) { ?>checked<?php } ?>><label for="DHCPchk"><strong>DHCP server enabled</strong></label></div><br>
-                                                <p id="dhcpnotice" lookatme-text="Make sure your router's DHCP server is disabled when using the Pi-hole DHCP server!" <?php if (!$DHCP) { ?>hidden<?php } ?>>Make sure your router's DHCP server is disabled when using the Pi-hole DHCP server!</p>
+                                                <div><input type="checkbox" name="active" id="DHCPchk" <?php if ($DHCP) { ?>checked<?php } ?>><label for="DHCPchk"><strong>启动 DHCP 服务器</strong></label></div><br>
+                                                <p id="dhcpnotice" lookatme-text="使用 Pi-hole 的 DHCP 服务器时，请先禁用路由器中的 DHCP 功能！" <?php if (!$DHCP) { ?>hidden<?php } ?>>使用 Pi-hole 的 DHCP 服务器时，请先禁用路由器中的 DHCP 功能！</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12">
-                                                <label>Range of IP addresses to hand out</label>
+                                                <label>分配 IP 地址范围</label>
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon">From</div>
+                                                        <div class="input-group-addon">开始地址：</div>
                                                         <input type="text" class="form-control DHCPgroup" name="from"
                                                             autocomplete="off" spellcheck="false" autocapitalize="none"
                                                             autocorrect="off" value="<?php echo $DHCPstart; ?>"
@@ -479,7 +479,7 @@ if ($FTLpid !== 0) {
                                             <div class="col-xs-12 col-sm-6 col-md-12 col-lg-6">
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon">To</div>
+                                                        <div class="input-group-addon">结束地址：</div>
                                                         <input type="text" class="form-control DHCPgroup" name="to"
                                                             autocomplete="off" spellcheck="false" autocapitalize="none"
                                                             autocorrect="off" value="<?php echo $DHCPend; ?>"
@@ -490,10 +490,10 @@ if ($FTLpid !== 0) {
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label>Router (gateway) IP address</label>
+                                                <label>路由器（网关）IP 地址</label>
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon">Router</div>
+                                                        <div class="input-group-addon">路由器地址：</div>
                                                         <input type="text" class="form-control DHCPgroup" name="router"
                                                             autocomplete="off" spellcheck="false" autocapitalize="none"
                                                             autocorrect="off" value="<?php echo $DHCProuter; ?>"
@@ -509,15 +509,15 @@ if ($FTLpid !== 0) {
                             <div class="col-md-6">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Advanced DHCP settings</h3>
+                                        <h3 class="box-title">DHCP 高级设置</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label>Pi-hole domain name</label>
+                                                <label>Pi-hole 域名</label>
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon">Domain</div>
+                                                        <div class="input-group-addon">域名：</div>
                                                         <input type="text" class="form-control DHCPgroup" name="domain"
                                                             value="<?php echo $piHoleDomain; ?>"
                                                             <?php if (!$DHCP) { ?>disabled<?php } ?>>
@@ -527,17 +527,17 @@ if ($FTLpid !== 0) {
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <label>DHCP lease time</label>
+                                                <label>DHCP 租约时间</label>
                                                 <div class="form-group">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon">Lease time in hours</div>
+                                                        <div class="input-group-addon">租约时间（H）</div>
                                                         <input type="number" class="form-control DHCPgroup"
                                                             name="leasetime"
                                                             id="leasetime" value="<?php echo $DHCPleasetime; ?>"
                                                             data-mask <?php if (!$DHCP) { ?>disabled<?php } ?>>
                                                     </div>
                                                 </div>
-                                                <p>Hint: 0 = infinite, 24 = one day, 168 = one week, 744 = one month, 8760 = one year</p>
+                                                <p>提示：0 = 永久，24 小时 = 1 天，168 小时 = 1 周，744 小时 = 1 月，8760 小时 = 1 年</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -546,12 +546,12 @@ if ($FTLpid !== 0) {
 <?php
 if ($DHCP_rapid_commit) { ?>checked<?php }
 if (!$DHCP) { ?> disabled<?php } ?>
->&nbsp;<label for="DHCP_rapid_commit"><strong>Enable DHCPv4 rapid commit (fast address assignment)</strong></label></div>
+>&nbsp;<label for="DHCP_rapid_commit"><strong>启用 DHCPv4 快速提交（快速地址分配）</strong></label></div>
                                                 <div><input type="checkbox" name="useIPv6" id="useIPv6" class="DHCPgroup"
 <?php
 if ($DHCPIPv6) { ?>checked<?php }
 if (!$DHCP) { ?> disabled<?php } ?>
->&nbsp;<label for="useIPv6"><strong>Enable IPv6 support (SLAAC + RA)</strong></label></div>
+>&nbsp;<label for="useIPv6"><strong>启用 IPv6 支持（SLAAC + RA）</strong></label></div>
                                             </div>
                                         </div>
                                     </div>
@@ -595,7 +595,7 @@ if ($DHCP) {
 
             $clid = $line[4];
             if ($clid == '*') {
-                $clid = '<i>unknown</i>';
+                $clid = '<i>未知</i>';
             }
 
             array_push($dhcp_leases, array('TIME' => $time, 'hwaddr' => strtoupper($line[1]), 'IP' => $line[2], 'host' => $host, 'clid' => $clid, 'type' => $type));
@@ -608,7 +608,7 @@ readStaticLeasesFile();
                             <div class="col-md-12">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Currently active DHCP leases</h3>
+                                        <h3 class="box-title">DHCP 客户端列表</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
@@ -616,16 +616,16 @@ readStaticLeasesFile();
                                                 <table id="DHCPLeasesTable" class="table table-striped table-bordered nowrap" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>MAC address</th>
-                                                            <th>IP address</th>
-                                                            <th>Hostname</th>
+                                                            <th>MAC 地址</th>
+                                                            <th>IP 地址</th>
+                                                            <th>主机名称</th>
                                                             <td></td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <?php foreach ($dhcp_leases as $lease) { ?>
                                                         <tr data-placement="auto" data-container="body" data-toggle="tooltip"
-                                                            title="Lease type: IPv<?php echo $lease['type']; ?><br/>Remaining lease time: <?php echo $lease['TIME']; ?><br/>DHCP UID: <?php echo $lease['clid']; ?>">
+                                                            title="租约类型：IPv<?php echo $lease['type']; ?><br/>剩余租约时间：<?php echo $lease['TIME']; ?><br/>DHCP UID: <?php echo $lease['clid']; ?>">
                                                             <td id="MAC"><?php echo $lease['hwaddr']; ?></td>
                                                             <td id="IP" data-order="<?php echo bin2hex(inet_pton($lease['IP'])); ?>"><?php echo $lease['IP']; ?></td>
                                                             <td id="HOST"><?php echo $lease['host']; ?></td>
@@ -649,7 +649,7 @@ readStaticLeasesFile();
                             <div class="col-md-12">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Static DHCP leases configuration</h3>
+                                        <h3 class="box-title">DHCP 静态地址分配</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
@@ -657,9 +657,9 @@ readStaticLeasesFile();
                                                 <table id="DHCPStaticLeasesTable" class="table table-striped table-bordered nowrap" width="100%">
                                                     <thead>
                                                     <tr>
-                                                        <th>MAC address</th>
-                                                        <th>IP address</th>
-                                                        <th>Hostname</th>
+                                                        <th>MAC 地址</th>
+                                                        <th>IP 地址</th>
+                                                        <th>主机名称</th>
                                                         <td></td>
                                                     </tr>
                                                     </thead>
@@ -692,18 +692,14 @@ readStaticLeasesFile();
                                                         </tr>
                                                     </tfoot>
                                                 </table>
-                                                <p>Specifying the MAC address is mandatory and only one entry per MAC
-                                                    address is allowed. If the IP address is omitted and a host name is
-                                                    given, the IP address will still be generated dynamically and the
-                                                    specified host name will be used. If the host name is omitted, only
-                                                    a static lease will be added.</p>
+                                                <p>指定的MAC地址具有强制性且每个MAC地址不允许重复设置。如果只设定主机名称不设定IP地址，则会使用指定的主机名并生成动态IP地址进行分配。如果不设定主机名称，则会采用静态地址分配。</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="field" value="DHCP">
                                 <input type="hidden" name="token" value="<?php echo $token; ?>">
-                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                <button type="submit" class="btn btn-primary pull-right">保存</button>
                             </div>
                         </div>
                     </form>
@@ -728,7 +724,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <div class="col-lg-6">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h1 class="box-title">Upstream DNS Servers</h1>
+                                        <h1 class="box-title">上游 DNS 服务器</h1>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
@@ -738,7 +734,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                                         <tr>
                                                             <th colspan="2">IPv4</th>
                                                             <th colspan="2">IPv6</th>
-                                                            <th>Name</th>
+                                                            <th>名称</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -777,7 +773,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                                         <?php } ?>
                                                     </tbody>
                                                 </table>
-                                                <p>ECS (Extended Client Subnet) defines a mechanism for recursive resolvers to send partial client IP address information to authoritative DNS name servers. Content Delivery Networks (CDNs) and latency-sensitive services use this to give geo-located responses when responding to name lookups coming through public DNS resolvers. <em>Note that ECS may result in reduced privacy.</em></p>
+                                                <p>ECS（扩展客户端子网）定义了递归解析器将部分客户端IP地址信息发送到权威DNS名称服务器的机制。 内容分发网络（CDNs）和延迟敏感的服务在响应来自公共DNS解析器的名称查询时，使用它提供的地理定位响应。<em>请注意，ECS 可能会导致隐私性降低。</em></p>
                                             </div>
                                         </div>
                                     </div>
@@ -786,12 +782,12 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <div class="col-lg-6">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h1 class="box-title">Upstream DNS Servers</h1>
+                                        <h1 class="box-title">上游 DNS 服务器</h1>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <strong>Custom 1 (IPv4)</strong>
+                                                <strong>自定义 1 (IPv4)</strong>
                                                 <div class="row">
                                                     <div class="col-md-1"><div>
                                                         <input type="checkbox" name="custom1" id="custom1" value="Customv4" <?php if (isset($custom1)) { ?>checked<?php } ?>>
@@ -804,7 +800,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <strong>Custom 2 (IPv4)</strong>
+                                                <strong>自定义 2 (IPv4)</strong>
                                                 <div class="row">
                                                     <div class="col-md-1"><div>
                                                         <input type="checkbox" name="custom2" id="custom2" value="Customv4" <?php if (isset($custom2)) { ?>checked<?php } ?>>
@@ -819,7 +815,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <strong>Custom 3 (IPv6)</strong>
+                                                <strong>自定义 3 (IPv6)</strong>
                                                 <div class="row">
                                                     <div class="col-md-1"><div>
                                                         <input type="checkbox" name="custom3" id="custom3" value="Customv6" <?php if (isset($custom3)) { ?>checked<?php } ?>>
@@ -832,7 +828,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <strong>Custom 4 (IPv6)</strong>
+                                                <strong>自定义 4 (IPv6)</strong>
                                                 <div class="row">
                                                     <div class="col-md-1"><div>
                                                         <input type="checkbox" name="custom4" id="custom4" value="Customv6" <?php if (isset($custom4)) { ?>checked<?php } ?>>
@@ -851,45 +847,41 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <div class="col-lg-6">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h1 class="box-title">Interface settings</h1>
+                                        <h1 class="box-title">接口监听设置</h1>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="form-group">
                                                     <div class="no-danger-area">
-                                                        <h4>Recommended setting</h4>
+                                                        <h4>推荐设置</h4>
                                                         <div>
                                                             <input type="radio" name="DNSinterface" id="DNSinterface1" value="local"
                                                                 <?php if ($DNSinterface == 'local') { ?>checked<?php } ?>>
-                                                            <label for="DNSinterface1"><strong>Allow only local requests</strong><br>Allows only queries from devices that are at most one hop away (local devices)</label>
+                                                            <label for="DNSinterface1"><strong>仅允许本地请求</strong><br>仅允许来自最多一跳的设备（本地设备）的查询请求</label>
                                                         </div>
                                                     </div>
                                                     <div class="danger-area">
-                                                        <h4>Potentially dangerous options</h4>Make sure your Pi-hole is properly firewalled!
+                                                        <h4>潜在危险的选项</h4>确保您的 Pi-hole 已正确设置防火墙！
                                                         <div>
                                                             <input type="radio" name="DNSinterface" id="DNSinterface2" value="single"
                                                                 <?php if ($DNSinterface == 'single') { ?>checked<?php } ?>>
-                                                            <label for="DNSinterface2"><strong>Respond only on interface <?php echo htmlentities($piHoleInterface); ?></strong></label>
+                                                            <label for="DNSinterface2"><strong>仅在接口 <?php echo htmlentities($piHoleInterface); ?> 上响应</strong></label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" name="DNSinterface" id="DNSinterface3" value="bind"
                                                                 <?php if ($DNSinterface == 'bind') { ?>checked<?php } ?>>
-                                                            <label for="DNSinterface3"><strong>Bind only to interface <?php echo htmlentities($piHoleInterface); ?></strong></label>
+                                                            <label for="DNSinterface3"><strong>仅绑定到接口 <?php echo htmlentities($piHoleInterface); ?></strong></label>
                                                         </div>
                                                         <div>
                                                             <input type="radio" name="DNSinterface" id="DNSinterface4" value="all"
                                                                 <?php if ($DNSinterface == 'all') { ?>checked<?php } ?>>
-                                                            <label for="DNSinterface4"><strong>Permit all origins</strong></label>
+                                                            <label for="DNSinterface4"><strong>允许所有来源</strong></label>
                                                         </div>
-                                                        <p>These options are dangerous on devices
-                                                            directly connected to the Internet such as cloud instances and are only safe if your
-                                                            Pi-hole is properly firewalled. In a typical at-home setup where your Pi-hole is
-                                                            located within your local network (and you have <strong>not</strong> forwarded port 53
-                                                            in your router!) they are safe to use.</p>
+                                                        <p>这些选项在直接连接到互联网（公网）的设备（例如云实例）上使用是危险的，并且只有在您的 Pi-hole 正确设置防火墙时才是安全的。在典型的家庭设置中，您的 Pi-hole 位于本地网络中（并且您的路由器<strong>没有转发端口53</strong>！），这些选项才是安全的。</p>
                                                     </div>
                                                 </div>
-                                                <p>See <a href="https://docs.pi-hole.net/ftldns/interfaces/" target="_blank">our documentation</a> for further technical details.</p>
+                                                <p>相关技术说明，请参阅<a href="https://docs.pi-hole.net/ftldns/interfaces/" target="_blank">接口设置</a> 文档。</p>
                                             </div>
                                         </div>
                                     </div>
@@ -900,97 +892,60 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <div class="col-lg-12">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Advanced DNS settings</h3>
+                                        <h3 class="box-title">DNS 高级设置</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div>
                                                     <input type="checkbox" name="DNSrequiresFQDN" id="DNSrequiresFQDN" title="domain-needed" <?php if ($DNSrequiresFQDN) { ?>checked<?php } ?>>
-                                                    <label for="DNSrequiresFQDN"><strong>Never forward non-FQDN <code>A</code> and <code>AAAA</code> queries</strong></label>
-                                                    <p>When there is a Pi-hole domain set and this box is
-                                                        ticked, this asks FTL that this domain is purely
-                                                        local and FTL may answer queries from <code>/etc/hosts</code> or DHCP leases
-                                                        but should never forward queries on that domain to any upstream servers.
-                                                        If Conditional Forwarding is enabled, unticking this box may cause a partial
-                                                        DNS loop under certain circumstances (e.g. if a client would send TLD DNSSEC queries).</p>
+                                                    <label for="DNSrequiresFQDN"><strong>从不转发 non-FQDN <code>A</code> 和 <code>AAAA</code> 类型的查询请求</strong></label>
+                                                    <p>当设置了 Pi-hole 域名并且勾选此框时，这会询问 FTL 该域名是纯本地的，FTL可以根据<code>/etc/hosts</code>或 DHCP 租约回应查询请求，但不会将该域名的查询请求转发到任何上游服务器。
+                                                    如果启用了条件转发，在某些情况下（例如：如果客户端将发送 TLD DNSSEC 查询请求）不勾选此框可能会导致部分 DNS 循环。</p>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="DNSbogusPriv" id="DNSbogusPriv" title="bogus-priv" <?php if ($DNSbogusPriv) { ?>checked<?php } ?>>
-                                                    <label for="DNSbogusPriv"><strong>Never forward reverse lookups for private IP ranges</strong></label>
-                                                    <p>All reverse lookups for private IP ranges (i.e., <code>192.168.0.x/24</code>, etc.)
-                                                        which are not found in <code>/etc/hosts</code> or the DHCP leases are answered
-                                                        with "no such domain" rather than being forwarded upstream. The set
-                                                        of prefixes affected is the list given in <a href="https://tools.ietf.org/html/rfc6303">RFC6303</a>.</p>
-                                                        <p><strong>Important</strong>: Enabling these two options may increase your privacy,
-                                                        but may also prevent you from being able to access
-                                                        local hostnames if the Pi-hole is not used as DHCP server.</p>
+                                                    <label for="DNSbogusPriv"><strong>从不向上游发送私有 IP 范围的反向查询</strong></label>
+                                                    <p>在<code>/etc/hosts</code>或DHCP中找不到的私有IP范围（即<code>192.168.0.x/24</code>等）的所有反向查询都用“没有这个域名”回应，而不是转发到上游。受影响的前缀集是<a href="https://tools.ietf.org/html/rfc6303">RFC6303</a>中给出的列表。</p>
+                                                    <p><strong>重要提示：</strong>启用这两个选项可能会增加您的隐私性，但如果 Pi-hole 未用作 DHCP 服务器，则可能会阻止您访问本地主机。</p>
                                                 </div>
                                                 <br>
                                                 <div>
                                                     <input type="checkbox" name="DNSSEC" id="DNSSEC" <?php if ($DNSSEC) { ?>checked<?php } ?>>
-                                                    <label for="DNSSEC"><strong>Use DNSSEC</strong></label>
-                                                    <p>Validate DNS replies and cache DNSSEC data. When forwarding DNS
-                                                        queries, Pi-hole requests the DNSSEC records needed to validate
-                                                        the replies. If a domain fails validation or the upstream does not
-                                                        support DNSSEC, this setting can cause issues resolving domains.
-                                                        Use an upstream DNS server which supports DNSSEC when activating DNSSEC. Note that
-                                                        the size of your log might increase significantly
-                                                        when enabling DNSSEC. A DNSSEC resolver test can be found
-                                                        <a href="https://dnssec.vs.uni-due.de/" rel="noopener" target="_blank">here</a>.</p>
+                                                    <label for="DNSSEC"><strong>使用 DNSSEC</strong></label>
+                                                    <p>验证 DNS 回应并缓存 DNSSEC 数据。在转发 DNS 查询请求时，Pi-hole  会请求验证回应所需的 DNSSEC 记录。如果域名验证失败或上游不支持  DNSSEC ，则此设置可能导致解析域名时出现问题。在启用 DNSSEC  时使用支持DNSSEC的上游DNS服务器。请注意，启用 DNSSEC  后，您的日志大小可能会显著增加。您可以在
+                                                        <a href="https://dnssec.vs.uni-due.de/" rel="noopener" target="_blank">DNSSEC 解析器检测</a>进行测试。</p>
                                                 </div>
                                                 <br>
-                                                <h4><a id="ratelimit"></a>Rate-limiting</h4>
-                                                <p>Block clients making more than <input type="number" name="rate_limit_count" value="<?php echo $rate_limit_count; ?>" min="0" step="10" style="width: 5em;"> queries within
-                                                    <input type="number" name="rate_limit_interval" value="<?php echo $rate_limit_interval; ?>" min="0" step="10" style="width: 4em;"> seconds.</p>
-                                                    <p>When a client makes too many queries in too short time, it
-                                                    gets rate-limited. Rate-limited queries are answered with a
-                                                    <code>REFUSED</code> reply and not further processed by FTL
-                                                    and prevent Pi-holes getting overwhelmed by rogue clients.
-                                                    It is important to note that rate-limiting is happening on a
-                                                    per-client basis. Other clients can continue to use FTL while
-                                                    rate-limited clients are short-circuited at the same time.</p>
-                                                <p>Rate-limiting may be disabled altogether by setting both
-                                                    values to zero. See
-                                                    <a href="https://docs.pi-hole.net/ftldns/configfile/#rate_limit" target="_blank">our documentation</a>
-                                                    for further details.</p>
+                                                <h4><a id="ratelimit"></a>频率限制</h4>
+                                                <p>阻止客户端在 <input type="number" name="rate_limit_interval" value="<?php echo $rate_limit_interval; ?>" min="0" step="10" style="width: 4em;"> 秒内超过
+												<input type="number" name="rate_limit_count" value="<?php echo $rate_limit_count; ?>" min="0" step="10" style="width: 5em;"> 次的查询请求。</p>
+                                                    <p>当客户端在短时间内发送过多的查询请求时，将会受到限制。受限客户端的查询请求将会被回应<code>拒绝</code>,FTL 将不会进一步处理，防止Pi-hole被恶意客户端过度消耗资源。需要注意，频率限制将针对每个客户端进行设置。其他客户端可以继续使用 FTL ，而受限的客户端将会被短路。</p>
+                                                <p>通过将两个数值设置为零，可以禁用频率限制。详见
+                                                    <a href="https://docs.pi-hole.net/ftldns/configfile/#rate_limit" target="_blank">频率限制</a>
+                                                    文档。</p>
                                                 <br>
-                                                <h4>Conditional forwarding</h4>
-                                                <p>If not configured as your DHCP server, Pi-hole typically won't be able to
-                                                    determine the names of devices on your local network.  As a
-                                                    result, tables such as Top Clients will only show IP addresses.</p>
-                                                <p>One solution for this is to configure Pi-hole to forward these
-                                                    requests to your DHCP server (most likely your router), but only for devices on your
-                                                    home network.  To configure this we will need to know the IP
-                                                    address of your DHCP server and which addresses belong to your local network.
-                                                    Exemplary input is given below as placeholder in the text boxes (if empty).</p>
-                                                <p>If your local network spans 192.168.0.1 - 192.168.0.255, then you will have to input
-                                                    <code>192.168.0.0/24</code>. If your local network is 192.168.47.1 - 192.168.47.255, it will
-                                                    be <code>192.168.47.0/24</code> and similar. If your network is larger, the CIDR has to be
-                                                    different, for instance a range of 10.8.0.1 - 10.8.255.255 results in <code>10.8.0.0/16</code>,
-                                                    whereas an even wider network of 10.0.0.1 - 10.255.255.255 results in <code>10.0.0.0/8</code>.
-                                                    Setting up IPv6 ranges is exactly similar to setting up IPv4 here and fully supported.
-                                                    Feel free to reach out to us on our
-                                                    <a href="https://discourse.pi-hole.net" rel="noopener" target="_blank">Discourse forum</a>
-                                                    in case you need any assistance setting up local host name resolution for your particular system.</p>
-                                                <p>You can also specify a local domain name (like <code>fritz.box</code>) to ensure queries to
-                                                    devices ending in your local domain name will not leave your network, however, this is optional.
-                                                    The local domain name must match the domain name specified
-                                                    in your DHCP server for this to work. You can likely find it within the DHCP settings.</p>
-                                                <p>Enabling Conditional Forwarding will also forward all hostnames (i.e., non-FQDNs) to the router
-                                                    when "Never forward non-FQDNs" is <em>not</em> enabled.</p>
+                                                <h4>条件转发</h4>
+                                                <p>如果未配置为DHCP服务器，Pi-hole通常无法确定本地网络上的设备名称。 因此，客户端统计等统计表将仅显示IP地址。</p>
+                                                <p>一种解决方案是配置Pi-hole把这些请求转发到您的DHCP服务器（很可能是您的路由器），但仅限于您家庭网络上的设备。要进行配置，我们需要知道您的 DHCP 服务器的 IP 地址以及哪些地址属于您的本地网络。可以参考下面的输入框（如果为空）中显示的提示文本。</p>
+                                                <p>1、如果您的本地网络IP地址范围是192.168.0.1-192.168.0.255，在“本地网络范围”中填入<code>192.168.0.0/24</code>。
+												<p>2、如果您的本地网络IP地址范围是192.168.47.1-192.168.47.255，在“本地网络范围”中填入<code>192.168.47.0/24</code>，如此类推。<p>
+												<p>3、如果您的本地网络IP地址范围更大，则与上述1、2点不同，例如10.8.0.1-10.8.255.255 ，则在“本地网络范围”中填入<code>10.8.0.0/16</code>，而更广泛的IP地址范围，如10.0.0.1-10.255.255.255则在“本地网络范围”中填入<code>10.0.0.0/8</code>。<p>If your local network is 192.168.47.1 - 192.168.47.255, it will
+												<p>设置IPv6地址范围与上述设置IPv4地址的方式完全相同。如果您需要任何帮助为您的特定系统设置本地主机名解析，请随时在我们的<a href="https://discourse.pi-hole.net" rel="noopener" target="_blank">Discourse论坛</a>上与我们联系。</p>
+                                                <p>您还可以指定本地域名（如<code>fritz.box</code>）来确保设备的查询请求从始至终都不会您的网络。本地域名必须与您的DHCP 服务器中指定的域名匹配才能正常工作。您可以在DHCP设置中找到该设置，这是可选的</p>
+                                                <p>当“从不转发non-FQDN”<em>未</em>启用时，启用条件转发也会将所有主机名（即non-FQDN）转发到路由器。</p>
                                                 <div class="form-group">
                                                     <div>
                                                         <input type="checkbox" name="rev_server" id="rev_server" value="rev_server" <?php if (isset($rev_server) && ($rev_server == true)) { ?>checked<?php } ?>>
-                                                        <label for="rev_server"><strong>Use Conditional Forwarding</strong></label>
+                                                        <label for="rev_server"><strong>使用条件转发</strong></label>
                                                     </div>
                                                     <div class="input-group">
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>Local network in <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing" target="_blank">CIDR notation</a></th>
-                                                                    <th>IP address of your DHCP server (router)</th>
-                                                                    <th>Local domain name (optional)</th>
+                                                                    <th>本地网络范围<a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing" target="_blank">（CIDR表示法）</a></th>
+                                                                    <th>DHCP 服务器（路由器）的 IP 地址</th>
+                                                                    <th>本地域名（可选）</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -1006,7 +961,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                                                         <?php if (!isset($rev_server) || !$rev_server) { ?>disabled<?php } ?>>
                                                                     </td>
                                                                     <td>
-                                                                        <input type="text" name="rev_server_domain" placeholder="local" class="form-control" data-mask autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off"
+                                                                        <input type="text" name="rev_server_domain" placeholder="本地域名" class="form-control" data-mask autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off"
                                                                         <?php if (isset($rev_server_domain)) { ?>value="<?php echo $rev_server_domain; ?>"<?php } ?>
                                                                         <?php if (!isset($rev_server) || !$rev_server) { ?>disabled<?php } ?>>
                                                                     </td>
@@ -1021,7 +976,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                 </div>
                                 <input type="hidden" name="field" value="DNS">
                                 <input type="hidden" name="token" value="<?php echo $token; ?>">
-                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                <button type="submit" class="btn btn-primary pull-right">保存</button>
                             </div>
                         </div>
                     </form>
@@ -1033,20 +988,20 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <form role="form" method="post">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">API settings</h3>
+                                        <h3 class="box-title">API 设置</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h4>Top Lists</h4>
-                                                <p>Exclude the following domains from being shown in</p>
+                                                <h4>统计表设置</h4>
+                                                <p>在统计表中隐藏以下域名或客户端</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-6 col-md-12 col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Top Domains / Top Advertisers</label>
-                                                    <textarea name="domains" class="form-control" placeholder="Enter one domain per line" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off"
+                                                    <label>域名</label>
+                                                    <textarea name="domains" class="form-control" placeholder="每行输入一个域名" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off"
                                                             rows="4"><?php foreach ($excludedDomains as $domain) {
                                                                 echo $domain."\n";
                                                             }
@@ -1055,8 +1010,8 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                             </div>
                                             <div class="col-xs-12 col-sm-6 col-md-12 col-lg-6">
                                                 <div class="form-group">
-                                                    <label>Top Clients</label>
-                                                    <textarea name="clients" class="form-control" placeholder="Enter one IP address or host name per line" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off"
+                                                    <label>客户端</label>
+                                                    <textarea name="clients" class="form-control" placeholder="每行输入一个 IP 地址或主机名称" autocomplete="off" spellcheck="false" autocapitalize="none" autocorrect="off"
                                                             rows="4"><?php foreach ($excludedClients as $client) {
                                                                 echo $client."\n";
                                                             }
@@ -1066,20 +1021,20 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
-                                            <h4>Query Log</h4>
+                                            <h4>查询请求日志</h4>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div>
                                                     <input type="checkbox" name="querylog-permitted" id="querylog-permitted" <?php if ($queryLog === 'permittedonly' || $queryLog === 'all') { ?>checked<?php } ?>>
-                                                    <label for="querylog-permitted"><strong>Show permitted domain entries</strong></label>
+                                                    <label for="querylog-permitted"><strong>显示放行域名</strong></label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div>
                                                 <input type="checkbox" name="querylog-blocked" id="querylog-blocked" <?php if ($queryLog === 'blockedonly' || $queryLog === 'all') { ?>checked<?php } ?>>
-                                                <label for="querylog-blocked"><strong>Show blocked domain entries</strong></label>
+                                                <label for="querylog-blocked"><strong>显示吞噬域名</strong></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1087,8 +1042,8 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                     <div class="box-footer clearfix">
                                         <input type="hidden" name="field" value="API">
                                         <input type="hidden" name="token" value="<?php echo $token; ?>">
-                                        <button type="button" class="btn btn-primary api-token">Show API token</button>
-                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                        <button type="button" class="btn btn-primary api-token">显示 API 令牌</button>
+                                        <button type="submit" class="btn btn-primary pull-right">保存</button>
                                     </div>
                                 </div>
                             </form>
@@ -1097,13 +1052,13 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="apiTokenModalHeaderLabel">API Token</h4>
+                                            <h4 class="modal-title" id="apiTokenModalHeaderLabel">API 令牌</h4>
                                         </div>
                                         <div class="modal-body">
                                         <pre><iframe id="apiTokenIframe" name="apiToken_iframe" src="scripts/pi-hole/php/api_token.php"></iframe></pre>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                                            <button type="button" data-dismiss="modal" class="btn btn-default">关闭</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1113,12 +1068,12 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <form role="form" method="post">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Web interface settings</h3>
+                                        <h3 class="box-title">Web 界面设置</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h4>Interface appearance</h4>
+                                                <h4>网页界面外观</h4>
                                                 <?php theme_selection(); ?>
                                             </div>
                                         </div>
@@ -1126,7 +1081,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                             <div class="col-md-12">
                                                 <div>
                                                     <input type="checkbox" name="boxedlayout" id="boxedlayout" value="yes" <?php if ($boxedlayout) { ?>checked<?php } ?>>
-                                                    <label for="boxedlayout"><strong>Use boxed layout (for large screens)</strong></label>
+                                                    <label for="boxedlayout"><strong>使用磁贴式布局（适用于大屏幕）</strong></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -1134,7 +1089,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                         <input type="hidden" name="token" value="<?php echo $token; ?>">
                                     </div>
                                     <div class="box-footer clearfix">
-                                        <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                        <button type="submit" class="btn btn-primary pull-right">保存</button>
                                     </div>
                                 </div>
                             </form>
@@ -1142,73 +1097,73 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                         <div class="col-md-6">
                             <div class="box box-warning">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Per-browser settings (auto saved)</h3>
+                                    <h3 class="box-title">样式（自动保存，每个浏览器单独设置）</h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p>Checkbox and radio buttons</p>
+                                            <p>复选框和单选按钮</p>
                                         </div>
                                         <div class="col-md-6">
                                             <select id="iCheckStyle">
-                                                <option>default</option>
-                                                <option>primary</option>
-                                                <option>success</option>
-                                                <option>info</option>
-                                                <option>warning</option>
-                                                <option>danger</option>
-                                                <option>turquoise</option>
-                                                <option>emerland</option>
-                                                <option>peterriver</option>
-                                                <option>amethyst</option>
-                                                <option>wetasphalt</option>
-                                                <option>greensea</option>
-                                                <option>nephritis</option>
-                                                <option>belizehole</option>
-                                                <option>wisteria</option>
-                                                <option>midnightblue</option>
-                                                <option>sunflower</option>
-                                                <option>carrot</option>
-                                                <option>alizarin</option>
-                                                <option>clouds</option>
-                                                <option>concrete</option>
-                                                <option>orange</option>
-                                                <option>pumpkin</option>
-                                                <option>pomegranate</option>
-                                                <option>silver</option>
-                                                <option>asbestos</option>
+                                                <option>默认</option>
+                                                <option>重要</option>
+                                                <option>成功</option>
+                                                <option>信息</option>
+                                                <option>警告</option>
+                                                <option>危险</option>
+                                                <option>青绿色</option>
+                                                <option>石灰绿</option>
+                                                <option>彼得河</option>
+                                                <option>紫水晶</option>
+                                                <option>蓝灰色</option>
+                                                <option>深海绿</option>
+                                                <option>鲜绿色</option>
+                                                <option>伯利兹洞蓝</option>
+                                                <option>紫藤色</option>
+                                                <option>午夜蓝</option>
+                                                <option>向日葵</option>
+                                                <option>胡萝卜</option>
+                                                <option>茜红色</option>
+                                                <option>云白色</option>
+                                                <option>混凝土</option>
+                                                <option>橙色</option>
+                                                <option>南瓜</option>
+                                                <option>石榴</option>
+                                                <option>银色</option>
+                                                <option>石棉</option>
 
-                                                <option>material-red</option>
-                                                <option>material-pink</option>
-                                                <option>material-purple</option>
-                                                <option>material-deeppurple</option>
-                                                <option>material-indigo</option>
-                                                <option>material-blue</option>
-                                                <option>material-lightblue</option>
-                                                <option>material-cyan</option>
-                                                <option>material-teal</option>
-                                                <option>material-green</option>
-                                                <option>material-lightgreen</option>
-                                                <option>material-lime</option>
-                                                <option>material-yellow</option>
-                                                <option>material-amber</option>
-                                                <option>material-orange</option>
-                                                <option>material-deeporange</option>
-                                                <option>material-brown</option>
-                                                <option>material-grey</option>
-                                                <option>material-bluegrey</option>
+                                                <option>material-红色</option>
+                                                <option>material-粉红色</option>
+                                                <option>material-紫色</option>
+                                                <option>material-深紫色</option>
+                                                <option>material-靛蓝色</option>
+                                                <option>material-蓝色</option>
+                                                <option>material-浅蓝色</option>
+                                                <option>material-青色</option>
+                                                <option>material-蓝绿色</option>
+                                                <option>material-绿色</option>
+                                                <option>material-浅绿色</option>
+                                                <option>material-柠檬色</option>
+                                                <option>material-黄色</option>
+                                                <option>material-琥珀色</option>
+                                                <option>material-橙色</option>
+                                                <option>material-深橙色</option>
+                                                <option>material-棕色</option>
+                                                <option>material-灰色</option>
+                                                <option>material-蓝灰色</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <p>CPU Temperature Unit</p>
+                                            <p>CPU 温度单位</p>
                                         </div>
                                         <div class="col-md-6">
                                             <select id="tempunit-selector">
-                                                <option value="C">Celsius</option>
-                                                <option value="K">Kelvin</option>
-                                                <option value="F">Fahrenheit</option>
+                                                <option value="C">°C（摄氏度）</option>
+                                                <option value="K">K（绝对温度）</option>
+                                                <option value="F">°F（华氏度）</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1216,7 +1171,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                         <div class="col-md-12">
                                             <div>
                                                 <input type="checkbox" name="bargraphs" id="bargraphs" value="yes">
-                                                <label for="bargraphs"><strong>Use new Bar charts on dashboard</strong></label>
+                                                <label for="bargraphs"><strong>在运行状态页面上使用新的条形图</strong></label>
                                             </div>
                                         </div>
                                     </div>
@@ -1224,7 +1179,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                         <div class="col-md-12">
                                             <div>
                                                 <input type="checkbox" name="colorfulQueryLog" id="colorfulQueryLog" value="no">
-                                                <label for="colorfulQueryLog"><strong>Colorful Query Log</strong></label>
+                                                <label for="colorfulQueryLog"><strong>多彩查询日志</strong></label>
                                             </div>
                                         </div>
                                     </div>
@@ -1232,7 +1187,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                         <div class="col-md-12">
                                             <div>
                                                 <input type="checkbox" name="hideNonfatalDnsmasqWarnings" id="hideNonfatalDnsmasqWarnings" value="no">
-                                                <label for="hideNonfatalDnsmasqWarnings"><strong>Hide non-fatal <code>dnsmasq</code> warnings (warnings listed <a target="_blank" href="https://docs.pi-hole.net/ftldns/dnsmasq_warn">here</a>)</strong></label>
+                                                <label for="hideNonfatalDnsmasqWarnings"><strong>隐藏非致命 <code>dnsmasq</code> 警告（<a target="_blank" href="https://docs.pi-hole.net/ftldns/dnsmasq_warn">警告列表</a>）</strong></label>
                                             </div>
                                         </div>
                                     </div>
@@ -1256,36 +1211,36 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <form role="form" method="post">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Privacy settings</h3>
+                                        <h3 class="box-title">隐私设置</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h4>DNS resolver privacy level</h4>
-                                                <p>Specify if DNS queries should be anonymized, available options are:</p>
+                                                <h4>DNS 解析器隐私级别</h4>
+                                                <p>指定 DNS 查询是否应该匿名，可用选项有：</p>
                                                 <div>
                                                     <input type="radio" name="privacylevel" id="privacylevel_0" value="0" <?php if ($privacylevel === 0) { ?>checked<?php } ?>>
-                                                    <label for="privacylevel_0"><strong>Show everything and record everything</strong></label>
-                                                    <p>Gives maximum amount of statistics</p>
+                                                    <label for="privacylevel_0"><strong>显示一切并记录一切</strong></label>
+                                                    <p>提供最详尽的统计数据</p>
                                                 </div>
                                                 <div>
                                                     <input type="radio" name="privacylevel" id="privacylevel_1" value="1" <?php if ($privacylevel === 1) { ?>checked<?php } ?>>
-                                                    <label for="privacylevel_1"><strong>Hide domains: Display and store all domains as "hidden"</strong></label>
-                                                    <p>This disables the Top Permitted Domains and Top Blocked Domains tables on the dashboard</p>
+                                                    <label for="privacylevel_1"><strong>隐藏域名：将所有域名显示和存储为“隐藏”</strong></label>
+                                                    <p>这将禁用运行状态页面上的域名统计和广告统计</p>
                                                 </div>
                                                 <div>
                                                     <input type="radio" name="privacylevel" id="privacylevel_2" value="2" <?php if ($privacylevel === 2) { ?>checked<?php } ?>>
-                                                    <label for="privacylevel_2"><strong>Hide domains and clients: Display and store all domains as "hidden" and all clients as "0.0.0.0"</strong></label>
-                                                    <p>This disables all tables on the dashboard</p>
+                                                    <label for="privacylevel_2"><strong>隐藏域名和客户端：显示和存储所有域名为“隐藏”，所有客户端为“0.0.0.0”</strong></label>
+                                                    <p>这将禁用运行状态页面上的所有统计</p>
                                                 </div>
                                                 <div>
                                                     <input type="radio" name="privacylevel" id="privacylevel_3" value="3" <?php if ($privacylevel === 3) { ?>checked<?php } ?>>
-                                                    <label for="privacylevel_3"><strong>Anonymous mode: This disables basically everything except the live anonymous statistics</strong></label>
-                                                    <p>No history is saved at all to the database, and nothing is shown in the query log. Also, there are no top item lists.</p>
+                                                    <label for="privacylevel_3"><strong>匿名模式：这基本上禁用了除实时匿名统计之外的所有内容</strong></label>
+                                                    <p>不会保存历史记录到数据库中，查询日志中也不会显示任何内容。此外，也不会有统计数据表。</p>
                                                 </div>
-                                                <p>The privacy level may be increased at any time without having to restart the DNS resolver. However, note that the DNS resolver needs to be restarted when lowering the privacy level. This restarting is automatically done when saving.</p>
+                                                <p>可以随时提高隐私级别，而无需重新启动DNS解析器。但是请注意，降低隐私级别时需要重新启动DNS解析器。保存时会自动重新启动。</p>
                                                 <?php if ($privacylevel > 0 && $piHoleLogging) { ?>
-                                                <p class="lookatme" lookatme-text="Warning: Pi-hole's query logging is activated. Although the dashboard will hide the requested details, all queries are still fully logged to the pihole.log file.">Warning: Pi-hole's query logging is activated. Although the dashboard will hide the requested details, all queries are still fully logged to the pihole.log file.</p>
+                                                <p class="lookatme" lookatme-text="警告：Pi-hole 的查询请求记录功能已启用。尽管运行状态页面将隐藏请求的详细信息，但所有查询请求仍会完全记录到 pihole.log 文件中。">警告：Pi-hole 的查询请求记录功能已启用。尽管运行状态页面将隐藏请求的详细信息，但所有查询请求仍会完全记录到 pihole.log 文件中。</p>
                                                 <?php } ?>
                                             </div>
                                         </div>
@@ -1293,7 +1248,7 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                     <div class="box-footer clearfix">
                                         <input type="hidden" name="field" value="privacyLevel">
                                         <input type="hidden" name="token" value="<?php echo $token; ?>">
-                                        <button type="submit" class="btn btn-primary pull-right">Apply</button>
+                                        <button type="submit" class="btn btn-primary pull-right">应用</button>
                                     </div>
                                 </div>
                             </form>
@@ -1311,13 +1266,13 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <div class="col-lg-6 col-md-12">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Backup</h3>
+                                        <h3 class="box-title">备份</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <p>Backup your Pi-hole configuration (settings &amp; lists) as a downloadable archive</p>
-                                                <button type="submit" class="btn btn-default">Backup</button>
+                                                <p>将您的 Pi-hole 配置（设置&amp;列表）备份为可下载的存档</p>
+                                                <button type="submit" class="btn btn-default">备份</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1326,91 +1281,91 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <div class="col-lg-6 col-md-12">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
-                                        <h3 class="box-title">Restore</h3>
+                                        <h3 class="box-title">恢复</h3>
                                     </div>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <label>Restore...</label>
+                                                <label>选择恢复内容...</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div>
                                                     <input type="checkbox" name="whitelist" id="tele_whitelist" value="true" checked>
-                                                    <label for="tele_whitelist">Whitelist (exact)</label>
+                                                    <label for="tele_whitelist">白名单（确切）</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="regex_whitelist" id="tele_regex_whitelist" value="true" checked>
-                                                    <label for="tele_regex_whitelist">Whitelist (regex/wildcard)</label>
+                                                    <label for="tele_regex_whitelist">白名单（正则表达式/通配符）</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="blacklist" id="tele_blacklist" value="true" checked>
-                                                    <label for="tele_blacklist">Blacklist (exact)</label>
+                                                    <label for="tele_blacklist">黑名单（确切）</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="regexlist" id="tele_regexlist" value="true" checked>
-                                                    <label for="tele_regexlist">Blacklist (regex/wildcard)</label>
+                                                    <label for="tele_regexlist">黑名单（正则表达式/通配符）</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="adlist" id="tele_adlist" value="true" checked>
-                                                    <label for="tele_adlist">Adlists</label>
+                                                    <label for="tele_adlist">引力场（广告吞噬规则）</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div>
                                                     <input type="checkbox" name="client" id="tele_client" value="true" checked>
-                                                    <label for="tele_client">Client</label>
+                                                    <label for="tele_client">客户端</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="group" id="tele_group" value="true" checked>
-                                                    <label for="tele_group">Group</label>
+                                                    <label for="tele_group">群组</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="auditlog" id="tele_auditlog" value="true" checked>
-                                                    <label for="tele_auditlog">Audit log</label>
+                                                    <label for="tele_auditlog">审核日志</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="staticdhcpleases" id="tele_staticdhcpleases" value="true" checked>
-                                                    <label for="tele_staticdhcpleases">Static DHCP Leases</label>
+                                                    <label for="tele_staticdhcpleases">DHCP 静态地址分配</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="localdnsrecords" id="tele_localdnsrecords" value="true" checked>
-                                                    <label for="tele_localdnsrecords">Local DNS Records</label>
+                                                    <label for="tele_localdnsrecords">本地 DNS 映射</label>
                                                 </div>
                                                 <div>
                                                     <input type="checkbox" name="localcnamerecords" id="tele_localcnamerecords" value="true" checked>
-                                                    <label for="tele_localcnamerecords">Local CNAME Records</label>
+                                                    <label for="tele_localcnamerecords">本地 CNAME 映射</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <label for="zip_file">File input</label>
+                                                <label for="zip_file">上传文件</label>
                                                 <div class="input-group">
                                                     <span class="input-group-btn">
-                                                        <span class="btn btn-default btn-file" tabindex="0">Browse...
+                                                        <span class="btn btn-default btn-file" tabindex="0">选择文件...
                                                             <input type="file" name="zip_file" id="zip_file" accept="application/gzip" tabindex="-1">
                                                         </span>
                                                     </span>
                                                     <input type="text" id="zip_filename" class="form-control"
-                                                        placeholder="no file selected" readonly="readonly" tabindex="-1">
+                                                        placeholder="未选择文件" readonly="readonly" tabindex="-1">
                                                 </div>
-                                                <p class="help-block">Upload only Pi-hole backup files.</p>
+                                                <p class="help-block">仅支持上传 Pi-hole 备份文件。</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div>
                                                     <input type="checkbox" name="flushtables" id="tele_flushtables" value="true" checked>
-                                                    <label for="tele_flushtables">Clear existing data</label>
+                                                    <label for="tele_flushtables">清除现有数据</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="box-footer clearfix">
                                         <button type="submit" class="btn btn-default" name="action"
-                                            value="in" data-toggle="modal" data-target="#teleporterModal">Restore
+                                            value="in" data-toggle="modal" data-target="#teleporterModal">恢复
                                         </button>
                                     </div>
                                 </div>
@@ -1421,10 +1376,10 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="exampleModalLabel">Teleporter Import</h4>
+                                        <h4 class="modal-title" id="exampleModalLabel">传送器导入</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Output:</label>
+                                        <label class="control-label">输出信息：</label>
                                         <div class="box no-margin no-border no-shadow">
                                             <pre class="no-margin no-padding"><iframe class="col-xs-12 no-border no-padding"
                                                                                     name="teleporter_iframe" height="100"
@@ -1435,9 +1390,9 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                                        <button type="button" data-dismiss="modal" class="btn btn-default">关闭</button>
                                         <button type="button" data-dismiss="modal" class="btn btn-default hidden">
-                                            <i class="fas fa-sync"></i> Reload page
+                                            <i class="fas fa-sync"></i> 重新加载页面
                                         </button>
                                     </div>
                                 </div>
@@ -1447,10 +1402,10 @@ if (isset($piholeFTLConf['RATE_LIMIT'])) {
                         <div class="col-lg-12">
                             <div class="box box-warning">
                                 <div class="box-header with-border">
-                                    <h3 class="box-title">Teleporter</h3>
+                                    <h3 class="box-title">传送器</h3>
                                 </div>
                                 <div class="box-body">
-                                    <p>The PHP extension <code>Phar</code> is not loaded. Please ensure it is installed and loaded if you want to use the Pi-hole teleporter.</p>
+                                    <p>未加载 PHP 扩展<code>Phar</code>模块。如果您想使用 Pi-hole 传送器，请确保已安装并加载该模块。</p>
                                 </div>
                             </div>
                         </div>

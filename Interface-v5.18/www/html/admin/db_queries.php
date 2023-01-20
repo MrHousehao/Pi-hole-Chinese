@@ -13,7 +13,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 
 <!-- Title -->
 <div class="page-header">
-    <h1>Specify date range to be queried from the Pi-hole query database</h1>
+    <h1>从Pi-hole数据库调阅查询请求日志</h1>
 </div>
 
 <div class="row">
@@ -21,14 +21,14 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Select date and time range
+                    选择时间范围
                 </h3>
             </div>
             <div class="box-body">
                 <div class="alert alert-info reload-box">
                     <div>
-                        <span><i class="fa fa-exclamation-circle"></i>&nbsp; New options selected. Please reload the data or choose another time range.</span>
-                        <button type="button" class="btn btn-primary bt-reload">Reload Data</button>
+                        <span><i class="fa fa-exclamation-circle"></i>&nbsp; 已选择新的选项。请重新加载数据或选择其他时间范围。</span>
+                        <button type="button" class="btn btn-primary bt-reload">重新加载数据</button>
                     </div>
                 </div>
                 <div class="row">
@@ -37,35 +37,35 @@ require 'scripts/pi-hole/php/header_authenticated.php';
                             <div class="input-group-addon">
                                 <i class="far fa-clock"></i>
                             </div>
-                            <input type="button" class="form-control pull-right" id="querytime" value="Click to select date and time range">
+                            <input type="button" class="form-control pull-right" id="querytime" value="点击选择日期和时间范围">
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <label>Query status:</label>
+                        <label>查询请求状态：</label>
                     </div>
                     <div class="form-group">
                         <div class="col-md-3">
-                            <div><input type="checkbox" id="type_forwarded" checked><label for="type_forwarded">Permitted: forwarded</label><br></div>
-                            <div><input type="checkbox" id="type_cached" checked><label for="type_cached">Permitted: cached</label></div>
-                            <div><input type="checkbox" id="type_cached_stale" checked><label for="type_cached_stale">Permitted: stale cache</label></div>
-                            <div><input type="checkbox" id="type_retried" checked><label for="type_retried">Permitted: retried</label></div>
+                            <div><input type="checkbox" id="type_forwarded" checked><label for="type_forwarded">放行：已转发</label><br></div>
+                            <div><input type="checkbox" id="type_cached" checked><label for="type_cached">放行：缓存</label></div>
+                            <div><input type="checkbox" id="type_cached_stale" checked><label for="type_cached_stale">放行：过时的缓存</label></div>
+                            <div><input type="checkbox" id="type_retried" checked><label for="type_retried">放行：重试</label></div>
                         </div>
                         <div class="col-md-3">
-                            <div><input type="checkbox" id="type_gravity" checked><label for="type_gravity">Blocked: gravity</label><br></div>
-                            <div><input type="checkbox" id="type_external" checked><label for="type_external">Blocked: external</label></div>
-                            <div><input type="checkbox" id="type_dbbusy" checked><label for="type_dbbusy">Blocked: database busy</label></div>
+                            <div><input type="checkbox" id="type_gravity" checked><label for="type_gravity">吞噬：引力场</label><br></div>
+                            <div><input type="checkbox" id="type_external" checked><label for="type_external">吞噬：外部</label></div>
+                            <div><input type="checkbox" id="type_dbbusy" checked><label for="type_dbbusy">吞噬：数据库繁忙</label></div>
                         </div>
                         <div class="col-md-3">
-                            <div><input type="checkbox" id="type_blacklist" checked><label for="type_blacklist">Blocked: exact blacklist</label><br></div>
-                            <div><input type="checkbox" id="type_regex" checked><label for="type_regex">Blocked: regex blacklist</label></div>
-                            <div><input type="checkbox" id="type_special_domain" checked><label for="type_special_domain">Blocked: special domain</label></div>
+                            <div><input type="checkbox" id="type_blacklist" checked><label for="type_blacklist">吞噬：确切黑名单</label><br></div>
+                            <div><input type="checkbox" id="type_regex" checked><label for="type_regex">吞噬：正侧表达式黑名单</label></div>
+                            <div><input type="checkbox" id="type_special_domain" checked><label for="type_special_domain">吞噬：特殊域名</label></div>
                         </div>
                         <div class="col-md-3">
-                            <div><input type="checkbox" id="type_gravity_CNAME" checked><label for="type_gravity_CNAME">Blocked: gravity (CNAME)</label><br></div>
-                            <div><input type="checkbox" id="type_blacklist_CNAME" checked><label for="type_blacklist_CNAME">Blocked: exact blacklist (CNAME)</label><br></div>
-                            <div><input type="checkbox" id="type_regex_CNAME" checked><label for="type_regex_CNAME">Blocked: regex blacklist (CNAME)</label></div>
+                            <div><input type="checkbox" id="type_gravity_CNAME" checked><label for="type_gravity_CNAME">吞噬：引力场（CNAME）</label><br></div>
+                            <div><input type="checkbox" id="type_blacklist_CNAME" checked><label for="type_blacklist_CNAME">吞噬：确切黑名单（CNAME）</label><br></div>
+                            <div><input type="checkbox" id="type_regex_CNAME" checked><label for="type_regex_CNAME">吞噬：正侧表达式黑名单（CNAME）</label></div>
                         </div>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 </div>
 
 <div id="timeoutWarning" class="alert alert-warning alert-dismissible fade in" role="alert" hidden>
-    Depending on how large of a range you specified, the request may time out while Pi-hole tries to retrieve all the data.<br/><span id="err"></span>
+    根据选择的时间范围的大小，Pi-hole 尝试检索大量数据时，请求可能会超时。<br/><span id="err"></span>
 </div>
 
 <!-- Small boxes (Stat box) -->
@@ -85,7 +85,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         <div class="small-box bg-aqua no-user-select">
             <div class="inner">
                 <h3 class="statistic" id="queries_blocked_exact">---</h3>
-                <p>Queries Blocked</p>
+                <p>已吞噬数据</p>
             </div>
             <div class="icon">
                 <i class="fas fa-hand-paper"></i>
@@ -98,7 +98,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         <div class="small-box bg-aqua no-user-select">
             <div class="inner">
                 <h3 class="statistic" id="queries_wildcard_blocked">---</h3>
-                <p>Queries Blocked (Wildcards)</p>
+                <p>已吞噬数据（通配符）</p>
             </div>
             <div class="icon">
                 <i class="fas fa-hand-paper"></i>
@@ -111,7 +111,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         <div class="small-box bg-green no-user-select">
             <div class="inner">
                 <h3 class="statistic" id="dns_queries">---</h3>
-                <p>Queries Total</p>
+                <p>总查询请求数据</p>
             </div>
             <div class="icon">
                 <i class="fas fa-globe-americas"></i>
@@ -124,7 +124,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         <div class="small-box bg-yellow no-user-select">
             <div class="inner">
                 <h3 class="statistic" id="queries_percentage_today">---</h3>
-                <p>Queries Blocked</p>
+                <p>吞噬比例</p>
             </div>
             <div class="icon">
                 <i class="fas fa-chart-pie"></i>
@@ -153,15 +153,15 @@ require 'scripts/pi-hole/php/header_authenticated.php';
                             <i class="fa fa-times fa-stack-1x fa-inverse"></i>
                         </div>
                     </span>
-                    <div class="alProcessing">Adding <span id="alDomain"></span> to the <span id="alList"></span>...</div>
-                    <div class="alSuccess text-bold text-green" style="display: none"><span id="alDomain"></span> successfully added to the <span id="alList"></span></div>
+                    <div class="alProcessing">正在添加 <span id="alDomain"></span> 到 <span id="alList"></span>...</div>
+                    <div class="alSuccess text-bold text-green" style="display: none"><span id="alDomain"></span> 已成功添加到 <span id="alList"></span></div>
                     <div class="alFailure text-bold text-red" style="display: none">
-                        <span id="alNetErr">Timeout or Network Connection Error!</span>
+                        <span id="alNetErr">超时或网络连接错误！</span>
                         <span id="alCustomErr"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
@@ -172,31 +172,31 @@ require 'scripts/pi-hole/php/header_authenticated.php';
     <div class="col-md-12">
         <div class="box" id="recent-queries">
             <div class="box-header with-border">
-                <h3 class="box-title">Recent Queries</h3>
+                <h3 class="box-title">查询请求日志</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <table id="all-queries" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th>Time</th>
-                            <th>Type</th>
-                            <th>Domain</th>
-                            <th>Client</th>
-                            <th>Status</th>
-                            <th>Reply</th>
-                            <th>Action</th>
+                            <th>时间</th>
+                            <th>类型</th>
+                            <th>域名</th>
+                            <th>客户端</th>
+                            <th>状态</th>
+                            <th>响应时间</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Time</th>
-                            <th>Type</th>
-                            <th>Domain</th>
-                            <th>Client</th>
-                            <th>Status</th>
-                            <th>Reply</th>
-                            <th>Action</th>
+                            <th>时间</th>
+                            <th>类型</th>
+                            <th>域名</th>
+                            <th>客户端</th>
+                            <th>状态</th>
+                            <th>响应时间</th>
+                            <th>操作</th>
                         </tr>
                     </tfoot>
                 </table>

@@ -9,7 +9,7 @@ if (!isset($api)) {
         check_cors();
         check_csrf($_POST['token']);
     } else {
-        log_and_die('Not allowed (login session invalid or expired, please relogin on the Pi-hole dashboard)!');
+        log_and_die('不允许（登录无效或已过期，请重新登录Pi-hole）！');
     }
 }
 
@@ -24,5 +24,5 @@ switch ($_POST['action']) {
         break;
 
     default:
-        exit('Wrong action');
+        exit('错误操作');
 }
