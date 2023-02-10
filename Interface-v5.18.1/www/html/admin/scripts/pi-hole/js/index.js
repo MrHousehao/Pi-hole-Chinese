@@ -231,7 +231,7 @@ function updateQueriesOverTime() {
     timeLineChart.data.labels = [];
     timeLineChart.data.datasets = [];
 
-    var labels = ["Blocked DNS Queries", "Permitted DNS Queries"];
+    var labels = ["吞噬 DNS 查询请求", "放行 DNS 查询请求"];
     var blockedColor = $(".queries-blocked").css("background-color");
     var permittedColor = $(".queries-permitted").css("background-color");
     var colors = [blockedColor, permittedColor];
@@ -657,9 +657,9 @@ function updateSummaryData(runOnce) {
 
   $.getJSON("api.php?summaryRaw", function (data) {
     if ("FTLnotrunning" in data) {
-      data.dns_queries_today = "Lost";
-      data.ads_blocked_today = "connection";
-      data.ads_percentage_today = "to";
+      data.dns_queries_today = "无法";
+      data.ads_blocked_today = "连接";
+      data.ads_percentage_today = "到";
       data.domains_being_blocked = "API";
       // Show spinner
       $("#queries-over-time .overlay").show();
@@ -703,7 +703,7 @@ function updateSummaryData(runOnce) {
     if (Object.prototype.hasOwnProperty.call(data, "dns_queries_all_types")) {
       $("#total_queries").prop(
         "title",
-        "only A + AAAA queries (" + data.dns_queries_all_types + " in total)"
+        "类型为 A 和 AAAA 的查询请求（总共" + data.dns_queries_all_types + "条数据）"
       );
     }
 
@@ -746,10 +746,12 @@ function doughnutTooltip(tooltipLabel) {
     return (
       label +
       ":<br>&bull; " +
+	  "占所有项目的" +
       itemPercentage +
-      "% of all queries<br>&bull; " +
+      "%<br>&bull; " +
+      "占所选显示项目的" +
       ((tooltipLabel.parsed * 100) / percentageTotalShown).toFixed(1) +
-      "% of shown items"
+      "%"
     );
   }
 }
@@ -805,7 +807,7 @@ const htmlLegendPlugin = {
 
       // Color checkbox (toggle visibility)
       const boxSpan = document.createElement("span");
-      boxSpan.title = "Toggle visibility";
+      boxSpan.title = "统计可见";
       boxSpan.style.color = item.fillStyle;
       boxSpan.style.display = "inline-block";
       boxSpan.style.margin = "0 10px";
@@ -828,7 +830,7 @@ const htmlLegendPlugin = {
 
       // Text (link to query log page)
       const textLink = document.createElement("p");
-      textLink.title = "List " + item.text + " queries";
+      textLink.title = "" + item.text + "的查询请求";
       textLink.style.color = item.fontColor;
       textLink.style.margin = 0;
       textLink.style.padding = 0;
@@ -890,7 +892,7 @@ $(function () {
               var m = parseInt(time[2], 10) || 0;
               var from = utils.padNumber(h) + ":" + utils.padNumber(m - 5) + ":00";
               var to = utils.padNumber(h) + ":" + utils.padNumber(m + 4) + ":59";
-              return "Queries from " + from + " to " + to;
+              return "查询请求数据统计时间从" + from + " 到 " + to;
             },
             label: function (tooltipLabel) {
               var label = tooltipLabel.dataset.label;
@@ -1003,7 +1005,7 @@ $(function () {
                 var m = parseInt(time[2], 10) || 0;
                 var from = utils.padNumber(h) + ":" + utils.padNumber(m - 5) + ":00";
                 var to = utils.padNumber(h) + ":" + utils.padNumber(m + 4) + ":59";
-                return "Client activity from " + from + " to " + to;
+                return "客户端查询请求统计时间从" + from + " 到 " + to;
               },
             },
           },
@@ -1149,7 +1151,7 @@ $(function () {
             external: customTooltips,
             callbacks: {
               title: function () {
-                return "Query type";
+                return "查询请求类型";
               },
               label: doughnutTooltip,
             },
@@ -1195,7 +1197,7 @@ $(function () {
             external: customTooltips,
             callbacks: {
               title: function () {
-                return "Upstream server";
+                return "转发目的地";
               },
               label: doughnutTooltip,
             },
