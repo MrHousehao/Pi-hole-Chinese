@@ -18,7 +18,7 @@ function checkSafetyPersistentLoginToken($token)
     if (ctype_alnum($token) and strlen($token) == 32) {
         return true;
     }
-    error_log('Security alert: presented "persistentlogin" token did not pass safety check!', 0);
+    error_log('安全警报：提交的“永久登录”令牌未通过安全检查！', 0);
 
     return false;
 }

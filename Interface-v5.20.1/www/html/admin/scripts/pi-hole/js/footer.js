@@ -25,14 +25,14 @@ function piholeChanged(action) {
 
   switch (action) {
     case "enabled":
-      status.html("<i class='fa fa-circle text-green-light'></i> Active");
+      status.html("<i class='fa fa-circle text-green-light'></i> 激活");
       ena.hide();
       dis.show();
       dis.removeClass("active");
       break;
 
     case "disabled":
-      status.html("<i class='fa fa-circle text-red'></i> Blocking disabled");
+      status.html("<i class='fa fa-circle text-red'></i> 离线");
       ena.show();
       dis.hide();
       break;
@@ -50,15 +50,15 @@ function countDown() {
 
   //Stop and remove timer when user enabled early
   if ($("#pihole-enable").is(":hidden")) {
-    ena.text("Enable Blocking");
+    ena.text("启用吞噬");
     return;
   }
 
   if (seconds > 0) {
     setTimeout(countDown, 1000);
-    ena.text("Enable Blocking (" + secondsTimeSpanToHMS(seconds) + ")");
+    ena.text("启用吞噬（" + secondsTimeSpanToHMS(seconds) + "）");
   } else {
-    ena.text("Enable Blocking");
+    ena.text("启用吞噬");
     piholeChanged("enabled");
     if (localStorage) {
       localStorage.removeItem("countDownTarget");
@@ -186,11 +186,11 @@ function initCPUtemp() {
     var token = encodeURIComponent($("#token").text());
     $.getJSON("api.php?setTempUnit=" + unit + "&token=" + token, function (data) {
       if (showmsg === true) {
-        utils.showAlert("info", "", "Setting temperature unit...");
+        utils.showAlert("info", "", "正在温度单位中...");
         if ("result" in data && data.result === "success") {
-          utils.showAlert("success", "far fa-check-circle", "Temperature unit set to " + unit, "");
+          utils.showAlert("success", "far fa-check-circle", "温度单位已设置为" + unit, "");
         } else {
-          utils.showAlert("error", "", "", "Temperature unit not set");
+          utils.showAlert("error", "", "", "温度单位未设置成功");
         }
       }
     });

@@ -20,7 +20,7 @@ $data = array();
 if (isset($_GET['enable']) && $auth) {
     if (isset($_GET['auth'])) {
         if ($_GET['auth'] !== $pwhash) {
-            exit('Not authorized!');
+            exit('未经授权！');
         }
     } else {
         // Skip token validation if explicit auth string is given
@@ -34,7 +34,7 @@ if (isset($_GET['enable']) && $auth) {
 } elseif (isset($_GET['disable']) && $auth) {
     if (isset($_GET['auth'])) {
         if ($_GET['auth'] !== $pwhash) {
-            exit('Not authorized!');
+            exit('未经授权！');
         }
     } else {
         // Skip token validation if explicit auth string is given
@@ -95,11 +95,11 @@ if (isset($_GET['enable']) && $auth) {
     $data = array_merge($data, array('result' => $result));
 } elseif (isset($_GET['list'])) {
     if (!$auth) {
-        exit('Not authorized!');
+        exit('未经授权！');
     }
 
     if (!isset($_GET['list'])) {
-        exit('List has not been specified.');
+        exit('尚未指定列表。');
     }
 
     switch ($_GET['list']) {
@@ -124,7 +124,7 @@ if (isset($_GET['enable']) && $auth) {
             break;
 
         default:
-            exit('Invalid list [supported: black, regex_black, white, regex_white]');
+            exit('无效列表 [支持：黑名单、正则表达式黑名单、白名单、正则表达式白名单]');
     }
 
     if (isset($_GET['add'])) {
@@ -147,7 +147,7 @@ if (isset($_GET['enable']) && $auth) {
 } elseif (isset($_GET['customdns']) && $auth) {
     if (isset($_GET['auth'])) {
         if ($_GET['auth'] !== $pwhash) {
-            exit('Not authorized!');
+            exit('未经授权！');
         }
     } else {
         // Skip token validation if explicit auth string is given
@@ -171,12 +171,12 @@ if (isset($_GET['enable']) && $auth) {
             break;
 
         default:
-            exit('Wrong action');
+            exit('错误操作');
     }
 } elseif (isset($_GET['customcname']) && $auth) {
     if (isset($_GET['auth'])) {
         if ($_GET['auth'] !== $pwhash) {
-            exit('Not authorized!');
+            exit('未经授权！');
         }
     } else {
         // Skip token validation if explicit auth string is given
@@ -200,7 +200,7 @@ if (isset($_GET['enable']) && $auth) {
             break;
 
         default:
-            exit('Wrong action');
+            exit('错误操作');
     }
 }
 
