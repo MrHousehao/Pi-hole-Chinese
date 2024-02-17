@@ -1,0 +1,1048 @@
+/* Pi-hole: A black hole for Internet advertisements
+*  (c) 2017 Pi-hole, LLC (https://pi-hole.net)
+*  Network-wide ad blocking via your own hardware.
+*
+*  This file is copyright under the latest version of the EUPL.
+*  Please see LICENSE file for your rights under this license. */
+
+.layout-boxed {
+  background: url("../img/boxed-bg.png") repeat fixed;
+}
+
+@-webkit-keyframes Pulse {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes Pulse {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+p#dhcpnotice[hidden] {
+  display: none;
+}
+
+.lookatme #dhcpnotice {
+  display: block;
+}
+
+td.lookatme {
+  display: table-cell;
+}
+
+.lookatme {
+  color: #630030;
+  opacity: 1;
+  position: relative;
+  display: inline-block;
+}
+
+/* this pseudo element will be faded in and out in front /*
+/* of the lookatme element to create an efficient animation. */
+.lookatme:after {
+  color: #e33100;
+  text-shadow: 0 0 5px #e33100;
+  /* in the html, the lookatme-text attribute must */
+  /* contain the same text as the .lookatme element */
+  content: attr(lookatme-text);
+  padding: inherit;
+  position: absolute;
+  inset: 0 0 0 0;
+  z-index: 1;
+  /* 20 steps / 2 seconds = 10fps */
+  -webkit-animation: 2s infinite Pulse steps(20);
+  animation: 2s infinite Pulse steps(20);
+}
+
+.table-responsive {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optimize Queries-Table for small screens */
+/* Time column */
+#all-queries td:nth-of-type(1),
+/* Status column */
+#all-queries td:nth-of-type(5) {
+  white-space: nowrap;
+}
+
+/* Domain column */
+#all-queries td:nth-of-type(3) {
+  min-width: 200px;
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+/* Allow Info String to wrap (useful while filtering entries on small screen) */
+#all-queries_info {
+  white-space: unset;
+}
+
+/* adjust the buttons width */
+#all-queries_wrapper .pagination > li > a {
+  padding-left: 6px;
+  padding-right: 6px;
+  min-width: 34px;
+  text-align: center;
+}
+
+@media screen and (max-width: 500px), screen and (min-width: 767px) and (max-width: 1000px) {
+  /* Hide "Previous" & "Next"-Buttons in Pagination */
+  #all-queries_wrapper .pagination > li.previous,
+  #all-queries_wrapper .pagination > li.next {
+    display: none;
+  }
+
+  #all-queries_wrapper .pagination > li:nth-of-type(2) a {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  #all-queries_wrapper .pagination > li:nth-last-of-type(2) a {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+}
+
+#resetButton {
+  font-weight: 700;
+}
+
+.vertical-alignment-helper {
+  display: table;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.vertical-alignment-helper > .vertical-align-center {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.vertical-alignment-helper > .vertical-align-center > .modal-content {
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  word-wrap: break-word;
+  pointer-events: all;
+}
+
+.alSpinner {
+  top: 0.1em;
+  left: 0.1em;
+  width: 0.8em;
+  height: 0.8em;
+  border-radius: 50%;
+  border: 4px solid #c0c0c0;
+  border-right-color: transparent;
+  -webkit-animation: fa-spin 1s infinite linear;
+  animation: fa-spin 1s infinite linear;
+}
+
+.chartjs-tooltip {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.8);
+  max-width: 95%;
+  z-index: 900;
+}
+
+.chartjs-tooltip th {
+  padding-bottom: 3px;
+}
+
+.chartjs-tooltip,
+.chartjs-tooltip .arrow {
+  transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.chartjs-tooltip .arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+
+.chartjs-tooltip.bottom .arrow {
+  top: 100%;
+  left: 50%;
+  margin: 0 -5px -5px;
+  border-width: 5px 5px 0;
+  border-top-color: rgba(0, 0, 0, 0.8);
+}
+
+.chartjs-tooltip.top .arrow {
+  top: 0;
+  left: 50%;
+  border-width: 0 5px 5px;
+  margin: -5px -5px 0;
+  border-bottom-color: rgba(0, 0, 0, 0.8);
+}
+
+.chartjs-tooltip.right.center .arrow {
+  top: 50%;
+  left: 100%;
+  margin: -5px -5px -5px 0;
+  border-width: 5px 0 5px 5px;
+  border-left-color: rgba(0, 0, 0, 0.8);
+}
+
+.chartjs-tooltip.left.center .arrow {
+  top: 50%;
+  left: 0;
+  margin: -5px 0 -5px -5px;
+  border-width: 5px 5px 5px 0;
+  border-right-color: rgba(0, 0, 0, 0.8);
+}
+
+.chartjs-tooltip-key {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  vertical-align: text-top;
+}
+
+#query-types-pie .box-body,
+#forward-destinations-pie .box-body {
+  display: flex;
+}
+
+.chart-legend {
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.chart-legend li {
+  cursor: pointer;
+  position: relative;
+  line-height: 1;
+  margin: 0 0 8px;
+}
+
+.chart-legend li span {
+  display: inline-block;
+}
+
+.colorBoxWrapper {
+  font-size: 15px;
+}
+
+.colorBoxWrapper:hover {
+  transform: scale(1.15);
+}
+
+.chart-legend li .legend-label-text {
+  line-height: 1;
+  word-break: break-word;
+}
+
+.chart-legend li .legend-label-text:hover {
+  text-decoration: underline;
+}
+
+.strike,
+.strike span {
+  text-decoration: line-through !important;
+}
+
+/* These are needed because AdmintLTE 2.x doesn't support Font Awesome 5.x */
+.sidebar-menu > li > a > .fab,
+.sidebar-menu > li > a > .far,
+.sidebar-menu > li > a > .fas {
+  width: 20px;
+}
+
+/* Utilities */
+.text-underline {
+  text-decoration: underline;
+}
+
+.breakall {
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.no-user-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.bootstrap-select.bs-container.align-right {
+  left: unset !important;
+  right: 10px;
+}
+
+.input-group-addon {
+  padding: 0 12px;
+}
+
+.user-panel {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.user-panel .image {
+  flex: 1 0 25%;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.user-panel > .image > img {
+  max-width: 52px;
+  min-width: 30px;
+}
+
+.user-panel > .info {
+  padding: 0;
+  position: relative;
+  line-height: 1.05;
+  flex: 1 1 auto;
+  left: auto;
+}
+
+.user-panel > .info > p {
+  margin-bottom: 6px;
+}
+
+.user-panel > .info > span {
+  display: inline-block;
+  padding: 0;
+  margin: 2px 0;
+  font-size: 11px;
+}
+
+.user-panel > .info i {
+  margin-right: 3px;
+}
+
+.row-centered > div[class^="col-"] {
+  display: inline-block;
+  float: none;
+}
+
+.version-info {
+  margin-top: 10px;
+}
+
+.daterangepicker {
+  font-family: inherit;
+}
+
+.form-inline .form-control {
+  display: inline-block;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+  max-height: 400px;
+}
+
+/*Work around code that expects icon fonts rather than SVG.
+  Newer versions of AdminLTE have support for SVG icons,
+  https://github.com/ColorlibHQ/AdminLTE/pull/2920
+  so this code will only be needed temporarily. */
+
+.sidebar-menu li > a > .fa-angle-left,
+.sidebar-menu li > a > .pull-right-container > .fa-angle-left {
+  height: 1em;
+}
+
+.sidebar-toggle-svg {
+  position: relative;
+  color: #fff;
+  float: left;
+  background: none;
+  padding: 15px;
+  width: 50px;
+  text-align: center;
+}
+
+.sidebar-toggle-svg:hover {
+  color: #f6f6f6;
+  background: #367fa9;
+}
+
+/* Hide the "Ph" and move the toggle to the left */
+.sidebar-mini.sidebar-collapse .main-header .logo {
+  width: 0;
+  position: absolute;
+}
+.sidebar-mini.sidebar-collapse .main-header .logo-mini {
+  visibility: hidden;
+}
+.sidebar-mini.sidebar-collapse .main-header .navbar {
+  margin-left: 0;
+}
+
+/* "Hide" all sidebar header titles, but keep them readable to screen readers */
+.sidebar-menu > li.header {
+  color: transparent;
+  font-size: 0;
+  padding: 1px;
+}
+
+.box {
+  border-radius: 10px;
+}
+
+.small-box {
+  border-radius: 10px;
+  z-index: 0; /* fix the small-box z-index (related to '.small-box .icon') */
+  overflow: hidden;
+}
+
+.small-box span {
+  transition-duration: 0.5s;
+}
+
+.small-box-footer span {
+  transition-duration: 0s;
+}
+
+.small-box span.glow {
+  text-shadow: 0 0 5px currentColor;
+}
+
+.small-box p {
+  margin: 0 0 5px;
+}
+
+.small-box > .inner {
+  padding: 10px 10px 0;
+}
+
+.small-box > .small-box-footer {
+  color: rgba(255, 255, 255, 0.75);
+  transition: all 0.5s;
+}
+
+@media screen and (min-width: 768px) {
+  .small-box > .small-box-footer {
+    text-align: right;
+    padding: 3px 7px;
+  }
+}
+
+.small-box-footer svg {
+  margin: 0 5px;
+  font-size: 13px;
+}
+
+.small-box .icon {
+  font-size: 76px;
+  z-index: -1; /* sends the icon behind the text */
+}
+
+/*** Icons grow on hover, but remain centered ***/
+.small-box:hover .icon {
+  font-size: 80px; /* keep the same font-size, to avoid shifting the position */
+  transform: scale(1.06);
+}
+
+.list-status-0 {
+  color: #7d7d7d;
+}
+
+.list-status-1 {
+  color: #74c700;
+}
+
+.list-status-2 {
+  color: #98ca52;
+}
+
+.list-status-3 {
+  color: #ff8c00;
+}
+
+.list-status-4 {
+  color: #cc0000;
+}
+
+td.details-control {
+  cursor: pointer;
+}
+
+.dataTables-child td {
+  padding: 2px 5px;
+}
+
+.blocked-row td {
+  background-color: rgb(229, 83, 75, 0.1);
+}
+
+.allowed-row td {
+  background-color: rgb(70, 149, 74, 0.1);
+}
+
+.reload-box {
+  display: none;
+}
+.reload-box div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.reload-box span {
+  padding-right: 20px;
+}
+
+@media screen and (max-width: 991px) {
+  #domain-search-block {
+    display: block;
+  }
+  #domain {
+    margin: 5px 0;
+  }
+  #domain-search-block .input-group-btn {
+    display: inline-block;
+  }
+  #domain-search-block .input-group-btn button {
+    margin: 0 5px 0 0;
+    border-radius: 3px;
+  }
+}
+
+/*** Login page ***/
+.login-page {
+  padding: 15px;
+  min-height: 100vh !important;
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.login-box {
+  position: relative;
+  margin: 0 auto;
+  padding: 5px;
+  width: 480px;
+  max-width: 100%;
+  flex: 0 1 auto;
+  align-self: center;
+  border: none;
+}
+
+.form-control-feedback {
+  right: 12px;
+}
+
+.loginpage-logo {
+  width: 140px;
+  margin: 0 0 10px;
+}
+
+.login-options {
+  display: flex;
+  margin: 0 0 15px -15px;
+  flex-wrap: wrap;
+}
+
+.login-options div {
+  position: relative;
+  margin-left: 15px;
+}
+
+.login-options div:last-child {
+  margin-right: 2px;
+  margin-bottom: 0 !important;
+  flex: 0 1 auto;
+  font-size: 95%;
+}
+
+.pwd-field {
+  flex: 1 0 auto;
+}
+
+.login-footer a {
+  text-align: center;
+  min-width: 28%;
+}
+@media screen and (max-width: 420px) {
+  .login-footer a {
+    min-width: auto;
+    padding: 5px;
+  }
+}
+
+.login-donate {
+  padding: 15px;
+}
+
+/*** Warning icon and count ***/
+.warning-count {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  background: #e08e0b;
+  color: #fff;
+  line-height: 1;
+  padding: 0.25em 0.5em;
+  margin: -0.7em 4px;
+  border-radius: 2em;
+  right: 3em;
+  top: 50%;
+  font-size: 12px;
+}
+
+#top-warning-count {
+  top: 55%;
+  left: 50%;
+  right: unset;
+  margin: 0;
+}
+
+.treeview-menu .warning-count {
+  margin-right: 0;
+  font-size: 10px;
+}
+
+.menu-open > a > span.warning-count {
+  display: none;
+}
+
+/* hide submenu warning count during animation */
+li:not(.menu-open) .treeview-menu .warning-count {
+  display: none;
+}
+
+/* hide warning count when hover a collapsed sidebar */
+.sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse
+  .sidebar-menu
+  > li:hover
+  > a
+  > span.warning-count {
+  display: none !important;
+}
+
+/*** Accessibility - Add focus for checkboxes and radio buttons (icheck) ***/
+[class*="icheck-"] > input:first-child:focus + label::before {
+  outline: 1px #3c8dbc solid;
+  border-color: #3c8dbc;
+}
+
+/* Fix some datatables layout on small screens */
+@media screen and (max-width: 660px), screen and (min-width: 767px) and (max-width: 960px) {
+  #domainsTable_wrapper .table-responsive {
+    border: none;
+    overflow: unset;
+  }
+  #domainsTable {
+    border: 0;
+    box-sizing: border-box;
+  }
+  #domainsTable thead {
+    display: none;
+  }
+  #domainsTable tr {
+    display: flex;
+    padding: 5px 0;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    align-items: end;
+    border: 1px solid rgba(127, 127, 127, 0.4);
+    margin: 15px 0;
+    border-radius: 6px;
+  }
+  #domainsTable td {
+    flex: 1 1 auto;
+    width: 100px;
+    display: block;
+    border: none;
+    box-sizing: border-box;
+    order: 3;
+    text-align: right;
+    padding: 4px 8px;
+  }
+  #domainsTable td:nth-child(2n + 1) {
+    width: calc(100% - 120px);
+  }
+  #domainsTable td:nth-child(1) {
+    width: 40px;
+    order: 0;
+    text-align: left;
+    padding: 5px 0 30px;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+    margin-bottom: 5px;
+    flex: 0 0 auto;
+  }
+  #domainsTable td:nth-child(2) {
+    width: calc(100% - 40px);
+    order: 1;
+    text-align: left;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+    margin-bottom: 5px;
+  }
+  #domainsTable td:last-child {
+    width: 40px;
+    order: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.25);
+    margin-bottom: 5px;
+  }
+  #domainsTable td:nth-child(3),
+  #domainsTable td:nth-child(5) {
+    text-align: left;
+  }
+  #domainsTable td::before {
+    display: block;
+    font-weight: bold;
+    font-size: smaller;
+  }
+  #domainsTable td:nth-child(3)::before {
+    content: "Type:";
+  }
+  #domainsTable td:nth-child(5)::before {
+    content: "Comment:";
+  }
+  #domainsTable tr.selected td.select-checkbox::after,
+  #domainsTable tr.selected th.select-checkbox::after {
+    transform: rotate(45deg) translate(5px, 1px);
+  }
+}
+@media screen and (min-width: 767px) {
+  #domainsTable select.form-control {
+    padding: 0 0 0 5px;
+    width: auto;
+  }
+}
+@media screen and (max-width: 767px) {
+  #domainsTable th {
+    white-space: normal;
+  }
+}
+
+/* Domains table: filter by type */
+#domains-list .box-header {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px 10px;
+}
+#domains-list .box-header h3 {
+  flex: 1 1 auto;
+  margin: 5px 0;
+  width: auto;
+  min-width: 130px;
+}
+.filter_types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 5px auto;
+}
+.filter_types div {
+  flex: 0 0 auto;
+  margin: 2px 0 0;
+}
+.filter_types span {
+  display: inline-block;
+  margin: 0 0 2px 10px !important;
+  width: 120px;
+  min-height: 1.2em;
+}
+
+/* Domains table: filter by type - smaller icheck */
+body:not(.lcars) .filter_types [class*="icheck-"] > label {
+  padding-left: 1.5em !important;
+  line-height: 1.2em;
+  min-height: 1.2em;
+}
+body:not(.lcars)
+  .filter_types
+  [class*="icheck-"]
+  > input:first-child
+  + input[type="hidden"]
+  + label::before,
+body:not(.lcars) .filter_types [class*="icheck-"] > input:first-child + label::before {
+  width: 1.2em;
+  height: 1.2em;
+  margin-left: -1.55em;
+}
+body:not(.lcars)
+  .filter_types
+  [class*="icheck-"]
+  > input:first-child:checked
+  + input[type="hidden"]
+  + label::after,
+body:not(.lcars) .filter_types [class*="icheck-"] > input:first-child:checked + label::after {
+  width: 0.35em;
+  height: 0.7em;
+  top: -0.2em;
+  left: -0.18em;
+}
+
+/* reverse side menu collapse arrows when menu is closed */
+.sidebar-collapse .sidebar-toggle-svg svg {
+  transform: scaleX(-1);
+}
+
+/* reverse side menu collapse arrows on mobile screens */
+@media (max-width: 767px) {
+  .sidebar-toggle-svg svg {
+    transform: scaleX(-1);
+  }
+  .sidebar-open .sidebar-toggle-svg svg {
+    transform: scaleX(1);
+  }
+}
+
+.icon-bounce {
+  display: inline-block;
+  position: relative;
+  animation: icon-bounce 2.4s 3 ease-in-out;
+  font-size: 1.6em;
+}
+
+@keyframes icon-bounce {
+  0%,
+  15%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-5px);
+  }
+  30% {
+    transform: translateY(4px);
+  }
+  35% {
+    transform: translateY(-3px);
+  }
+  40% {
+    transform: translateY(2px);
+  }
+  45% {
+    transform: translateY(-1px);
+  }
+}
+
+.navbar-nav {
+  height: 50px;
+}
+
+.navbar-nav > .user-menu {
+  margin-left: 15px;
+  width: 50px;
+  text-align: center;
+}
+@media screen and (min-width: 767px) {
+  .navbar-nav > .user-menu {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+  height: auto;
+  padding: 15px 15px 5px;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > img {
+  height: 50px;
+  width: 50px;
+  border: none;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-body {
+  border-radius: 0;
+  border-color: #fff;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer {
+  padding: 10px 15px;
+  background: #fff;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu > .user-footer a {
+  background: transparent !important;
+  padding: 6px 0;
+}
+
+.navbar-nav > .user-menu > .dropdown-menu {
+  width: 240px;
+  border: none;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
+  margin: 1px;
+}
+
+.dropdown-menu > li > a {
+  color: inherit;
+}
+
+.user-menu hr {
+  margin: 5px 0;
+  opacity: 0.5;
+}
+
+#apiTokenIframe {
+  width: 100%;
+  border: 0;
+  height: 500px;
+}
+
+#apiTokenModal pre {
+  background: #fff;
+}
+
+.no-danger-area {
+  margin: 0.5em 0 1em;
+  border-left: 2px solid green;
+  border-right: 2px solid green;
+  padding: 1px 1em 0.5em;
+  box-shadow: 0 0 2px -1px #bbb;
+  border-radius: 6px;
+}
+
+.danger-area {
+  margin: 0.5em 0 1em;
+  border-left: 2px solid red;
+  border-right: 2px solid red;
+  padding: 1px 1em 0.5em;
+  box-shadow: 0 0 2px -1px #bbb;
+  border-radius: 6px;
+}
+
+.menu-icon {
+  margin-right: 0.5em;
+}
+
+/* Datatables Select - bgcolor */
+:root {
+  --datatable-bgcolor: #e0e8ee;
+}
+
+div.dt-buttons {
+  margin: 2px 0 5px;
+}
+@media screen and (max-width: 767px) {
+  div.dt-buttons {
+    margin-bottom: 5px;
+    float: none;
+    text-align: center;
+  }
+}
+
+/* Datatables Select - checkbox outline */
+table.dataTable tbody td.select-checkbox::before,
+table.dataTable tbody th.select-checkbox::before {
+  border-color: currentColor;
+  border-radius: 2px;
+  border-width: 2px;
+  width: 13px;
+  height: 13px;
+}
+
+table.dataTable tr.selected td.select-checkbox::after,
+table.dataTable tr.selected th.select-checkbox::after {
+  color: currentColor;
+  content: "";
+  text-shadow: none;
+  border-bottom: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  width: 4px;
+  height: 8px;
+  transform: rotate(45deg) translate(7px, 3px);
+}
+
+.datatable-bt {
+  padding: 3px 8px;
+}
+
+.datatable-bt span {
+  font-size: 17px;
+}
+
+/* Datatables Select - selected row bgcolor */
+table.dataTable tbody > tr.selected,
+table.dataTable tbody > tr > .selected {
+  background: none;
+  background-image: linear-gradient(var(--datatable-bgcolor), var(--datatable-bgcolor));
+}
+
+#messagesTable pre {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+#output {
+  position: relative;
+  margin: 5px 0;
+  min-height: 36px;
+  padding: 4px 8px;
+}
+
+.loading::before {
+  content: " ";
+  position: absolute;
+  padding: 1em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 1;
+  background: rgba(35, 60, 85, 0.8);
+  box-shadow: 0 0 6px -3px rgba(0, 0, 0, 0.5);
+}
+.loading::after {
+  content: "\1F553\FE0E  Loading...";
+  position: absolute;
+  padding: 1em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  line-height: 1;
+  animation: 2s infinite Pulse steps(20);
+}
+
+/* Loading spinner (Dashboard and Long-term data) */
+.overlay .fa-spin {
+  position: relative;
+  opacity: 0.5;
+  font-size: 2.5em;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+.faint-border {
+  border-color: rgba(127, 127, 127, 0.1);
+}
