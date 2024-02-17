@@ -17,7 +17,7 @@ if (!isset($api)) {
         check_cors();
         check_csrf($_POST['token']);
     } else {
-        log_and_die('Not allowed (login session invalid or expired, please relogin on the Pi-hole dashboard)!');
+        log_and_die('不允许（登录无效或已过期，请重新登录Pi-hole）！');
     }
 }
 
@@ -31,21 +31,21 @@ if ($_POST['action'] == 'delete_message' && isset($_POST['id'])) {
     try {
         $ids = json_decode($_POST['id']);
         if (!is_array($ids)) {
-            throw new Exception('Invalid payload: id is not an array');
+            throw new Exception('无效负载：id不是数组');
         }
         // Exploit prevention: Ensure all entries in the ID array are integers
         foreach ($ids as $value) {
             if (!is_numeric($value)) {
-                throw new Exception('Invalid payload: id contains non-numeric entries');
+                throw new Exception('无效负载：id包含非数字');
             }
         }
         $stmt = $db->prepare('DELETE FROM message WHERE id IN ('.implode(',', $ids).')');
         if (!$stmt) {
-            throw new Exception('While preparing message statement: '.$db->lastErrorMsg());
+            throw new Exception('在准备消息语句时：'.$db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
-            throw new Exception('While executing message statement: '.$db->lastErrorMsg());
+            throw new Exception('执行消息语句时：'.$db->lastErrorMsg());
         }
 
         $reload = true;
@@ -54,5 +54,5 @@ if ($_POST['action'] == 'delete_message' && isset($_POST['id'])) {
         JSON_error($ex->getMessage());
     }
 } else {
-    log_and_die('Requested action not supported!');
+    log_and_die('不支持请求的操作！');
 }

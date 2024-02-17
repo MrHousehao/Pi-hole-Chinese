@@ -16,7 +16,7 @@ function gravity_last_update($raw = false)
     if ($date_file_created_unix === false) {
         if ($raw) {
             // Array output
-            return array('file_exists' => false);
+            return array('文件已存在' => false);
         }
 
         // String output
@@ -42,13 +42,13 @@ function gravity_last_update($raw = false)
 
     if ($gravitydiff->d > 1) {
         // String output (more than one day ago)
-        return $gravitydiff->format('Adlists updated %a days, %H:%I (hh:mm) ago');
+        return $gravitydiff->format('引力场已于%a天%H小时%I分前更新');
     }
     if ($gravitydiff->d == 1) {
         // String output (one day ago)
-        return $gravitydiff->format('Adlists updated one day, %H:%I (hh:mm) ago');
+        return $gravitydiff->format('引力场已于1天%H小时%I分前更新');
     }
 
     // String output (less than one day ago)
-    return $gravitydiff->format('Adlists updated %H:%I (hh:mm) ago');
+    return $gravitydiff->format('引力场已于%H小时%I分前更新');
 }
