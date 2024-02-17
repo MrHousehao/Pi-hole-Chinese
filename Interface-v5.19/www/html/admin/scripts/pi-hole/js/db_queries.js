@@ -18,7 +18,7 @@ var timeoutWarning = $("#timeoutWarning");
 var reloadBox = $(".reload-box");
 var datepickerManuallySelected = false;
 
-var dateformat = "MMMM Do YYYY, HH:mm";
+var dateformat = "YYYY年MM月DD日 HH:mm";
 
 var replyTypes = [
   "N/A",
@@ -64,20 +64,20 @@ $(function () {
       startDate: start__,
       endDate: end__,
       ranges: {
-        Today: [moment().startOf("day"), moment()],
-        Yesterday: [
+        今天: [moment().startOf("day"), moment()],
+        昨天: [
           moment().subtract(1, "days").startOf("day"),
           moment().subtract(1, "days").endOf("day"),
         ],
-        "Last 7 Days": [moment().subtract(7, "days"), moment()],
-        "Last 30 Days": [moment().subtract(30, "days"), moment()],
-        "This Month": [moment().startOf("month"), moment()],
-        "Last Month": [
+        "最近7天": [moment().subtract(7, "days"), moment()],
+        "最近30天": [moment().subtract(30, "days"), moment()],
+        "本月": [moment().startOf("month"), moment()],
+        "上月": [
           moment().subtract(1, "month").startOf("month"),
           moment().subtract(1, "month").endOf("month"),
         ],
-        "This Year": [moment().startOf("year"), moment()],
-        "All Time": [moment(0), moment()],
+        "今年": [moment().startOf("year"), moment()],
+        "全部": [moment(0), moment()],
       },
       opens: "center",
       showDropdowns: true,
@@ -94,15 +94,15 @@ var tableApi, statistics;
 
 function handleAjaxError(xhr, textStatus) {
   if (textStatus === "timeout") {
-    alert("The server took too long to send the data.");
+    alert("服务器发送数据时间过长。");
   } else if (xhr.responseText.indexOf("Connection refused") !== -1) {
-    alert("An error occurred while loading the data: Connection refused. Is FTL running?");
+    alert("加载数据时发生错误：连接被拒绝。请确认FTL是否已运行。");
   } else {
     alert(
-      "An unknown error occurred while loading the data.\n" +
+      "加载数据时发生未知错误。\n" +
         xhr.responseText +
-        "\nCheck the server's log files (/var/log/lighttpd/error-pihole.log) for details.\n\nYou may need to increase PHP memory limit." +
-        "\n\nYou can find more info in pi-hole's FAQ:\nhttps://docs.pi-hole.net/main/faq/#error-while-loading-data-from-the-long-term-database"
+        "\n有关详细信息，请检查服务器的日志文件（/var/log/lighttpd/error.log，当您使用默认的Pi-hole web服务器时）。\n\n您可能需要增加Pi-hole的可用内存，以防请求大量数据。" +
+        "\n\n您可以在pi-hole的FAQ中找到更多信息：\nhttps://docs.pi-hole.net/main/faq/#error-while-loading-data-from-the-long-term-database"
     );
   }
 
@@ -254,7 +254,7 @@ $(function () {
       }
 
       if (dnssecStatus.length > 0) {
-        if (replyid === 7) dnssecStatus += " (refused upstream)";
+        if (replyid === 7) dnssecStatus += " （上游拒绝）";
         dnssecStatus += "</span>";
       }
 
@@ -263,105 +263,105 @@ $(function () {
         blocked = false;
       switch (data[4]) {
         case 1:
-          fieldtext = "<span class='text-red'>Blocked (gravity)</span>";
+          fieldtext = "<span class='text-red'>吞噬（引力场）</span>";
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i> Whitelist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i>添加到白名单</button>';
           blocked = true;
           break;
         case 2:
           fieldtext =
             replyid === 0
-              ? "<span class='text-green'>OK</span> (sent to <br class='hidden-lg'>"
-              : "<span class='text-green'>OK</span> (answered by <br class='hidden-lg'>";
-          fieldtext += (data.length > 5 && data[5] !== "N/A" ? data[5] : "") + ")" + dnssecStatus;
+              ? "<span class='text-green'>OK</span>（转发至 <br class='hidden-lg'>"
+              : "<span class='text-green'>OK</span>（回应自 <br class='hidden-lg'>";
+          fieldtext += (data.length > 5 && data[5] !== "N/A" ? data[5] : "") + "）" + dnssecStatus;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i> Blacklist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i>添加到黑名单</button>';
           break;
         case 3:
           fieldtext =
-            "<span class='text-green'>OK</span> <br class='hidden-lg'>(cache)" + dnssecStatus;
+            "<span class='text-green'>OK</span> <br class='hidden-lg'>（缓存）" + dnssecStatus;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i> Blacklist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i>添加到黑名单</button>';
           break;
         case 4:
-          fieldtext = "<span class='text-red'>Blocked <br class='hidden-lg'>(regex blacklist)";
+          fieldtext = "<span class='text-red'>吞噬<br class='hidden-lg'>（正则表达式黑名单）";
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i> Whitelist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i>添加到白名单</button>';
           blocked = true;
           break;
         case 5:
-          fieldtext = "<span class='text-red'>Blocked <br class='hidden-lg'>(exact blacklist)";
+          fieldtext = "<span class='text-red'>吞噬<br class='hidden-lg'>（确切黑名单）";
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i> Whitelist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i>添加到白名单</button>';
           blocked = true;
           break;
         case 6:
-          fieldtext = "<span class='text-red'>Blocked <br class='hidden-lg'>(external, IP)";
+          fieldtext = "<span class='text-red'>吞噬<br class='hidden-lg'>（外部，IP）";
           blocked = true;
           break;
         case 7:
           fieldtext =
-            "<span class='text-red'>Blocked <br class='hidden-lg'>(external, NULL)</span>";
+            "<span class='text-red'>吞噬<br class='hidden-lg'>（外部，NULL）</span>";
           blocked = true;
           break;
         case 8:
           fieldtext =
-            "<span class='text-red'>Blocked <br class='hidden-lg'>(external, NXRA)</span>";
+            "<span class='text-red'>吞噬<br class='hidden-lg'>（外部，NXRA）</span>";
           blocked = true;
           break;
         case 9:
           fieldtext =
-            "<span class='text-red'>Blocked <br class='hidden-lg'>(gravity, CNAME)</span>";
+            "<span class='text-red'>吞噬<br class='hidden-lg'>（引力场，CNAME）</span>";
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i> Whitelist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i>添加到白名单</button>';
           blocked = true;
           break;
         case 10:
           fieldtext =
-            "<span class='text-red'>Blocked <br class='hidden-lg'>(regex blacklist, CNAME)</span>";
+            "<span class='text-red'>吞噬<br class='hidden-lg'>（正则表达式黑名单，CNAME）</span>";
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i> Whitelist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i>添加到白名单</button>';
           blocked = true;
           break;
         case 11:
           fieldtext =
-            "<span class='text-red'>Blocked <br class='hidden-lg'>(exact blacklist, CNAME)</span>";
+            "<span class='text-red'>吞噬<br class='hidden-lg'>（确切黑名单，CNAME）</span>";
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i> Whitelist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-green btn-whitelist"><i class="fas fa-check"></i>添加到白名单</button>';
           blocked = true;
           break;
         case 12:
-          fieldtext = "<span class='text-green'>Retried</span>";
+          fieldtext = "<span class='text-green'>重试</span>";
           break;
         case 13:
-          fieldtext = "<span class='text-green'>Retried</span> <br class='hidden-lg'>(ignored)";
+          fieldtext = "<span class='text-green'>重试</span> <br class='hidden-lg'>（忽略）";
           break;
         case 14:
           fieldtext =
-            "<span class='text-green'>OK</span> <br class='hidden-lg'>(already forwarded)" +
+            "<span class='text-green'>OK</span> <br class='hidden-lg'>（已转发）" +
             dnssecStatus;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i> Blacklist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i>添加到黑名单</button>';
           break;
         case 15:
           fieldtext =
-            "<span class='text-orange'>Blocked <br class='hidden-lg'>(database is busy)</span>";
+            "<span class='text-orange'>吞噬<br class='hidden-lg'>（数据库正忙）</span>";
           blocked = true;
           break;
         case 16:
           fieldtext =
-            "<span class='text-orange'>Blocked <br class='hidden-lg'>(special domain)</span>";
+            "<span class='text-orange'>吞噬<br class='hidden-lg'>（特殊域名）</span>";
           blocked = true;
           break;
         case 17:
           fieldtext =
-            "<span class='text-orange'>OK</span> <br class='hidden-lg'>(stale cache)" +
+            "<span class='text-orange'>OK</span> <br class='hidden-lg'>（过期的缓存）" +
             dnssecStatus;
           buttontext =
-            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i> Blacklist</button>';
+            '<button type="button" class="btn btn-default btn-sm text-red btn-blacklist"><i class="fa fa-ban"></i>添加到黑名单</button>';
           break;
         default:
-          fieldtext = "Unknown (" + parseInt(data[4], 10) + ")";
+          fieldtext = "未知（" + parseInt(data[4], 10) + "）";
       }
 
       // Cannot block internal queries of this type
@@ -440,7 +440,7 @@ $(function () {
     ],
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     columnDefs: [
       {
@@ -470,7 +470,7 @@ $(function () {
 });
 
 $("#querytime").on("apply.daterangepicker", function (ev, picker) {
-  $(this).val(picker.startDate.format(dateformat) + " to " + picker.endDate.format(dateformat));
+  $(this).val(picker.startDate.format(dateformat) + " 到 " + picker.endDate.format(dateformat));
   datepickerManuallySelected = true;
   refreshTableData();
 });

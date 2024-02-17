@@ -10,7 +10,7 @@
 require_once 'func.php';
 
 if (!in_array(basename($_SERVER['SCRIPT_FILENAME']), array('settings.php', 'teleporter.php'), true)) {
-    exit('Direct access to this script is forbidden!');
+    exit('禁止直接访问此脚本！');
 }
 
 // Check for existence of variable
@@ -142,20 +142,20 @@ function addStaticDHCPLease($mac, $ip, $hostname)
 
     try {
         if (!validMAC($mac)) {
-            throw new Exception('MAC address ('.htmlspecialchars($mac).') is invalid!<br>', 0);
+            throw new Exception('MAC 地址 ('.htmlspecialchars($mac).') 无效！<br>', 0);
         }
         $mac = strtoupper($mac);
 
         if (!validIP($ip) && strlen($ip) > 0) {
-            throw new Exception('IP address ('.htmlspecialchars($ip).') is invalid!<br>', 1);
+            throw new Exception('IP 地址 ('.htmlspecialchars($ip).') 无效！<br>', 1);
         }
 
         if (!validDomain($hostname) && strlen($hostname) > 0) {
-            throw new Exception('Host name ('.htmlspecialchars($hostname).') is invalid!<br>', 2);
+            throw new Exception('主机名称 ('.htmlspecialchars($hostname).') 无效！<br>', 2);
         }
 
         if (strlen($hostname) == 0 && strlen($ip) == 0) {
-            throw new Exception('You can not omit both the IP address and the host name!<br>', 3);
+            throw new Exception('您不能既不输入IP地址又不输入主机名称！<br>', 3);
         }
 
         if (strlen($hostname) == 0) {
@@ -171,18 +171,18 @@ function addStaticDHCPLease($mac, $ip, $hostname)
 
         foreach ($dhcp_static_leases as $lease) {
             if ($lease['hwaddr'] === $mac) {
-                throw new Exception('Static lease for MAC address ('.htmlspecialchars($mac).') already defined!<br>', 4);
+                throw new Exception('MAC 地址 ('.htmlspecialchars($mac).') 的静态地址已被分配！<br>', 4);
             }
             if ($ip !== 'noip' && $lease['IP'] === $ip) {
-                throw new Exception('Static lease for IP address ('.htmlspecialchars($ip).') already defined!<br>', 5);
+                throw new Exception('IP 地址 ('.htmlspecialchars($ip).') 的静态地址已被分配！<br>', 5);
             }
             if ($lease['host'] === $hostname) {
-                throw new Exception('Static lease for hostname ('.htmlspecialchars($hostname).') already defined!<br>', 6);
+                throw new Exception('主机名称 ('.htmlspecialchars($hostname).') 的静态地址已被分配！<br>', 6);
             }
         }
 
         pihole_execute('-a addstaticdhcp '.$mac.' '.$ip.' '.$hostname);
-        $success .= 'A new static address has been added';
+        $success .= '已添加新的静态地址分配';
 
         return true;
     } catch (Exception $exception) {
@@ -235,12 +235,12 @@ if (isset($_POST['field'])) {
                     $IP = trim($exploded[0]);
 
                     if (!validIP($IP)) {
-                        $error .= 'IP ('.htmlspecialchars($IP).') is invalid!<br>';
+                        $error .= 'IP 地址 ('.htmlspecialchars($IP).') 无效！<br>';
                     } else {
                         if (count($exploded) > 1) {
                             $port = trim($exploded[1]);
                             if (!is_numeric($port)) {
-                                $error .= 'Port ('.htmlspecialchars($port).') is invalid!<br>';
+                                $error .= '端口 ('.htmlspecialchars($port).') 无效！<br>';
                             } else {
                                 $IP .= '#'.$port;
                             }
@@ -254,7 +254,7 @@ if (isset($_POST['field'])) {
 
             // Check if at least one DNS server has been added
             if ($DNSservercount < 1) {
-                $error .= 'No DNS server has been selected.<br>';
+                $error .= '未选择 DNS 服务器。<br>';
             }
 
             // Check if domain-needed is requested
@@ -283,20 +283,20 @@ if (isset($_POST['field'])) {
                 // Validate CIDR IP
                 $cidr = trim($_POST['rev_server_cidr']);
                 if (!validCIDRIP($cidr)) {
-                    $error .= 'Conditional forwarding subnet ("'.htmlspecialchars($cidr).'") is invalid!<br>'.
-                                'This field requires CIDR notation for local subnets (e.g., 192.168.0.0/16).<br>';
+                    $error .= '条件转发子网 ("'.htmlspecialchars($cidr).'") 无效！<br>'.
+                                '该字段需要按本地子网的 CIDR 表示法填写（例如, 192.168.0.0/16）。<br>';
                 }
 
                 // Validate target IP
                 $target = trim($_POST['rev_server_target']);
                 if (!validIP($target)) {
-                    $error .= 'Conditional forwarding target IP ("'.htmlspecialchars($target).'") is invalid!<br>';
+                    $error .= '条件转发目标 IP 地址（"'.htmlspecialchars($target).'"）无效！<br>';
                 }
 
                 // Validate conditional forwarding domain name (empty is okay)
                 $domain = trim($_POST['rev_server_domain']);
                 if (strlen($domain) > 0 && !validDomain($domain)) {
-                    $error .= 'Conditional forwarding domain name ("'.htmlspecialchars($domain).'") is invalid!<br>';
+                    $error .= '条件转发域名（"'.htmlspecialchars($domain).'"）无效！<br>';
                 }
 
                 if (!$error) {
@@ -332,9 +332,9 @@ if (isset($_POST['field'])) {
                 $IPs = implode(',', $DNSservers);
                 $return = pihole_execute('-a setdns "'.$IPs.'" '.$extra);
                 $success .= htmlspecialchars(end($return)).'<br>';
-                $success .= 'The DNS settings have been updated (using '.$DNSservercount.' DNS servers)';
+                $success .= 'DNS 设置已更新（使用'.$DNSservercount.'个DNS服务器）';
             } else {
-                $error .= 'The settings have been reset to their previous values';
+                $error .= '已恢复为之前保存的设置';
             }
 
             break;
@@ -342,13 +342,13 @@ if (isset($_POST['field'])) {
         case 'Logging':
             if ($_POST['action'] === 'Disable') {
                 pihole_execute('-l off');
-                $success .= 'Logging has been disabled and logs have been flushed';
+                $success .= '日志记录已被禁用，日志已被清空';
             } elseif ($_POST['action'] === 'Disable-noflush') {
                 pihole_execute('-l off noflush');
-                $success .= 'Logging has been disabled, your logs have <strong>not</strong> been flushed';
+                $success .= '日志记录已被禁用，您的日志<strong> 未 </strong>被清空';
             } else {
                 pihole_execute('-l on');
-                $success .= 'Logging has been enabled';
+                $success .= '已启用日志记录';
             }
 
             break;
@@ -364,7 +364,7 @@ if (isset($_POST['field'])) {
             $first = true;
             foreach ($domains as $domain) {
                 if (!validDomainWildcard($domain) || validIP($domain)) {
-                    $error .= 'Top Domains/Ads entry '.htmlspecialchars($domain).' is invalid (use only domains)!<br>';
+                    $error .= '域名'.htmlspecialchars($domain).' 无效（只使用域名）！<br>';
                 }
                 if (!$first) {
                     $domainlist .= ',';
@@ -378,7 +378,7 @@ if (isset($_POST['field'])) {
             $first = true;
             foreach ($clients as $client) {
                 if (!validDomainWildcard($client) && !validIP($client)) {
-                    $error .= 'Top Clients entry '.htmlspecialchars($client).' is invalid (use only host names and IP addresses)!<br>';
+                    $error .= '客户端'.htmlspecialchars($client).'无效（只使用主机名称和 IP 地址）！<br>';
                 }
                 if (!$first) {
                     $clientlist .= ',';
@@ -393,24 +393,24 @@ if (isset($_POST['field'])) {
                 // All entries are okay
                 pihole_execute('-a setexcludedomains '.$domainlist);
                 pihole_execute('-a setexcludeclients '.$clientlist);
-                $success .= 'The API settings have been updated<br>';
+                $success .= 'API 设置已更新<br>';
             } else {
-                $error .= 'The settings have been reset to their previous values';
+                $error .= '已恢复为之前保存的设置';
             }
 
             // Set query log options
             if (isset($_POST['querylog-permitted'], $_POST['querylog-blocked'])) {
                 pihole_execute('-a setquerylog all');
-                $success .= 'All entries will be shown in Query Log';
+                $success .= '所有记录将在查询请求日志中显示';
             } elseif (isset($_POST['querylog-permitted'])) {
                 pihole_execute('-a setquerylog permittedonly');
-                $success .= 'Only permitted will be shown in Query Log';
+                $success .= '只有放行的域名在查询请求日志中显示';
             } elseif (isset($_POST['querylog-blocked'])) {
                 pihole_execute('-a setquerylog blockedonly');
-                $success .= 'Only blocked entries will be shown in Query Log';
+                $success .= '只有吞噬的域名在查询请求日志中显示';
             } else {
                 pihole_execute('-a setquerylog nothing');
-                $success .= 'No entries will be shown in Query Log';
+                $success .= '查询日志中不显示任何记录';
             }
 
             break;
@@ -427,31 +427,31 @@ if (isset($_POST['field'])) {
                     exec('sudo pihole -a theme '.$_POST['webtheme']);
                 }
             }
-            $success .= 'The webUI settings have been updated';
+            $success .= '网页UI 设置已更新';
 
             break;
 
         case 'poweroff':
             pihole_execute('-a poweroff');
-            $success = 'The system will poweroff in 5 seconds...';
+            $success = '主机将在 5 秒后关机...';
 
             break;
 
         case 'reboot':
             pihole_execute('-a reboot');
-            $success = 'The system will reboot in 5 seconds...';
+            $success = '主机将在 5 秒后重启...';
 
             break;
 
         case 'restartdns':
             pihole_execute('-a restartdns');
-            $success = 'The DNS server has been restarted';
+            $success = 'DNS 服务器已重新启动';
 
             break;
 
         case 'flushlogs':
             pihole_execute('-f');
-            $success = 'The Pi-hole log file has been flushed';
+            $success = 'Pi-hole 日志文件已清空';
 
             break;
 
@@ -469,13 +469,13 @@ if (isset($_POST['field'])) {
             if (isset($_POST['removestatic'])) {
                 $mac = $_POST['removestatic'];
                 if (!validMAC($mac)) {
-                    $error .= 'MAC address ('.htmlspecialchars($mac).') is invalid!<br>';
+                    $error .= 'MAC 地址 ('.htmlspecialchars($mac).') 无效！<br>';
                 }
                 $mac = strtoupper($mac);
 
                 if (!strlen($error)) {
                     pihole_execute('-a removestaticdhcp '.$mac);
-                    $success .= 'The static address with MAC address '.htmlspecialchars($mac).' has been removed';
+                    $success .= 'MAC 地址'.htmlspecialchars($mac).' 的静态地址分配已删除';
                 }
 
                 break;
@@ -485,33 +485,33 @@ if (isset($_POST['field'])) {
                 // Validate from IP
                 $from = $_POST['from'];
                 if (!validIP($from)) {
-                    $error .= 'From IP ('.htmlspecialchars($from).') is invalid!<br>';
+                    $error .= '起始IP地址 ('.htmlspecialchars($from).') 无效！<br>';
                 }
 
                 // Validate to IP
                 $to = $_POST['to'];
                 if (!validIP($to)) {
-                    $error .= 'To IP ('.htmlspecialchars($to).') is invalid!<br>';
+                    $error .= '结束IP地址 ('.htmlspecialchars($to).') 无效！<br>';
                 }
 
                 // Validate router IP
                 $router = $_POST['router'];
                 if (!validIP($router)) {
-                    $error .= 'Router IP ('.htmlspecialchars($router).') is invalid!<br>';
+                    $error .= '路由器IP地址 ('.htmlspecialchars($router).') 无效！<br>';
                 }
 
                 $domain = $_POST['domain'];
 
                 // Validate Domain name
                 if (!validDomain($domain)) {
-                    $error .= 'Domain name '.htmlspecialchars($domain).' is invalid!<br>';
+                    $error .= '域名 '.htmlspecialchars($domain).' 无效！<br>';
                 }
 
                 $leasetime = $_POST['leasetime'];
 
                 // Validate Lease time length
                 if (!is_numeric($leasetime) || intval($leasetime) < 0) {
-                    $error .= 'Lease time '.htmlspecialchars($leasetime).' is invalid!<br>';
+                    $error .= '地址租期 '.htmlspecialchars($leasetime).' 无效！<br>';
                 }
 
                 if (isset($_POST['useIPv6'])) {
@@ -530,11 +530,11 @@ if (isset($_POST['field'])) {
 
                 if (!strlen($error)) {
                     pihole_execute('-a enabledhcp '.$from.' '.$to.' '.$router.' '.$leasetime.' '.$domain.' '.$ipv6.' '.$rapidcommit);
-                    $success .= 'The DHCP server has been activated '.htmlspecialchars($type);
+                    $success .= 'DHCP 服务器已激活'.htmlspecialchars($type);
                 }
             } else {
                 pihole_execute('-a disabledhcp');
-                $success = 'The DHCP server has been deactivated';
+                $success = 'DHCP 服务器已关闭';
             }
 
             break;
@@ -554,14 +554,14 @@ if (isset($_POST['field'])) {
 
                 if ($privacylevel > $level) {
                     pihole_execute('-a restartdns');
-                    $success .= 'The privacy level has been decreased and the DNS resolver has been restarted';
+                    $success .= '隐私级别已降低，DNS 服务器已重新启动';
                 } elseif ($privacylevel < $level) {
-                    $success .= 'The privacy level has been increased';
+                    $success .= '隐私级别已提升';
                 } else {
-                    $success .= 'The privacy level has not been changed';
+                    $success .= '隐私级别未改变';
                 }
             } else {
-                $error .= 'Invalid privacy level ('.$level.')!';
+                $error .= '无效的隐私级别 ('.$level.')!';
             }
 
             break;
@@ -573,14 +573,14 @@ if (isset($_POST['field'])) {
                 $error = implode('<br>', $output);
             }
             if (strlen($error) == 0) {
-                $success .= 'The network table has been flushed';
+                $success .= '客户端概览已清空';
             }
 
             break;
 
         default:
             // Option not found
-            $error = 'Invalid option';
+            $error = '无效选项';
     }
 }
 

@@ -17,7 +17,7 @@ if (!isset($api)) {
         check_cors();
         check_csrf($_POST['token']);
     } else {
-        log_and_die('Not allowed (login session invalid or expired, please relogin on the Pi-hole dashboard)!');
+        log_and_die('不允许（登录无效或已过期，请重新登录Pi-hole）！');
     }
 }
 
@@ -31,28 +31,28 @@ if ($_POST['action'] == 'delete_network_entry' && isset($_POST['id'])) {
     try {
         $stmt = $db->prepare('DELETE FROM network_addresses WHERE network_id=:id');
         if (!$stmt) {
-            throw new Exception('While preparing message statement: '.$db->lastErrorMsg());
+            throw new Exception('在准备消息语句时：'.$db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id to message statement: '.$db->lastErrorMsg());
+            throw new Exception('将id绑定到消息语句时：'.$db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
-            throw new Exception('While executing message statement: '.$db->lastErrorMsg());
+            throw new Exception('执行消息语句时：'.$db->lastErrorMsg());
         }
 
         $stmt = $db->prepare('DELETE FROM network WHERE id=:id');
         if (!$stmt) {
-            throw new Exception('While preparing message statement: '.$db->lastErrorMsg());
+            throw new Exception('在准备消息语句时：'.$db->lastErrorMsg());
         }
 
         if (!$stmt->bindValue(':id', intval($_POST['id']), SQLITE3_INTEGER)) {
-            throw new Exception('While binding id to message statement: '.$db->lastErrorMsg());
+            throw new Exception('将id绑定到消息语句时：'.$db->lastErrorMsg());
         }
 
         if (!$stmt->execute()) {
-            throw new Exception('While executing message statement: '.$db->lastErrorMsg());
+            throw new Exception('执行消息语句时：'.$db->lastErrorMsg());
         }
 
         $reload = true;
@@ -61,5 +61,5 @@ if ($_POST['action'] == 'delete_network_entry' && isset($_POST['id'])) {
         JSON_error($ex->getMessage());
     }
 } else {
-    log_and_die('Requested action not supported!');
+    log_and_die('不支持请求的操作！');
 }

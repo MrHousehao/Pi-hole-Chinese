@@ -68,7 +68,7 @@ $(function () {
   $("#btnAdd").on("click", addClient);
   $("select").select2({
     tags: true,
-    placeholder: "Select client...",
+    placeholder: "选择客户端...",
     allowClear: true,
   });
 
@@ -123,11 +123,11 @@ function initTable() {
     rowCallback: function (row, data) {
       $(row).attr("data-id", data.id);
       var tooltip =
-        "Added: " +
+        "添加时间：" +
         utils.datetime(data.date_added, false) +
-        "\nLast modified: " +
+        "\n上次修改：" +
         utils.datetime(data.date_modified, false) +
-        "\nDatabase ID: " +
+        "\n数据库ID：" +
         data.id;
       var ipName =
         '<code id="ip_' +
@@ -213,7 +213,7 @@ function initTable() {
         .prepend(
           '<button type="button" id=btn_apply_' +
             data.id +
-            ' class="btn btn-block btn-sm" disabled>Apply</button>'
+            ' class="btn btn-block btn-sm" disabled>应用</button>'
         );
 
       var applyBtn = "#btn_apply_" + data.id;
@@ -236,7 +236,7 @@ function initTable() {
     buttons: [
       {
         text: '<span class="far fa-square"></span>',
-        titleAttr: "Select All",
+        titleAttr: "全选",
         className: "btn-sm datatable-bt selectAll",
         action: function () {
           table.rows({ page: "current" }).select();
@@ -244,7 +244,7 @@ function initTable() {
       },
       {
         text: '<span class="far fa-plus-square"></span>',
-        titleAttr: "Select All",
+        titleAttr: "全选",
         className: "btn-sm datatable-bt selectMore",
         action: function () {
           table.rows({ page: "current" }).select();
@@ -253,12 +253,12 @@ function initTable() {
       {
         extend: "selectNone",
         text: '<span class="far fa-check-square"></span>',
-        titleAttr: "Deselect All",
+        titleAttr: "取消选择",
         className: "btn-sm datatable-bt removeAll",
       },
       {
         text: '<span class="far fa-trash-alt"></span>',
-        titleAttr: "Delete Selected",
+        titleAttr: "删除所选",
         className: "btn-sm datatable-bt deleteSelected",
         action: function () {
           // For each ".selected" row ...
@@ -280,7 +280,7 @@ function initTable() {
       "<'row'<'col-sm-12'i>>",
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     stateSave: true,
     stateDuration: 0,
@@ -362,7 +362,7 @@ function delItems(ids) {
 
   utils.disableAll();
   var idstring = ids.join(", ");
-  utils.showAlert("info", "", "Deleting client(s)...", "<ul>" + items + "</ul>");
+  utils.showAlert("info", "", "删除客户端：", "<ul>" + items + "</ul>中...");
 
   $.ajax({
     url: "scripts/pi-hole/php/groups.php",
@@ -376,7 +376,7 @@ function delItems(ids) {
         utils.showAlert(
           "success",
           "far fa-trash-alt",
-          "Successfully deleted client(s): ",
+          "已成功删除客户端：",
           "<ul>" + items + "</ul>"
         );
         for (var id in ids) {
@@ -388,8 +388,8 @@ function delItems(ids) {
         utils.showAlert(
           "error",
           "",
-          "Error while deleting client(s): " + idstring,
-          response.message
+          "删除ID为：" + idstring,
+          response.message + "的客户端时出错"
         );
       }
 
@@ -402,8 +402,8 @@ function delItems(ids) {
       utils.showAlert(
         "error",
         "",
-        "Error while deleting client(s): " + idstring,
-        jqXHR.responseText
+        "删除ID为：" + idstring,
+        jqXHR.responseText + "的客户端时出错"
       );
       console.log(exception); // eslint-disable-line no-console
     });
@@ -414,11 +414,11 @@ function addClient() {
   var comment = utils.escapeHtml($("#new_comment").val());
 
   utils.disableAll();
-  utils.showAlert("info", "", "Adding client...", ip);
+  utils.showAlert("info", "", "正在添加客户端...", ip);
 
   if (ip.length === 0) {
     utils.enableAll();
-    utils.showAlert("warning", "", "Warning", "Please specify a client IP or MAC address");
+    utils.showAlert("warning", "", "警告", "请指定客户端 IP 或 MAC 地址");
     return;
   }
 
@@ -435,8 +435,8 @@ function addClient() {
     utils.showAlert(
       "warning",
       "",
-      "Warning",
-      "Input is neither a valid IP or MAC address nor a valid host name!"
+      "警告",
+      "输入的信息既不是有效的 IP 或 MAC 地址，也不是有效的主机名！"
     );
     return;
   }
@@ -449,17 +449,17 @@ function addClient() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "fas fa-plus", "Successfully added client", ip);
+        utils.showAlert("success", "fas fa-plus", "已成功添加客户端", ip);
         reloadClientSuggestions();
         table.ajax.reload(null, false);
         table.rows().deselect();
       } else {
-        utils.showAlert("error", "", "Error while adding new client", response.message);
+        utils.showAlert("error", "", "添加客户端时出错", response.message);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "", "Error while adding new client", jqXHR.responseText);
+      utils.showAlert("error", "", "添加客户端时出错", jqXHR.responseText);
       console.log(exception); // eslint-disable-line no-console
     },
   });
@@ -474,19 +474,19 @@ function editClient() {
   var name = utils.escapeHtml(tr.find("#name_" + id).text());
   var comment = utils.escapeHtml(tr.find("#comment_" + id).val());
 
-  var done = "edited";
-  var notDone = "editing";
+  var done = "修改";
+  var notDone = "正在修改";
   switch (elem) {
     case "multiselect_" + id:
-      done = "edited groups of";
-      notDone = "editing groups of";
+      done = "修改群组，";
+      notDone = "正在修改群组";
       break;
     case "comment_" + id:
-      done = "edited comment of";
-      notDone = "editing comment of";
+      done = "修改描述，";
+      notDone = "正在修改描述";
       break;
     default:
-      alert("bad element or invalid data-id!");
+      alert("元素错误或数据id无效！");
       return;
   }
 
@@ -495,7 +495,7 @@ function editClient() {
   }
 
   utils.disableAll();
-  utils.showAlert("info", "", "Editing client...", ip);
+  utils.showAlert("info", "", "正在修改客户端...", ip);
   $.ajax({
     url: "scripts/pi-hole/php/groups.php",
     method: "post",
@@ -510,12 +510,12 @@ function editClient() {
     success: function (response) {
       utils.enableAll();
       if (response.success) {
-        utils.showAlert("success", "fas fa-pencil-alt", "Successfully " + done + " client", ip);
+        utils.showAlert("success", "fas fa-pencil-alt", "已成功" + done + " 客户端：", ip);
         table.ajax.reload(null, false);
       } else {
         utils.showAlert(
           "error",
-          "Error while " + notDone + " client with ID " + id,
+           "ID为" + id + "的客户端，" + notDone + "的过程中出错",
           response.message
         );
       }
@@ -525,7 +525,7 @@ function editClient() {
       utils.showAlert(
         "error",
         "",
-        "Error while " + notDone + " client with ID " + id,
+        "ID为" + id + "的客户端，" + notDone + "的过程中出错",
         jqXHR.responseText
       );
       console.log(exception); // eslint-disable-line no-console
