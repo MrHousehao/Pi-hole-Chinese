@@ -13,7 +13,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 
 <!-- Title -->
 <div class="page-header">
-    <h1>Group management</h1>
+    <h1>群组管理</h1>
 </div>
 
 <!-- Group Input -->
@@ -23,29 +23,29 @@ require 'scripts/pi-hole/php/header_authenticated.php';
             <!-- /.box-header -->
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Add a new group
+                    添加新群组
                 </h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="new_name">Name:</label>
-                        <input id="new_name" type="text" class="form-control" placeholder="Group name or space-separated group names">
+                        <label for="new_name">名称：</label>
+                        <input id="new_name" type="text" class="form-control" placeholder="群组名称或以空格分隔的群组名称">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="new_desc">Description:</label>
-                        <input id="new_desc" type="text" class="form-control" placeholder="Group description (optional)">
+                        <label for="new_desc">描述：</label>
+                        <input id="new_desc" type="text" class="form-control" placeholder="群组描述（可选）">
                     </div>
                 </div>
             </div>
             <div class="box-footer clearfix">
-                <strong>Hints:</strong>
+                <strong>提示：</strong>
                 <ol>
-                    <li>Multiple groups can be added by separating each group name with a space</li>
-                    <li>Group names can have spaces if entered in quotes. e.g "My New Group"</li>
+                    <li>通过用空格分隔每个群组名称，可以添加多个群组</li>
+                    <li>如果在引号中输入，群组名称可以有空格。例如“新 群组”</li>
                 </ol>
-                <button type="button" id="btnAdd" class="btn btn-primary pull-right">Add</button>
+                <button type="button" id="btnAdd" class="btn btn-primary pull-right">添加</button>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         <div class="box" id="groups-list">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    List of groups
+                    群组配置表
                 </h3>
             </div>
             <!-- /.box-header -->
@@ -65,14 +65,14 @@ require 'scripts/pi-hole/php/header_authenticated.php';
                         <tr>
                             <th>ID</th>
                             <th></th>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Description</th>
+                            <th>名称</th>
+                            <th>状态</th>
+                            <th>描述</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
                 </table>
-                <button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">Reset sorting</button>
+                <button type="button" id="resetButton" class="btn btn-default btn-sm text-red hidden">重新排序</button>
             </div>
             <!-- /.box-body -->
         </div>

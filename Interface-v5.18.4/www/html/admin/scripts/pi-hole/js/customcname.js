@@ -42,7 +42,7 @@ $(function () {
     ],
     lengthMenu: [
       [10, 25, 50, 100, -1],
-      [10, 25, 50, 100, "All"],
+      [10, 25, 50, 100, "全部"],
     ],
     order: [[0, "asc"]],
     stateSave: true,
@@ -71,7 +71,7 @@ function addCustomCNAME() {
   var target = utils.escapeHtml($("#target").val());
 
   utils.disableAll();
-  utils.showAlert("info", "", "Adding custom CNAME record...", "");
+  utils.showAlert("info", "", "添加自定义 CNAME 映射中...", "");
 
   $.ajax({
     url: "scripts/pi-hole/php/customcname.php",
@@ -94,12 +94,12 @@ function addCustomCNAME() {
         table.ajax.reload();
         $("#domain").focus();
       } else {
-        utils.showAlert("error", "fas fa-times", "Failure! Something went wrong", response.message);
+        utils.showAlert("error", "fas fa-times", "失败！出了一点问题", response.message);
       }
     },
     error: function () {
       utils.enableAll();
-      utils.showAlert("error", "fas fa-times", "Error while adding custom CNAME record", "");
+      utils.showAlert("error", "fas fa-times", "添加自定义 CNAME 映射时出错", "");
     },
   });
 }
@@ -109,7 +109,7 @@ function deleteCustomCNAME() {
   var target = $(this).attr("data-target");
 
   utils.disableAll();
-  utils.showAlert("info", "", "Deleting custom CNAME record...", "");
+  utils.showAlert("info", "", "删除自定义 CNAME 映射中...", "");
 
   $.ajax({
     url: "scripts/pi-hole/php/customcname.php",
@@ -127,12 +127,12 @@ function deleteCustomCNAME() {
         );
         table.ajax.reload();
       } else {
-        utils.showAlert("error", "fas fa-times", "Failure! Something went wrong", response.message);
+        utils.showAlert("error", "fas fa-times", "失败！出了一点问题", response.message);
       }
     },
     error: function (jqXHR, exception) {
       utils.enableAll();
-      utils.showAlert("error", "fas fa-times", "Error while deleting custom CNAME record", "");
+      utils.showAlert("error", "fas fa-times", "删除自定义 CNAME 映射时出错", "");
       console.log(exception); // eslint-disable-line no-console
     },
   });
