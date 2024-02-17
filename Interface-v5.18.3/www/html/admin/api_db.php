@@ -87,7 +87,7 @@ if (isset($_GET['getAllQueries']) && $auth) {
                 // We reject ",2,3", "1,2," and similar arguments
                 $dbquery .= 'AND status NOT IN ('.$excludedStatus.') ';
             } else {
-                exit('Error. Selector status specified using an invalid format.');
+                exit('错误。指定的选择器类型使用无效格式。');
             }
         }
         $dbquery .= 'ORDER BY timestamp ASC';
