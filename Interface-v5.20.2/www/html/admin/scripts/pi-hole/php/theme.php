@@ -15,14 +15,14 @@ $available_themes = array();
 *  Array[2] = Style sheet name
 *  Array[3] = Theme color
 */
-$available_themes['default-light'] = array('Pi-hole default theme (light, default)', false, 'default-light', '#367fa9');
-$available_themes['default-dark'] = array('Pi-hole midnight theme (dark)', true, 'default-dark', '#272c30');
-$available_themes['default-darker'] = array('Pi-hole deep-midnight theme (dark)', true, 'default-darker', '#2e6786');
-$available_themes['high-contrast'] = array('High contrast light', false, 'high-contrast', '#0078a0');
-$available_themes['high-contrast-dark'] = array('High contrast dark', false, 'high-contrast-dark', '#0077c7');
+$available_themes['default-light'] = array('Pi-hole 默认主题（明亮, 默认）', false, 'default-light', '#367fa9');
+$available_themes['default-dark'] = array('Pi-hole m午夜主题（暗黑）', true, 'default-dark', '#272c30');
+$available_themes['default-darker'] = array('Pi-hole 深夜主题（暗黑）', true, 'default-darker', '#2e6786');
+$available_themes['high-contrast'] = array('高对比（明亮）', false, 'high-contrast', '#0078a0');
+$available_themes['high-contrast-dark'] = array('高对比（暗黑）', false, 'high-contrast-dark', '#0077c7');
 // Option to have the theme go with the device dark mode setting, always set the background to black to avoid flashing
-$available_themes['default-auto'] = array('Pi-hole auto theme (light/dark)', true, 'default-auto', '#367fa9');
-$available_themes['lcars'] = array('Star Trek LCARS theme (dark)', true, 'lcars', '#4488FF');
+$available_themes['default-auto'] = array('Pi-hole 自动主题（明亮/暗黑）', true, 'default-auto', '#367fa9');
+$available_themes['lcars'] = array('星际迷航 LCARS 主题（暗黑）', true, 'lcars', '#4488FF');
 
 $webtheme = '';
 // Try to load theme settings from setupVars.conf
