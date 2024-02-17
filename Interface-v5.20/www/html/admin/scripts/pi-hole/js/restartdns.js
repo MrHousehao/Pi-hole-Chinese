@@ -8,9 +8,9 @@
 var timeleft = 60;
 var status = -1;
 var reloadMsg =
-  "FTL was restarted: <a href='settings.php' class='btn btn-sm btn-primary'>Reload FTL details.</a>";
-var warningMsg = "FTL was not able to reload after " + timeleft + " seconds.";
-var counterMsg = "FTL is reloading: ";
+  "FTL 已重新启动：<a href='settings.php' class='btn btn-sm btn-primary'>重新加载 FTL 信息。</a>";
+var warningMsg = "FTL 在" + timeleft + "秒后无法重新加载。";
+var counterMsg = "FTL 正在重新加载：";
 
 var reloadTimer = setInterval(function () {
   $.getJSON("api.php?dns-port", function (data) {
@@ -32,7 +32,7 @@ var reloadTimer = setInterval(function () {
     }
   } else {
     document.getElementById("restart-countdown").innerHTML =
-      counterMsg + timeleft + " seconds remaining...";
+      counterMsg + "剩余" + timeleft + "秒...";
   }
 
   timeleft -= 1;

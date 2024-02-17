@@ -13,7 +13,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 
 <!-- Title -->
 <div class="page-header">
-    <h1>Compute Top Lists from the Pi-hole query database</h1>
+    <h1>从 Pi-hole 数据库调阅统计表信息</h1>
 </div>
 
 <div class="row">
@@ -21,7 +21,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">
-                    Select date and time range
+                    选择时间范围
                 </h3>
             </div>
             <div class="box-body">
@@ -31,7 +31,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
                             <div class="input-group-addon">
                                 <i class="far fa-clock"></i>
                             </div>
-                            <input type="button" class="form-control pull-right" id="querytime" value="Click to select date and time range">
+                            <input type="button" class="form-control pull-right" id="querytime" value="点击选择日期和时间范围">
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ require 'scripts/pi-hole/php/header_authenticated.php';
 </div>
 
 <div id="timeoutWarning" class="alert alert-warning alert-dismissible fade in" role="alert" hidden>
-    Depending on how large of a range you specified, the request may time out while Pi-hole tries to retrieve all the data.<br/><span id="err"></span>
+    根据选择的时间范围的大小，Pi-hole 尝试检索大量数据时，请求可能会超时。<br/><span id="err"></span>
 </div>
 
 <?php
@@ -55,7 +55,7 @@ if ($boxedlayout) {
     <div class="<?php echo $tablelayout; ?>">
         <div class="box" id="domain-frequency">
             <div class="box-header with-border">
-                <h3 class="box-title">Top Domains</h3>
+                <h3 class="box-title">放行域名统计</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -63,9 +63,9 @@ if ($boxedlayout) {
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Domain</th>
-                                <th>Hits</th>
-                                <th>Frequency</th>
+                                <th>域名</th>
+                                <th>次数</th>
+                                <th>比例</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,7 +84,7 @@ if ($boxedlayout) {
     <div class="<?php echo $tablelayout; ?>">
         <div class="box" id="ad-frequency">
             <div class="box-header with-border">
-                <h3 class="box-title">Top Blocked Domains</h3>
+                <h3 class="box-title">吞噬域名统计</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -92,9 +92,9 @@ if ($boxedlayout) {
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Domain</th>
-                                <th>Hits</th>
-                                <th>Frequency</th>
+                                <th>域名</th>
+                                <th>次数</th>
+                                <th>比例</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,7 +113,7 @@ if ($boxedlayout) {
     <div class="<?php echo $tablelayout; ?>">
         <div class="box" id="client-frequency">
             <div class="box-header with-border">
-                <h3 class="box-title">Top Clients</h3>
+                <h3 class="box-title">客户端统计</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -121,9 +121,9 @@ if ($boxedlayout) {
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Client</th>
-                                <th>Requests</th>
-                                <th>Frequency</th>
+                                <th>客户端</th>
+                                <th>次数</th>
+                                <th>比例</th>
                             </tr>
                         </thead>
                         <tbody>

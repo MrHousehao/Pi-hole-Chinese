@@ -50,7 +50,7 @@ function connectFTL()
 function sendRequestFTL($requestin, $socket)
 {
     $request = '>'.$requestin;
-    fwrite($socket, $request) or exit('{"error":"Could not send data to server"}');
+    fwrite($socket, $request) or exit('{"错误":"无法向服务器发送数据"}');
 }
 
 function getResponseFTL($socket)
@@ -66,7 +66,7 @@ function getResponseFTL($socket)
 
         if ($errCount > 100) {
             // Tried 100 times, but never got proper reply, fail to prevent busy loop
-            exit('{"error":"Tried 100 times to connect to FTL server, but never got proper reply. Please check Port and logs!"}');
+            exit('{"错误":"尝试了 100 次连接到 FTL 服务器，但没有得到正确的答复。 请检查端口和日志！"}');
         }
 
         if (strrpos($out, '---EOM---') !== false) {
