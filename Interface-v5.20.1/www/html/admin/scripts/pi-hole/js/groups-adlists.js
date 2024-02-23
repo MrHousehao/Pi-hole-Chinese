@@ -98,7 +98,6 @@ function format(data) {
     '</td></tr><tr class="dataTables-child"><td>有效的吞噬域名规则：&nbsp;&nbsp;</td><td>' +
     (data.number !== null && numbers === true ? parseInt(data.number, 10) : "N/A") +
     '</td></tr><tr class="dataTables-child"' +
-    invalidStyle +
     "><td>无效的吞噬域名规则：&nbsp;&nbsp;</td>" +
     "<td>" +
     (data.invalid_domains !== null && numbers === true
